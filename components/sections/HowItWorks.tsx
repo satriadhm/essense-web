@@ -93,7 +93,7 @@ const desktopSteps = [
   },
   {
     key: "s1",
-    width: "min-w-[80vw]",
+    width: "min-w-[clamp(480px,62vw,720px)]",
     content: (
       <div className="relative flex h-full flex-col justify-center bg-[var(--bg-mid)] px-[max(5vw,40px)] py-12">
         <span className="pointer-events-none absolute left-8 top-8 font-heading text-[clamp(100px,15vw,180px)] font-black text-white/[0.04]">
@@ -128,7 +128,7 @@ const desktopSteps = [
   },
   {
     key: "s2",
-    width: "min-w-[80vw]",
+    width: "min-w-[clamp(480px,62vw,720px)]",
     content: (
       <div className="relative flex h-full flex-col justify-center px-[max(5vw,40px)] py-12">
         <span className="pointer-events-none absolute right-12 top-12 font-heading text-[clamp(100px,15vw,180px)] font-black text-white/[0.04]">
@@ -160,9 +160,9 @@ const desktopSteps = [
   },
   {
     key: "s3",
-    width: "min-w-[80vw]",
+    width: "min-w-[clamp(480px,62vw,720px)]",
     content: (
-      <div className="flex h-full flex-col justify-center bg-[var(--bg-mid)] px-[max(5vw,40px)] py-12">
+      <div className="relative flex h-full flex-col justify-center bg-[var(--bg-mid)] px-[max(5vw,40px)] py-12">
         <span className="pointer-events-none absolute left-8 top-8 font-heading text-[clamp(100px,15vw,180px)] font-black text-white/[0.04]">
           03
         </span>
@@ -201,17 +201,17 @@ const desktopSteps = [
   },
   {
     key: "s4",
-    width: "min-w-[80vw]",
+    width: "min-w-[clamp(480px,62vw,720px)]",
     content: (
-      <div className="flex h-full flex-col justify-center px-[max(5vw,40px)] py-12">
-        <span className="pointer-events-none absolute right-8 top-8 font-heading text-[clamp(100px,15vw,180px)] font-black text-white/[0.04]">
+      <div className="relative flex h-full flex-col justify-center px-[max(5vw,40px)] py-12">
+        <span className="pointer-events-none absolute right-8 top-8 z-0 font-heading text-[clamp(100px,15vw,180px)] font-black text-white/[0.04]">
           04
         </span>
-        <div className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center gap-2">
+        <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center gap-1 p-0">
           <span className="text-2xl">🧴</span>
           <span className="text-2xl">📖</span>
           <span className="text-2xl">↗</span>
-        </div>
+        </GlassCard>
         <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
           Yours. Every Day.
         </h3>
@@ -239,7 +239,7 @@ const desktopSteps = [
 
 function MobileStack() {
   return (
-    <div className="flex flex-col gap-16 px-[max(5vw,40px)] py-24 lg:hidden">
+    <div className="flex flex-col gap-16 px-[max(5vw,40px)] pb-12 pt-24 lg:hidden">
       {desktopSteps.map((s, i) => (
         <ScrollReveal key={s.key} delay={i * 80}>
           <div>{s.content}</div>
@@ -300,7 +300,7 @@ export function HowItWorks() {
         <div className="sticky top-0 flex h-[100vh] flex-col overflow-hidden">
           <div
             ref={trackRef}
-            className="flex h-[calc(100vh-48px)] w-max will-change-transform"
+            className="flex h-[calc(100vh-48px)] w-max gap-6 will-change-transform"
           >
             {desktopSteps.map((s) => (
               <div
@@ -311,7 +311,7 @@ export function HowItWorks() {
               </div>
             ))}
           </div>
-          <div className="h-12 w-full px-[max(5vw,40px)] pb-6 pt-2">
+          <div className="h-10 w-full px-[max(5vw,40px)] pb-2 pt-2">
             <div className="h-px w-full bg-[var(--bg-surface)]">
               <div
                 ref={progressRef}

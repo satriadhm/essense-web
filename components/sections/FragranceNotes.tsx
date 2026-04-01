@@ -10,7 +10,7 @@ export function FragranceNotes() {
   return (
     <section
       id="features"
-      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[120px]"
+      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] pb-[120px] pt-4 lg:pt-6"
     >
       <div className="flex flex-col gap-16 lg:flex-row lg:items-start">
         <div className="relative w-full lg:w-[60%]">
@@ -22,10 +22,19 @@ export function FragranceNotes() {
               aria-label="Fragrance pyramid"
             >
               <defs>
-                <linearGradient id="g-top" x1="0" y1="0" x2="1" y2="1">
-                  <stop stopColor="#4DD9FF" />
-                  <stop offset="1" stopColor="#7B5CF0" />
+                <linearGradient id="g-top-airy" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#B8F0FF" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#7B5CF0" stopOpacity="0.5" />
                 </linearGradient>
+                <filter
+                  id="blur-top"
+                  x="-30%"
+                  y="-30%"
+                  width="160%"
+                  height="160%"
+                >
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
+                </filter>
                 <linearGradient id="g-mid" x1="0" y1="0" x2="1" y2="1">
                   <stop stopColor="#9D6FF5" />
                   <stop offset="1" stopColor="#F59E0B" />
@@ -35,10 +44,12 @@ export function FragranceNotes() {
                   <stop offset="1" stopColor="#7B5CF0" />
                 </linearGradient>
               </defs>
-              {/* Top */}
+              {/* Top — airy, misty top notes */}
               <polygon
                 points="160,20 220,100 100,100"
-                fill="url(#g-top)"
+                fill="url(#g-top-airy)"
+                fillOpacity={0.75}
+                filter="url(#blur-top)"
                 className="cursor-pointer transition-all duration-300"
                 style={{
                   opacity: hover && hover !== "top" ? 0.65 : 1,
@@ -47,6 +58,33 @@ export function FragranceNotes() {
                 }}
                 onMouseEnter={() => setHover("top")}
                 onMouseLeave={() => setHover(null)}
+              />
+              <circle
+                cx="152"
+                cy="48"
+                r="2"
+                fill="#4DD9FF"
+                opacity={0.5}
+                className="sparkle-pulse pointer-events-none"
+                style={{ animationDelay: "0ms" }}
+              />
+              <circle
+                cx="176"
+                cy="62"
+                r="2"
+                fill="#4DD9FF"
+                opacity={0.5}
+                className="sparkle-pulse pointer-events-none"
+                style={{ animationDelay: "400ms" }}
+              />
+              <circle
+                cx="164"
+                cy="78"
+                r="2"
+                fill="#4DD9FF"
+                opacity={0.5}
+                className="sparkle-pulse pointer-events-none"
+                style={{ animationDelay: "800ms" }}
               />
               {/* Mid */}
               <polygon
@@ -148,6 +186,13 @@ export function FragranceNotes() {
         @keyframes tierPulse {
           0%, 100% { opacity: 0.85; }
           50% { opacity: 1; }
+        }
+        @keyframes sparklePulse {
+          0%, 100% { opacity: 0.35; }
+          50% { opacity: 0.95; }
+        }
+        .sparkle-pulse {
+          animation: sparklePulse 2.2s ease-in-out infinite;
         }
       `}</style>
     </section>

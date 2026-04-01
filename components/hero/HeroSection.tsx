@@ -154,13 +154,13 @@ export function HeroSection() {
             />
             <div className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center">
               <div className="orbit-note-1 absolute flex items-center justify-center">
-                <NoteOrb noteType="top" label="TOP" size={40} />
+                <NoteOrb noteType="top" size={48} />
               </div>
               <div className="orbit-note-2 absolute flex items-center justify-center">
-                <NoteOrb noteType="mid" label="HEART" size={44} />
+                <NoteOrb noteType="mid" size={56} />
               </div>
               <div className="orbit-note-3 absolute flex items-center justify-center">
-                <NoteOrb noteType="base" label="BASE" size={40} />
+                <NoteOrb noteType="base" size={48} />
               </div>
             </div>
           </div>

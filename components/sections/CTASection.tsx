@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 export function CTASection() {
@@ -27,14 +26,15 @@ export function CTASection() {
       </p>
 
       <div className="relative z-[1] mx-auto flex max-w-3xl flex-col items-center text-center">
-        <motion.div
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/favicon.ico"
+          alt="Essense"
+          width={128}
+          height={128}
+          className="mb-10 h-24 w-24 select-none object-contain sm:h-28 sm:w-28 md:h-32 md:w-32"
           aria-hidden
-          className="mb-10 select-none bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-cyan)] bg-clip-text text-[180px] leading-none text-transparent"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        >
-          ⬡
-        </motion.div>
+        />
 
         <h2 className="font-heading text-[length:var(--text-h1)] font-extrabold text-[var(--text-primary)]">
           Your essence. Finally{" "}

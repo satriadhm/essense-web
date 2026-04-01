@@ -72,7 +72,52 @@ export function BiometricSection() {
                   }}
                 />
               ))}
-              <div className="bio-scan-line pointer-events-none absolute left-2 right-2 top-0 h-0.5 bg-[var(--accent-cyan)] opacity-30" />
+              <svg
+                className="pointer-events-none absolute z-[1] h-[110px] w-[110px]"
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
+              >
+                <path
+                  d="M50 85 C30 85 15 70 15 50 C15 30 30 15 50 15 C70 15 85 30 85 50 C85 60 80 68 72 74"
+                  stroke="var(--accent-cyan)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M50 77 C34 77 22 64 22 50 C22 36 34 24 50 24 C66 24 78 36 78 50 C78 58 74 65 68 70"
+                  stroke="var(--accent-cyan)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M50 69 C38 69 29 60 29 50 C29 40 38 31 50 31 C62 31 71 40 71 50 C71 56 68 62 63 66"
+                  stroke="var(--accent-cyan)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M50 61 C42 61 36 55 36 50 C36 45 42 39 50 39 C58 39 64 45 64 50 C64 53 62 56 59 59"
+                  stroke="var(--accent-cyan)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M50 53 C46 53 43 50 43 50 C43 47 46 44 50 44 C54 44 57 47 57 50"
+                  stroke="var(--accent-cyan)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="2.5"
+                  fill="var(--accent-cyan)"
+                  opacity="0.8"
+                />
+              </svg>
+              <div className="bio-scan-line pointer-events-none absolute left-2 right-2 top-0 z-[2] h-0.5 bg-[var(--accent-cyan)] opacity-30" />
             </div>
           </div>
           <div className="mt-6 flex justify-center gap-1 font-mono text-[var(--accent-cyan)]">
