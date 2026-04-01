@@ -1,3 +1,4 @@
+import { HideHomeScrollbar } from "@/components/home/HideHomeScrollbar";
 import { Navbar } from "@/components/navigation/Navbar";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { WhatIsEssense } from "@/components/sections/WhatIsEssense";
@@ -13,6 +14,7 @@ import { CTASection } from "@/components/sections/CTASection";
 export default function Home() {
   return (
     <div className="relative min-h-[100dvh] overflow-x-hidden">
+      <HideHomeScrollbar />
       <Navbar />
       <main>
         <HeroSection />
