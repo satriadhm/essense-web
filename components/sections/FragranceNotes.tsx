@@ -13,11 +13,11 @@ export function FragranceNotes() {
       className="bg-[var(--bg-deep)] px-[max(5vw,40px)] pb-[120px] pt-4 lg:pt-6"
     >
       <div className="flex flex-col gap-16 lg:flex-row lg:items-start">
-        <div className="relative w-full lg:w-[60%]">
+        <div className="relative w-full overflow-hidden isolate lg:w-[60%]">
           <ScrollReveal>
             <svg
               viewBox="0 0 320 280"
-              className="mx-auto w-full max-w-md"
+              className="pyramid-svg mx-auto w-full max-w-md"
               role="img"
               aria-label="Fragrance pyramid"
             >
@@ -26,15 +26,6 @@ export function FragranceNotes() {
                   <stop offset="0%" stopColor="#B8F0FF" stopOpacity="0.7" />
                   <stop offset="100%" stopColor="#7B5CF0" stopOpacity="0.5" />
                 </linearGradient>
-                <filter
-                  id="blur-top"
-                  x="-30%"
-                  y="-30%"
-                  width="160%"
-                  height="160%"
-                >
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
-                </filter>
                 <linearGradient id="g-mid" x1="0" y1="0" x2="1" y2="1">
                   <stop stopColor="#9D6FF5" />
                   <stop offset="1" stopColor="#F59E0B" />
@@ -49,8 +40,11 @@ export function FragranceNotes() {
                 points="160,20 220,100 100,100"
                 fill="url(#g-top-airy)"
                 fillOpacity={0.75}
-                filter="url(#blur-top)"
-                className="cursor-pointer transition-all duration-300"
+                stroke="url(#g-top-airy)"
+                strokeWidth="1.25"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                className="tier cursor-pointer transition-all duration-300"
                 style={{
                   opacity: hover && hover !== "top" ? 0.65 : 1,
                   transform:
@@ -90,7 +84,11 @@ export function FragranceNotes() {
               <polygon
                 points="100,100 220,100 240,180 80,180"
                 fill="url(#g-mid)"
-                className="cursor-pointer transition-all duration-300"
+                stroke="url(#g-mid)"
+                strokeWidth="1.25"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                className="tier cursor-pointer transition-all duration-300"
                 style={{
                   opacity: hover && hover !== "heart" ? 0.65 : 1,
                   transform:
@@ -103,7 +101,11 @@ export function FragranceNotes() {
               <polygon
                 points="80,180 240,180 280,260 40,260"
                 fill="url(#g-base)"
-                className="cursor-pointer transition-all duration-300"
+                stroke="url(#g-base)"
+                strokeWidth="1.25"
+                strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
+                className="tier cursor-pointer transition-all duration-300"
                 style={{
                   opacity: hover && hover !== "base" ? 0.65 : 1,
                   transform:
@@ -112,10 +114,34 @@ export function FragranceNotes() {
                 onMouseEnter={() => setHover("base")}
                 onMouseLeave={() => setHover(null)}
               />
+              <text
+                x="160"
+                y="70"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="pointer-events-none fill-[var(--accent-cyan)] font-heading text-[11px] font-bold uppercase tracking-[0.16em]"
+              >
+                TOP NOTES
+              </text>
+              <text
+                x="160"
+                y="140"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="pointer-events-none fill-[var(--accent-amber)] font-heading text-[11px] font-bold uppercase tracking-[0.16em]"
+              >
+                HEART NOTES
+              </text>
+              <text
+                x="160"
+                y="220"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="pointer-events-none fill-[var(--accent-rose)] font-heading text-[11px] font-bold uppercase tracking-[0.16em]"
+              >
+                BASE NOTES
+              </text>
             </svg>
-            <div className="pointer-events-none absolute inset-0 flex flex-col items-center pt-6 text-center text-[10px] font-heading font-bold uppercase">
-              <span className="text-[var(--accent-cyan)]">Top notes</span>
-            </div>
           </ScrollReveal>
           {hover && (
             <div className="absolute right-0 top-1/2 z-10 hidden w-48 -translate-y-1/2 translate-x-full rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3 text-xs text-[var(--text-secondary)] lg:block">
@@ -177,12 +203,12 @@ export function FragranceNotes() {
       </div>
 
       <style>{`
-        svg polygon {
+        .pyramid-svg .tier {
           animation: tierPulse 3s ease-in-out infinite;
         }
-        svg polygon:nth-of-type(1) { animation-delay: 0s; }
-        svg polygon:nth-of-type(2) { animation-delay: 1s; }
-        svg polygon:nth-of-type(3) { animation-delay: 2s; }
+        .pyramid-svg .tier:nth-of-type(1) { animation-delay: 0s; }
+        .pyramid-svg .tier:nth-of-type(2) { animation-delay: 1s; }
+        .pyramid-svg .tier:nth-of-type(3) { animation-delay: 2s; }
         @keyframes tierPulse {
           0%, 100% { opacity: 0.85; }
           50% { opacity: 1; }

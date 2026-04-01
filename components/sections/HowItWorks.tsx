@@ -275,7 +275,7 @@ export function HowItWorks() {
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: "bottom bottom",
+        end: () => `+=${Math.max(track.scrollWidth - window.innerWidth + 500, 0)}`,
         scrub: true,
         pin: true,
         invalidateOnRefresh: true,
@@ -296,7 +296,7 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="relative bg-[var(--bg-deep)]">
       <MobileStack />
-      <div ref={pinRef} className="relative hidden h-[400vh] lg:block">
+      <div ref={pinRef} className="relative hidden h-[100vh] lg:block">
         <div className="sticky top-0 flex h-[100vh] flex-col overflow-hidden">
           <div
             ref={trackRef}

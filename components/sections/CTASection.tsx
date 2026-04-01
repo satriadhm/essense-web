@@ -28,7 +28,7 @@ export function CTASection() {
       <div className="relative z-[1] mx-auto flex max-w-3xl flex-col items-center text-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/favicon.ico"
+          src="/app_logo.png"
           alt="Essense"
           width={128}
           height={128}

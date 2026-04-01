@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 const LINKS = [
@@ -57,13 +58,15 @@ export function Navbar() {
           )}
           aria-label="Main"
         >
-          <a href="#home" className="flex items-center gap-2" data-cursor="pointer">
-            <span className="font-heading text-lg font-extrabold tracking-tight text-[var(--text-primary)]">
-              ⬡
-            </span>
-            <span className="font-heading text-sm font-bold text-[var(--text-primary)]">
-              E
-            </span>
+          <a href="#home" className="flex items-center" data-cursor="pointer" aria-label="Essense home">
+            <Image
+              src="/app_logo.png"
+              alt="Essense logo"
+              width={34}
+              height={34}
+              className="h-8 w-8 rounded-[10px]"
+              priority
+            />
           </a>
           <div className="flex items-center gap-8">
             {LINKS.map((l) => {
@@ -103,8 +106,15 @@ export function Navbar() {
         </nav>
 
         <div className="flex w-[min(100vw-2rem,380px)] items-center justify-between rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-4 py-2.5 backdrop-blur-[20px] md:hidden">
-          <a href="#home" className="flex items-center gap-1 font-heading text-base font-extrabold">
-            ⬡ <span>E</span>
+          <a href="#home" className="flex items-center" aria-label="Essense home">
+            <Image
+              src="/app_logo.png"
+              alt="Essense logo"
+              width={30}
+              height={30}
+              className="h-7 w-7 rounded-[8px]"
+              priority
+            />
           </a>
           <button
             type="button"

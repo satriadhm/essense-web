@@ -73,48 +73,51 @@ export function BiometricSection() {
                 />
               ))}
               <svg
-                className="pointer-events-none absolute z-[1] h-[110px] w-[110px]"
-                viewBox="0 0 100 100"
+                className="absolute z-[1] h-[130px] w-[110px] opacity-45"
+                viewBox="0 0 100 120"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden
               >
+                {/* Ridge 1 — outermost, widest wrap */}
                 <path
-                  d="M50 85 C30 85 15 70 15 50 C15 30 30 15 50 15 C70 15 85 30 85 50 C85 60 80 68 72 74"
-                  stroke="var(--accent-cyan)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+                  d="M 18,95 C 10,65 12,38 28,22 C 50,4 72,4 84,24 C 96,42 92,68 82,95"
+                  stroke="var(--accent-cyan)" strokeWidth="1.6" strokeLinecap="round"
                 />
+                {/* Ridge 2 */}
                 <path
-                  d="M50 77 C34 77 22 64 22 50 C22 36 34 24 50 24 C66 24 78 36 78 50 C78 58 74 65 68 70"
-                  stroke="var(--accent-cyan)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+                  d="M 23,93 C 16,66 18,41 32,26 C 50,10 68,10 79,28 C 90,46 87,69 77,93"
+                  stroke="var(--accent-cyan)" strokeWidth="1.6" strokeLinecap="round"
                 />
+                {/* Ridge 3 */}
                 <path
-                  d="M50 69 C38 69 29 60 29 50 C29 40 38 31 50 31 C62 31 71 40 71 50 C71 56 68 62 63 66"
-                  stroke="var(--accent-cyan)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+                  d="M 28,92 C 22,67 23,44 36,30 C 50,16 64,16 73,32 C 83,50 81,70 72,92"
+                  stroke="var(--accent-cyan)" strokeWidth="1.6" strokeLinecap="round"
                 />
+                {/* Ridge 4 */}
                 <path
-                  d="M50 61 C42 61 36 55 36 50 C36 45 42 39 50 39 C58 39 64 45 64 50 C64 53 62 56 59 59"
-                  stroke="var(--accent-cyan)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+                  d="M 33,90 C 28,68 29,47 40,35 C 50,22 60,22 67,37 C 76,53 75,71 67,90"
+                  stroke="var(--accent-cyan)" strokeWidth="1.6" strokeLinecap="round"
                 />
+                {/* Ridge 5 */}
                 <path
-                  d="M50 53 C46 53 43 50 43 50 C43 47 46 44 50 44 C54 44 57 47 57 50"
-                  stroke="var(--accent-cyan)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
+                  d="M 38,89 C 34,69 35,51 44,40 C 50,32 56,32 62,41 C 70,54 69,72 62,89"
+                  stroke="var(--accent-cyan)" strokeWidth="1.6" strokeLinecap="round"
                 />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="2.5"
-                  fill="var(--accent-cyan)"
-                  opacity="0.8"
+                {/* Ridge 6 — inner, tighter curve */}
+                <path
+                  d="M 43,87 C 40,70 41,55 47,46 C 50,41 53,41 57,47 C 63,57 62,72 57,87"
+                  stroke="var(--accent-cyan)" strokeWidth="1.5" strokeLinecap="round"
+                />
+                {/* Ridge 7 — innermost loop */}
+                <path
+                  d="M 47,85 C 45,72 46,60 50,54 C 54,60 55,72 53,85"
+                  stroke="var(--accent-cyan)" strokeWidth="1.5" strokeLinecap="round"
+                />
+                {/* Core — small oval at the center of the whorl */}
+                <ellipse
+                  cx="50" cy="62" rx="4.5" ry="6"
+                  stroke="var(--accent-cyan)" strokeWidth="1.4"
                 />
               </svg>
               <div className="bio-scan-line pointer-events-none absolute left-2 right-2 top-0 z-[2] h-0.5 bg-[var(--accent-cyan)] opacity-30" />
