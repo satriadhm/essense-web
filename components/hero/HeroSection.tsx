@@ -14,33 +14,16 @@ export function HeroSection() {
     offset: ["start start", "end start"],
   });
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const orbY = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   return (
     <section
       ref={sectionRef}
       id="home"
-      className="relative isolate flex min-h-[100dvh] flex-col overflow-x-hidden overflow-y-visible bg-[var(--bg-deep)]"
+      className="relative isolate flex min-h-[100dvh] flex-col overflow-x-hidden overflow-y-clip bg-[var(--bg-deep)]"
     >
       <div className="pointer-events-none absolute inset-0 z-[1] bg-site-gradient opacity-0 animate-[fadeHero_600ms_ease_forwards]" />
       <style>{`
         @keyframes fadeHero { to { opacity: 1; } }
-        @keyframes heroPerfumeFloat {
-          0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-          50% { transform: translate(-50%, -50%) translateY(-5px); }
-        }
-        @keyframes heroGivenchyFloat {
-          0%, 100% { transform: translate(-50%, -50%) rotate(-11deg) translateY(0); }
-          50% { transform: translate(-50%, -50%) rotate(-11deg) translateY(-4px); }
-        }
-        .hero-perfume-float {
-          animation: heroPerfumeFloat 5.5s ease-in-out infinite;
-          animation-delay: 1.9s;
-        }
-        .hero-perfume-float-givenchy {
-          animation: heroGivenchyFloat 6s ease-in-out infinite;
-          animation-delay: 2.05s;
-        }
       `}</style>
 
       <motion.div
@@ -61,7 +44,7 @@ export function HeroSection() {
         <ParticleField />
       </div>
 
-      <div className="relative z-[2] grid flex-1 grid-cols-1 items-center gap-10 pb-24 pt-28 lg:grid-cols-[1.2fr_0.8fr] lg:gap-4 lg:pb-16 lg:pt-20">
+      <div className="relative z-[2] grid min-h-0 flex-1 grid-cols-1 items-center gap-10 overflow-x-hidden pb-24 pt-28 lg:grid-cols-[1.2fr_0.8fr] lg:gap-4 lg:pb-16 lg:pt-20">
         <div
           className="flex max-w-xl flex-col justify-center px-[max(5vw,40px)] lg:pr-8"
           style={{ paddingLeft: "max(5vw, 40px)" }}
@@ -142,20 +125,19 @@ export function HeroSection() {
         </div>
 
         <motion.div
-          className="relative flex min-h-[min(78vh,640px)] items-center justify-center max-lg:mx-auto max-lg:min-h-[420px] max-lg:w-[92vw] lg:absolute lg:right-0 lg:top-1/2 lg:h-[min(92vh,820px)] lg:min-h-0 lg:w-[48%] lg:max-w-[640px] lg:-translate-y-1/2"
-          style={{ y: orbY }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.2, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="relative flex min-h-[min(82vh,720px)] items-center justify-center overflow-hidden max-lg:mx-auto max-lg:min-h-[460px] max-lg:w-[94vw] lg:absolute lg:right-0 lg:top-1/2 lg:max-h-[min(92vh,900px)] lg:min-h-0 lg:w-[50%] lg:max-w-[760px] lg:-translate-y-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="relative flex h-[min(72vh,500px)] w-full max-w-[min(96vw,520px)] shrink-0 items-center justify-center lg:h-[min(76vh,560px)] lg:max-w-[560px]">
+          <div className="relative flex h-[min(82vh,640px)] w-full max-w-[min(100vw,760px)] shrink-0 items-center justify-center overflow-hidden lg:h-[min(88vh,780px)] lg:max-w-[780px]">
             <ScentRing />
             <motion.img
               src="/givenchy_perfume.png"
               alt="Givenchy L'Interdit perfume bottle"
-              width={400}
-              height={640}
-              className="hero-perfume-float-givenchy pointer-events-none absolute left-[30%] top-[52%] z-[1] h-auto max-h-[min(44vh,300px)] w-[min(34vw,200px)] max-w-[200px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] max-lg:left-[24%] max-lg:top-[53%]"
+              width={520}
+              height={832}
+              className="pointer-events-none absolute left-[35%] top-[55%] z-[1] h-auto max-h-[min(62vh,480px)] w-[min(50vw,340px)] max-w-[340px] -translate-x-1/2 -translate-y-1/2 -rotate-[11deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] max-lg:left-[28%] max-lg:top-[56%]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.15, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
@@ -163,9 +145,9 @@ export function HeroSection() {
             <motion.img
               src="/ysl_perfume.png"
               alt="Yves Saint Laurent Y Eau de Parfum bottle"
-              width={560}
-              height={840}
-              className="hero-perfume-float pointer-events-none absolute left-1/2 top-1/2 z-[2] h-auto max-h-[min(52vh,380px)] w-[min(42vw,260px)] max-w-[260px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_16px_48px_rgba(0,0,0,0.45)]"
+              width={720}
+              height={1080}
+              className="pointer-events-none absolute left-[52%] top-[52%] z-[2] h-auto max-h-[min(74vh,600px)] w-[min(58vw,440px)] max-w-[440px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_16px_48px_rgba(0,0,0,0.45)]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.25, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
