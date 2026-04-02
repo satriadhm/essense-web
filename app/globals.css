@@ -259,6 +259,8 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* Fallback for browsers where background-clip: text fails */
+  -webkit-text-fill-color: transparent;
 }
 
 @keyframes scent-ring-spin {

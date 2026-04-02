@@ -10,7 +10,7 @@ export function FragranceNotes() {
   return (
     <section
       id="features"
-      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] pb-[120px] pt-4 lg:pt-6"
+      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] pb-[60px] pt-4 lg:pb-[120px] lg:pt-6"
     >
       <div className="flex flex-col gap-16 lg:flex-row lg:items-start">
         <div className="relative w-full overflow-hidden isolate lg:w-[60%]">
@@ -163,10 +163,10 @@ export function FragranceNotes() {
         <div className="w-full lg:w-[40%] lg:pl-8">
           <ScrollReveal delay={80}>
             <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
-              The architecture of scent
+              WHY ESSENSE
             </p>
             <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-bold text-[var(--text-primary)]">
-              Every great fragrance is a story told in three acts.
+              One cap. Every fragrance. Zero guesswork.
             </h2>
             <div className="mt-8 space-y-6 text-[var(--text-secondary)]">
               <p className="flex gap-3">
@@ -174,29 +174,30 @@ export function FragranceNotes() {
                   className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--accent-cyan)]"
                   aria-hidden
                 />
-                Top notes are what you smell first — bright, light, and gone
-                within 20 minutes. They&apos;re the handshake.
+                The Essense cap fits any standard perfume bottle — no refills, no
+                replacements. Scan once, wear perfectly, every time.
               </p>
               <p className="flex gap-3">
                 <span
                   className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--accent-amber)]"
                   aria-hidden
                 />
-                Heart notes emerge as top notes fade. Floral, spice, or herbal —
-                they carry the character of the fragrance for hours.
+                Our biometric engine maps your body chemistry to the note pyramid
+                in real time — so your formula shifts as you do, not just when you
+                remember to change it.
               </p>
               <p className="flex gap-3">
                 <span
                   className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--accent-rose)]"
                   aria-hidden
                 />
-                Base notes are the foundation. Rich, deep, and lasting,
-                they&apos;re what lingers on your clothes the next morning.
+                Works with 200+ fragrances out of the box. No subscription to unlock
+                your own skin.
               </p>
             </div>
             <p className="mt-10 font-heading text-lg italic text-[var(--accent-violet)]">
-              Essense builds your formula around all three — balanced for your
-              body, your weather, your day.
+              Hardware that adapts. Software that remembers. A formula that&apos;s
+              yours.
             </p>
           </ScrollReveal>
         </div>

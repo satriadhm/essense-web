@@ -12,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { FragranceTag } from "@/components/ui/FragranceTag";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { BIOMETRIC_SCAN_SECONDS } from "@/lib/site-constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,7 +142,9 @@ const desktopSteps = [
           Read Your Biology
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
-          Place your finger on the Essense device. In 12 seconds, it captures your skin&apos;s temperature, conductance, and sebum profile.
+          Place your finger on the Essense device. In {BIOMETRIC_SCAN_SECONDS}{" "}
+          seconds, it captures your skin&apos;s temperature, conductance, and sebum
+          profile.
         </p>
         <ScanProgressLoop />
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
@@ -253,7 +256,13 @@ export function HowItWorks() {
   const pinRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const stRef = useRef<ScrollTrigger | null>(null);
+  const panelLeftsRef = useRef<number[]>([]);
+  const activeStepRef = useRef(0);
   const [desktop, setDesktop] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const [hoverTrack, setHoverTrack] = useState(false);
+  const [sectionInView, setSectionInView] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -263,35 +272,107 @@ export function HowItWorks() {
     return () => mq.removeEventListener("change", fn);
   }, []);
 
+  useEffect(() => {
+    const el = pinRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setSectionInView(e.isIntersecting),
+      { threshold: 0.12, rootMargin: "0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [desktop]);
+
   useLayoutEffect(() => {
     if (!desktop) return;
     const section = pinRef.current;
     const track = trackRef.current;
     if (!section || !track) return;
 
+    const measurePanels = () => {
+      const children = Array.from(track.children) as HTMLElement[];
+      panelLeftsRef.current = children.map((c) => c.offsetLeft);
+    };
+    measurePanels();
+
+    const maxX = () => Math.max(0, track.scrollWidth - window.innerWidth);
+
     const tween = gsap.to(track, {
-      x: () => -(track.scrollWidth - window.innerWidth),
+      x: () => -maxX(),
       ease: "none",
       scrollTrigger: {
         trigger: section,
         start: "top top",
-        end: () => `+=${Math.max(track.scrollWidth - window.innerWidth + 500, 0)}`,
+        end: () =>
+          `+=${Math.max(track.scrollWidth - window.innerWidth + 500, 0)}`,
         scrub: true,
         pin: true,
         invalidateOnRefresh: true,
+        onRefresh: () => {
+          measurePanels();
+        },
         onUpdate: (self) => {
           if (progressRef.current) {
             progressRef.current.style.width = `${self.progress * 100}%`;
           }
+          const mx = maxX();
+          if (mx <= 0) return;
+          const scrolled = self.progress * mx;
+          const lefts = panelLeftsRef.current;
+          let step = 0;
+          for (let i = 0; i < lefts.length; i++) {
+            if (scrolled >= lefts[i] - 12) step = i;
+          }
+          activeStepRef.current = step;
+          setActiveStep(step);
         },
       },
     });
 
+    stRef.current = tween.scrollTrigger ?? null;
+
     return () => {
       tween.scrollTrigger?.kill();
       tween.kill();
+      stRef.current = null;
     };
   }, [desktop]);
+
+  useEffect(() => {
+    if (!desktop || !sectionInView || hoverTrack) return;
+    const id = window.setInterval(() => {
+      const st = stRef.current;
+      const track = trackRef.current;
+      if (!st || !track) return;
+      const lefts = panelLeftsRef.current;
+      if (lefts.length === 0) return;
+      const mx = Math.max(1, track.scrollWidth - window.innerWidth);
+      const cur = activeStepRef.current;
+      const next = (cur + 1) % lefts.length;
+      const p = Math.min(1, lefts[next] / mx);
+      const start = st.start as number;
+      const end = st.end as number;
+      const targetY = start + p * (end - start);
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+    }, 4000);
+    return () => clearInterval(id);
+  }, [desktop, sectionInView, hoverTrack]);
+
+  const goToStep = (stepIndex: number) => {
+    const st = stRef.current;
+    const track = trackRef.current;
+    if (!st || !track) return;
+    const lefts = panelLeftsRef.current;
+    if (stepIndex < 0 || stepIndex >= lefts.length) return;
+    const mx = Math.max(1, track.scrollWidth - window.innerWidth);
+    const p = Math.min(1, lefts[stepIndex] / mx);
+    const start = st.start as number;
+    const end = st.end as number;
+    window.scrollTo({
+      top: start + p * (end - start),
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section id="how-it-works" className="relative bg-[var(--bg-deep)]">
@@ -300,6 +381,8 @@ export function HowItWorks() {
         <div className="sticky top-0 flex h-[100vh] flex-col overflow-hidden">
           <div
             ref={trackRef}
+            onMouseEnter={() => setHoverTrack(true)}
+            onMouseLeave={() => setHoverTrack(false)}
             className="flex h-[calc(100vh-48px)] w-max gap-6 will-change-transform"
           >
             {desktopSteps.map((s) => (
@@ -311,13 +394,34 @@ export function HowItWorks() {
               </div>
             ))}
           </div>
-          <div className="h-10 w-full px-[max(5vw,40px)] pb-2 pt-2">
+          <div className="h-auto w-full px-[max(5vw,40px)] pb-2 pt-2">
             <div className="h-px w-full bg-[var(--bg-surface)]">
               <div
                 ref={progressRef}
                 className="h-px bg-gradient-to-r from-[var(--accent-purple)] to-[var(--accent-cyan)]"
                 style={{ width: "0%" }}
               />
+            </div>
+            <div
+              className="mt-3 flex justify-center gap-2"
+              role="tablist"
+              aria-label="How it works steps"
+            >
+              {([1, 2, 3, 4] as const).map((i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeStep === i}
+                  aria-label={`Step ${i}`}
+                  onClick={() => goToStep(i)}
+                  className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                    activeStep === i
+                      ? "bg-[var(--accent-cyan)]"
+                      : "border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>

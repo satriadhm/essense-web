@@ -83,7 +83,7 @@ export function AppPreview() {
   return (
     <section
       id="app-preview"
-      className="relative overflow-hidden bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[100px]"
+      className="relative overflow-hidden bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[60px] lg:py-[100px]"
       style={{
         background:
           "radial-gradient(circle at 50% 30%, rgba(123,92,240,0.12) 0%, transparent 55%), var(--bg-deep)",

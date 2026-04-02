@@ -38,6 +38,45 @@ function useSectionProgress() {
   return { ref, p, visible };
 }
 
+const evolvingStatLines = [
+  "34 scans · 3 formulas refined",
+  "Season-aware · tuned to today",
+] as const;
+
+function EvolvingFormulaWidget() {
+  const [lineIndex, setLineIndex] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => {
+      setLineIndex((i) => (i + 1) % evolvingStatLines.length);
+    }, 3800);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="w-full max-w-[260px] rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4">
+      <p className="font-heading text-xs font-bold text-[var(--text-primary)]">
+        Your evolving formula
+      </p>
+      <p
+        className="mt-1.5 min-h-[1.25rem] font-heading text-[10px] tracking-wide text-[var(--text-muted)] transition-opacity duration-300"
+        key={lineIndex}
+      >
+        {evolvingStatLines[lineIndex]}
+      </p>
+      <div className="mt-3 flex items-center justify-between gap-2 text-[var(--text-secondary)]">
+        <span className="text-2xl">☀</span>
+        <div className="text-right text-sm">
+          <div>26°C</div>
+          <div className="text-[var(--text-muted)]">Humid 68%</div>
+        </div>
+      </div>
+      <div className="mt-3 flex gap-3 text-xs text-[var(--text-muted)]">
+        <span>💨 12 km/h</span>
+        <span>UV 4</span>
+      </div>
+    </div>
+  );
+}
+
 function Block({
   label,
   headline,
@@ -54,7 +93,7 @@ function Block({
   return (
     <div
       className={cn(
-        "relative grid gap-10 pb-24 transition-all duration-700 lg:grid-cols-[1fr_280px]",
+        "relative grid gap-10 pb-12 transition-all duration-700 lg:grid-cols-[1fr_280px] lg:pb-24",
         active ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0",
       )}
     >
@@ -84,7 +123,7 @@ export function WhatIsEssense() {
     <section
       ref={ref}
       id="what-is-essense"
-      className="relative bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[140px]"
+      className="relative bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[80px] lg:py-[140px]"
     >
       <div
         className="mb-20 h-px w-full bg-gradient-to-r from-transparent via-[var(--border-active)] to-transparent"
@@ -92,8 +131,8 @@ export function WhatIsEssense() {
       />
 
       <Block
-        label="INTELLIGENCE"
-        headline="Your skin changes."
+        label="ADAPTIVE"
+        headline="Your skin changes. Your scent should too."
         body="Temperature, stress, humidity — every factor shifts how a fragrance develops on you. Essense reads these signals in real time."
         active={b1}
         right={
@@ -113,7 +152,7 @@ export function WhatIsEssense() {
       />
 
       <Block
-        label="PRECISION"
+        label="PERSONAL"
         headline={
           <>
             Not one-size perfume.{" "}
@@ -143,33 +182,11 @@ export function WhatIsEssense() {
       />
 
       <Block
-        label="INTELLIGENCE × WEATHER"
-        headline={
-          <>
-            The forecast shapes your{" "}
-            <span className="gradient-text-brand">scent</span>.
-          </>
-        }
-        body="Essense reads weather and humidity at your location. Hot days call for lighter top notes. Cold nights for deeper base accords. You always wear the right version."
+        label="CIRCULAR"
+        headline="A scent that grows with you."
+        body="Every scan, every formula, every season — Essense learns. The more you use it, the more personal your formula becomes. Your fragrance evolves as you do."
         active={b3}
-        right={
-          <div className="w-full max-w-[260px] rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4">
-            <p className="font-heading text-xs font-bold text-[var(--text-primary)]">
-              Today
-            </p>
-            <div className="mt-3 flex items-center justify-between gap-2 text-[var(--text-secondary)]">
-              <span className="text-2xl">☀</span>
-              <div className="text-right text-sm">
-                <div>26°C</div>
-                <div className="text-[var(--text-muted)]">Humid 68%</div>
-              </div>
-            </div>
-            <div className="mt-3 flex gap-3 text-xs text-[var(--text-muted)]">
-              <span>💨 12 km/h</span>
-              <span>UV 4</span>
-            </div>
-          </div>
-        }
+        right={<EvolvingFormulaWidget />}
       />
     </section>
   );

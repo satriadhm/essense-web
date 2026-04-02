@@ -70,7 +70,7 @@ export function HeroSection() {
             OWN YOUR
           </motion.h1>
           <motion.h1
-            className="font-heading font-extrabold leading-[0.95] tracking-[-0.02em]"
+            className="isolation isolate font-heading font-extrabold leading-[0.95] tracking-[-0.02em]"
             style={{ fontSize: "var(--text-hero)" }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -103,25 +103,42 @@ export function HeroSection() {
           >
             <MagneticButton />
             <a
-              href="#how-it-works"
+              href="#community"
               className="group inline-flex items-center gap-2 text-[var(--text-secondary)] transition hover:text-[var(--accent-cyan)]"
               data-cursor="pointer"
             >
-              <span aria-hidden>▷</span>
+              <span aria-hidden>★</span>
               <span className="border-b border-transparent text-sm group-hover:border-[var(--accent-cyan)]">
-                Watch the Story
+                Read Reviews
               </span>
             </a>
           </motion.div>
 
-          <motion.p
-            className="mt-10 font-heading text-[11px] tracking-wide text-[var(--text-muted)]"
+          <motion.div
+            className="mt-10 flex flex-wrap items-stretch gap-0 font-heading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1, duration: 0.4 }}
+            role="group"
+            aria-label="Essense statistics"
           >
-            10K+ Scans &nbsp;|&nbsp; 97% Match Rate &nbsp;|&nbsp; 200+ Fragrances
-          </motion.p>
+            <div className="flex flex-col py-1 pr-6">
+              <span className="text-lg text-[var(--text-primary)]">10K+</span>
+              <span className="text-[11px] tracking-wide text-[var(--text-muted)]">Scans</span>
+            </div>
+            <div className="flex flex-col border-l border-[var(--border-subtle)] py-1 px-6">
+              <span className="text-lg text-[var(--text-primary)]">97%</span>
+              <span className="text-[11px] tracking-wide text-[var(--text-muted)]">
+                Match rate
+              </span>
+            </div>
+            <div className="flex flex-col border-l border-[var(--border-subtle)] py-1 pl-6">
+              <span className="text-lg text-[var(--text-primary)]">200+</span>
+              <span className="text-[11px] tracking-wide text-[var(--text-muted)]">
+                Fragrances
+              </span>
+            </div>
+          </motion.div>
         </div>
 
         <motion.div
@@ -151,6 +168,16 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.25, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            />
+            <motion.img
+              src="/chanel_perfume.png"
+              alt="Chanel fragrance bottle"
+              width={520}
+              height={832}
+              className="pointer-events-none absolute left-[68%] top-[50%] z-[1] h-auto max-h-[min(58vh,440px)] w-[min(46vw,300px)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 rotate-[10deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.35, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             />
             <div className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center">
               <div className="orbit-note-1 absolute flex items-center justify-center">

@@ -19,7 +19,7 @@ export function CommunitySection() {
     <section
       ref={ref}
       id="community"
-      className="relative px-[max(5vw,40px)] py-[120px]"
+      className="relative px-[max(5vw,40px)] py-[60px] lg:py-[120px]"
       style={{
         background:
           "linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 45%, var(--bg-deep) 100%)",

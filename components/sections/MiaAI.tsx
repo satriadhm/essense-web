@@ -20,7 +20,7 @@ export function MiaAI() {
   return (
     <section
       id="mia"
-      className="relative bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[120px]"
+      className="relative bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[60px] lg:py-[120px]"
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v12H0z' fill='none' stroke='%23ffffff' stroke-opacity='0.03'/%3E%3C/svg%3E")`,
       }}

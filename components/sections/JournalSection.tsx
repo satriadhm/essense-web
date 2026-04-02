@@ -16,9 +16,9 @@ export function JournalSection() {
   return (
     <section
       id="journal"
-      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[120px]"
+      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[80px] lg:py-[120px]"
     >
-      <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2 lg:items-start">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
         <div>
           <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
             Fragrance journal
