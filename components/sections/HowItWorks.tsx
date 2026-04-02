@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -252,17 +253,37 @@ function MobileStack() {
   );
 }
 
+const AUTOPLAY_MS = 1000;
+
+/** Steps s1–s4 only (panels at index 1–4; intro is index 0). */
+const STEP_PANEL_START = 1;
+const STEP_COUNT = 4;
+
 export function HowItWorks() {
   const pinRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const stRef = useRef<ScrollTrigger | null>(null);
   const panelLeftsRef = useRef<number[]>([]);
-  const activeStepRef = useRef(0);
+  const programmaticScrollRef = useRef(false);
+  const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
+  const introModeRef = useRef(true);
+
   const [desktop, setDesktop] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
+  /** s1–s4 only: index 0 → panel 1, … index 3 → panel 4 */
+  const [currentStep, setCurrentStep] = useState(0);
+  /** True when horizontal position is still on the intro panel */
+  const [introMode, setIntroMode] = useState(true);
+
+  useEffect(() => {
+    introModeRef.current = introMode;
+  }, [introMode]);
   const [hoverTrack, setHoverTrack] = useState(false);
   const [sectionInView, setSectionInView] = useState(false);
+  /** Bump to reset the autoplay interval after dot click */
+  const [autoplayKey, setAutoplayKey] = useState(0);
+  /** False while user is wheeling/scrolling; pauses autoplay until idle debounce */
+  const [scrollIdle, setScrollIdle] = useState(true);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
@@ -282,6 +303,22 @@ export function HowItWorks() {
     io.observe(el);
     return () => io.disconnect();
   }, [desktop]);
+
+  /** Pause autoplay while the user is actively scrolling (not our programmatic tween). */
+  useEffect(() => {
+    let t: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      if (programmaticScrollRef.current) return;
+      setScrollIdle(false);
+      clearTimeout(t);
+      t = setTimeout(() => setScrollIdle(true), 700);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(t);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (!desktop) return;
@@ -315,16 +352,25 @@ export function HowItWorks() {
           if (progressRef.current) {
             progressRef.current.style.width = `${self.progress * 100}%`;
           }
+          if (programmaticScrollRef.current) return;
+
           const mx = maxX();
           if (mx <= 0) return;
-          const scrolled = self.progress * mx;
+          const xAmount = self.progress * mx;
           const lefts = panelLeftsRef.current;
-          let step = 0;
-          for (let i = 0; i < lefts.length; i++) {
-            if (scrolled >= lefts[i] - 12) step = i;
+          if (lefts.length < STEP_PANEL_START + STEP_COUNT) return;
+
+          if (xAmount < lefts[STEP_PANEL_START] - 32) {
+            setIntroMode(true);
+            return;
           }
-          activeStepRef.current = step;
-          setActiveStep(step);
+          setIntroMode(false);
+          let s = 0;
+          for (let i = 0; i < STEP_COUNT; i++) {
+            const panelIdx = STEP_PANEL_START + i;
+            if (xAmount >= lefts[panelIdx] - 24) s = i;
+          }
+          setCurrentStep(s);
         },
       },
     });
@@ -338,41 +384,81 @@ export function HowItWorks() {
     };
   }, [desktop]);
 
-  useEffect(() => {
-    if (!desktop || !sectionInView || hoverTrack) return;
-    const id = window.setInterval(() => {
-      const st = stRef.current;
-      const track = trackRef.current;
-      if (!st || !track) return;
-      const lefts = panelLeftsRef.current;
-      if (lefts.length === 0) return;
-      const mx = Math.max(1, track.scrollWidth - window.innerWidth);
-      const cur = activeStepRef.current;
-      const next = (cur + 1) % lefts.length;
-      const p = Math.min(1, lefts[next] / mx);
-      const start = st.start as number;
-      const end = st.end as number;
-      const targetY = start + p * (end - start);
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-    }, 4000);
-    return () => clearInterval(id);
-  }, [desktop, sectionInView, hoverTrack]);
-
-  const goToStep = (stepIndex: number) => {
-    const st = stRef.current;
+  /**
+   * Animates to s1–s4 by tweening scrollY so ScrollTrigger scrub stays authoritative
+   * (same end x as gsap.to(track, { x: -offsetLeft })).
+   */
+  const animateToContentStep = useCallback((step: number) => {
     const track = trackRef.current;
-    if (!st || !track) return;
+    const st = stRef.current;
+    if (!track || !st) return;
     const lefts = panelLeftsRef.current;
-    if (stepIndex < 0 || stepIndex >= lefts.length) return;
+    const panelIdx =
+      STEP_PANEL_START + Math.max(0, Math.min(STEP_COUNT - 1, step));
+    const offset = lefts[panelIdx] ?? 0;
     const mx = Math.max(1, track.scrollWidth - window.innerWidth);
-    const p = Math.min(1, lefts[stepIndex] / mx);
+    const p = Math.min(1, offset / mx);
     const start = st.start as number;
     const end = st.end as number;
-    window.scrollTo({
-      top: start + p * (end - start),
-      behavior: "smooth",
+    const targetY = start + p * (end - start);
+
+    scrollTweenRef.current?.kill();
+    programmaticScrollRef.current = true;
+    const o = { y: window.scrollY };
+    scrollTweenRef.current = gsap.to(o, {
+      y: targetY,
+      duration: 0.8,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        window.scrollTo(0, o.y);
+      },
+      onComplete: () => {
+        programmaticScrollRef.current = false;
+        scrollTweenRef.current = null;
+        setIntroMode(false);
+        setCurrentStep(Math.max(0, Math.min(STEP_COUNT - 1, step)));
+      },
     });
+  }, []);
+
+  useEffect(() => {
+    if (!desktop || !sectionInView || hoverTrack || !scrollIdle) {
+      return;
+    }
+    const id = window.setInterval(() => {
+      if (introModeRef.current) {
+        requestAnimationFrame(() => animateToContentStep(0));
+        return;
+      }
+      setCurrentStep((prev) => {
+        const next = (prev + 1) % STEP_COUNT;
+        requestAnimationFrame(() => animateToContentStep(next));
+        return next;
+      });
+    }, AUTOPLAY_MS);
+    return () => clearInterval(id);
+  }, [
+    desktop,
+    sectionInView,
+    hoverTrack,
+    scrollIdle,
+    autoplayKey,
+    animateToContentStep,
+  ]);
+
+  const onDotClick = (step: number) => {
+    setCurrentStep(step);
+    setAutoplayKey((k) => k + 1);
+    scrollTweenRef.current?.kill();
+    animateToContentStep(step);
   };
+
+  useEffect(
+    () => () => {
+      scrollTweenRef.current?.kill();
+    },
+    [],
+  );
 
   return (
     <section id="how-it-works" className="relative bg-[var(--bg-deep)]">
@@ -403,22 +489,22 @@ export function HowItWorks() {
               />
             </div>
             <div
-              className="mt-3 flex justify-center gap-2"
+              className="mt-3 hidden justify-center gap-2 lg:flex"
               role="tablist"
               aria-label="How it works steps"
             >
-              {([1, 2, 3, 4] as const).map((i) => (
+              {([0, 1, 2, 3] as const).map((i) => (
                 <button
                   key={i}
                   type="button"
                   role="tab"
-                  aria-selected={activeStep === i}
-                  aria-label={`Step ${i}`}
-                  onClick={() => goToStep(i)}
-                  className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                    activeStep === i
-                      ? "bg-[var(--accent-cyan)]"
-                      : "border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
+                  aria-selected={!introMode && currentStep === i}
+                  aria-label={`Step ${i + 1}`}
+                  onClick={() => onDotClick(i)}
+                  className={`rounded-full transition-[width,background-color] ${
+                    !introMode && currentStep === i
+                      ? "h-2 w-6 bg-[var(--accent-cyan)]"
+                      : "h-2 w-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
                   }`}
                 />
               ))}
