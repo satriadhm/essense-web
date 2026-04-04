@@ -3,7 +3,6 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { WhatIsEssense } from "@/components/sections/WhatIsEssense";
 import { HowItWorks } from "@/components/sections/HowItWorks";
-import { FragranceNotes } from "@/components/sections/FragranceNotes";
 import { BiometricSection } from "@/components/sections/BiometricSection";
 import { MiaAI } from "@/components/sections/MiaAI";
 import { JournalSection } from "@/components/sections/JournalSection";
@@ -20,7 +19,6 @@ export default function Home() {
         <HeroSection />
         <WhatIsEssense />
         <HowItWorks />
-        <FragranceNotes />
         <BiometricSection />
         <MiaAI />
         <JournalSection />

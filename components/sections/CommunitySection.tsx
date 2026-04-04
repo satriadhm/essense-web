@@ -2,19 +2,28 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { communityPosts, suggestedUsers } from "@/lib/fragrance-data";
 
 export function CommunitySection() {
   const ref = useRef<HTMLElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
   const yLeft = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const yRight = useTransform(scrollYProgress, [0, 1], [0, 40]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   return (
     <section
@@ -40,12 +49,12 @@ export function CommunitySection() {
           </p>
         </ScrollReveal>
 
-        <div className="mt-16 columns-1 gap-6 md:columns-2 lg:columns-3">
+        <div className="mt-16 flex flex-col gap-6 md:block md:columns-2 md:gap-6 lg:columns-3">
           {communityPosts.map((post, i) => (
             <motion.div
               key={post.id}
-              style={{ y: i % 2 === 0 ? yLeft : yRight }}
-              className="mb-6 break-inside-avoid"
+              style={isDesktop ? { y: i % 2 === 0 ? yLeft : yRight } : undefined}
+              className="break-inside-avoid md:mb-6"
             >
               <GlassCard padding={20} className="text-left">
                 <div className="flex items-center gap-3">
