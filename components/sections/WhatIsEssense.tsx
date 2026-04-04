@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import deviceIllustration from "@/assets/illustrations/device.png";
-import womanIllustration from "@/assets/illustrations/woman.png";
 
 function useSectionProgress() {
   const ref = useRef<HTMLElement>(null);
@@ -46,6 +45,12 @@ const evolvingStatLines = [
   "Season-aware · tuned to today",
 ] as const;
 
+const adaptiveSkinLines = [
+  "Conductance stable · baseline trend",
+  "Calm response · low heat variance",
+  "Energy rise · sebum +2.1%",
+] as const;
+
 function EvolvingFormulaWidget() {
   const [lineIndex, setLineIndex] = useState(0);
   useEffect(() => {
@@ -75,6 +80,88 @@ function EvolvingFormulaWidget() {
       <div className="mt-3 flex gap-3 text-xs text-[var(--text-muted)]">
         <span>💨 12 km/h</span>
         <span>UV 4</span>
+      </div>
+    </div>
+  );
+}
+
+function AdaptiveSkinWidget() {
+  const [lineIndex, setLineIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setLineIndex((i) => (i + 1) % adaptiveSkinLines.length);
+    }, 3800);
+    return () => clearInterval(t);
+  }, []);
+
+  const activeMood = lineIndex % 3;
+  const moods = [
+    {
+      label: "Neutral",
+      gradient:
+        "radial-gradient(circle at 35% 35%, rgba(224,231,255,0.75), rgba(160,170,191,0.28) 42%, rgba(20,24,54,0.14) 100%)",
+    },
+    {
+      label: "Calm",
+      gradient:
+        "radial-gradient(circle at 35% 35%, rgba(77,217,255,0.78), rgba(123,92,240,0.36) 45%, rgba(20,24,54,0.16) 100%)",
+    },
+    {
+      label: "Energy",
+      gradient:
+        "radial-gradient(circle at 35% 35%, rgba(245,158,11,0.82), rgba(244,63,94,0.4) 45%, rgba(20,24,54,0.16) 100%)",
+    },
+  ] as const;
+
+  return (
+    <div className="w-full max-w-[260px] rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-4">
+      <p className="font-heading text-xs font-bold text-[var(--text-primary)]">
+        Skin response monitor
+      </p>
+      <p className="mt-1.5 text-[10px] tracking-wide text-[var(--text-muted)]">
+        Neutral, calm, and energy states update in real time.
+      </p>
+
+      <div className="mt-4 flex items-start justify-between gap-2">
+        {moods.map((mood, i) => (
+          <div key={mood.label} className="flex w-[30%] flex-col items-center gap-2">
+            <span
+              className={`h-10 w-10 rounded-full border transition ${
+                i === activeMood
+                  ? "border-[var(--accent-cyan)] shadow-[0_0_14px_color-mix(in_srgb,var(--accent-cyan)_40%,transparent)]"
+                  : "border-[var(--border-subtle)]"
+              }`}
+              style={{ background: mood.gradient }}
+            />
+            <span className="text-[10px] text-[var(--text-muted)]">{mood.label}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-3">
+        <p
+          className="min-h-[1.25rem] font-heading text-[10px] tracking-wide text-[var(--text-muted)] transition-opacity duration-300"
+          key={lineIndex}
+        >
+          {adaptiveSkinLines[lineIndex]}
+        </p>
+        <svg
+          className="mt-2 h-10 w-full"
+          viewBox="0 0 220 40"
+          preserveAspectRatio="none"
+          aria-hidden
+        >
+          <polyline
+            points="0,24 18,24 30,12 44,28 64,10 82,30 100,16 120,20 138,11 156,27 178,15 196,21 220,19"
+            fill="none"
+            stroke="var(--accent-cyan)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.92"
+          />
+        </svg>
       </div>
     </div>
   );
@@ -138,15 +225,7 @@ export function WhatIsEssense() {
         headline="Your skin changes. Your scent should too."
         body="Temperature, stress, humidity — every factor shifts how a fragrance develops on you. Essense reads these signals in real time."
         active={b1}
-        right={
-          <Image
-            src={womanIllustration}
-            alt="Woman applying perfume — your scent adapts with you"
-            className="h-auto w-full max-w-[240px] rounded-2xl object-cover object-top ring-1 ring-[var(--border-subtle)] lg:max-w-[280px]"
-            sizes="(min-width: 1024px) 280px, 240px"
-            priority={false}
-          />
-        }
+        right={<AdaptiveSkinWidget />}
       />
 
       <Block
