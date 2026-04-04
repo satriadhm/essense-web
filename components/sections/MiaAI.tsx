@@ -86,7 +86,7 @@ export function MiaAI() {
                 <p>{b.text}</p>
                 {b.card && (
                   <div className="mt-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-3 text-xs">
-                    <p className="font-heading font-semibold">Chanel Bleu — Base-forward edition</p>
+                    <p className="font-heading font-semibold">Givenchy Gentleman — Base-forward edition</p>
                     <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-[var(--bg-mid)]">
                       <div className="h-full w-[72%] rounded-full bg-gradient-to-r from-[var(--accent-rose)] to-[var(--accent-purple)]" />
                     </div>

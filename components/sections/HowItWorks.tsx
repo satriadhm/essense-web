@@ -125,7 +125,7 @@ const desktopSteps = [
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
           <FragranceTag name="YSL Y" />
           <FragranceTag name="Dior Sauvage" />
-          <FragranceTag name="Chanel Bleu" />
+          <FragranceTag name="Givenchy Gentleman" />
         </div>
       </div>
     ),

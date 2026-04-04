@@ -171,7 +171,7 @@ export function HeroSection() {
             />
             <motion.img
               src="/chanel_perfume.png"
-              alt="Chanel fragrance bottle"
+              alt="Givenchy fragrance bottle"
               width={520}
               height={832}
               className="pointer-events-none absolute left-[68%] top-[50%] z-[1] hidden h-auto max-h-[min(58vh,440px)] w-[min(46vw,300px)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 rotate-[10deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"

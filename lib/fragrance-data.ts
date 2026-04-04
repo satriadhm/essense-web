@@ -11,7 +11,7 @@ export interface FragranceProfile {
 export const exampleFragrances: FragranceProfile[] = [
   { id: "1", name: "YSL Y", family: "fresh" },
   { id: "2", name: "Dior Sauvage", family: "fresh" },
-  { id: "3", name: "Chanel Bleu", family: "fresh" },
+  { id: "3", name: "Givenchy Gentleman", family: "fresh" },
 ];
 
 export const noteTierExamples: Record<

@@ -9,7 +9,7 @@ const logged = new Set([3, 7, 12, 18, 22, 28]);
 const recent = [
   { date: "Mar 28", name: "YSL Y", cond: "27°C · Humid", border: "var(--accent-cyan)" },
   { date: "Mar 26", name: "Dior Sauvage", cond: "24°C · Clear", border: "var(--accent-purple)" },
-  { date: "Mar 21", name: "Bleu Chanel", cond: "19°C · Dry", border: "var(--accent-amber)" },
+  { date: "Mar 21", name: "Givenchy Gentleman", cond: "19°C · Dry", border: "var(--accent-amber)" },
 ];
 
 export function JournalSection() {
