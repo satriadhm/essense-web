@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import deviceIllustration from "@/assets/illustrations/device.png";
+import womanIllustration from "@/assets/illustrations/woman.png";
 
 function useSectionProgress() {
   const ref = useRef<HTMLElement>(null);
@@ -138,18 +139,13 @@ export function WhatIsEssense() {
         body="Temperature, stress, humidity — every factor shifts how a fragrance develops on you. Essense reads these signals in real time."
         active={b1}
         right={
-          <svg width="200" height="240" viewBox="0 0 200 240" className="opacity-90">
-            <path
-              d="M100 20 C130 40 150 80 150 120 C150 180 130 220 100 240"
-              fill="none"
-              stroke="var(--accent-cyan)"
-              strokeOpacity="0.15"
-              strokeWidth="2"
-            />
-            <circle cx="100" cy="90" r="40" fill="none" stroke="var(--accent-cyan)" strokeOpacity="0.12" />
-            <circle cx="100" cy="90" r="60" fill="none" stroke="var(--accent-cyan)" strokeOpacity="0.08" />
-            <circle cx="100" cy="90" r="80" fill="none" stroke="var(--accent-cyan)" strokeOpacity="0.05" />
-          </svg>
+          <Image
+            src={womanIllustration}
+            alt="Woman applying perfume — your scent adapts with you"
+            className="h-auto w-full max-w-[240px] rounded-2xl object-cover object-top ring-1 ring-[var(--border-subtle)] lg:max-w-[280px]"
+            sizes="(min-width: 1024px) 280px, 240px"
+            priority={false}
+          />
         }
       />
 
