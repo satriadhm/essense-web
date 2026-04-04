@@ -55,7 +55,10 @@ export function JournalSection() {
         </div>
 
         <ScrollReveal>
-          <GlassCard padding={16} className="w-full max-w-full rounded-[20px] md:p-6">
+          <GlassCard
+            padding={14}
+            className="mx-auto w-full max-w-[420px] rounded-[20px] sm:p-4 md:max-w-full md:p-6"
+          >
             <div className="flex items-center justify-between">
               <h3 className="font-heading text-lg font-bold">March 2026</h3>
               <div className="flex gap-2 text-[var(--text-muted)]">
@@ -67,12 +70,12 @@ export function JournalSection() {
                 </button>
               </div>
             </div>
-            <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[9px] text-[var(--text-muted)] md:mt-4 md:text-[10px]">
+            <div className="mt-3 grid grid-cols-7 gap-0.5 text-center text-[9px] text-[var(--text-muted)] sm:gap-1 md:mt-4 md:text-[10px]">
               {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
                 <span key={`weekday-${i}`}>{d}</span>
               ))}
             </div>
-            <div className="mt-2 grid grid-cols-7 gap-1">
+            <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
               {days.map((d) => {
                 const isLog = logged.has(d);
                 return (
@@ -83,7 +86,7 @@ export function JournalSection() {
                         ? "Mar 12 — Dior Sauvage + 24°C"
                         : undefined
                     }
-                    className={`relative flex h-7 w-7 items-center justify-center rounded-md text-[11px] md:h-9 md:w-9 md:text-xs ${
+                    className={`relative flex aspect-square w-full min-w-0 items-center justify-center rounded-md text-[10px] sm:text-[11px] md:h-9 md:w-9 md:text-xs ${
                       isLog
                         ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
                         : "text-[var(--text-muted)]"
