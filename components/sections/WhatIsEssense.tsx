@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import deviceIllustration from "@/assets/illustrations/device.png";
 
 function useSectionProgress() {
   const ref = useRef<HTMLElement>(null);
@@ -162,22 +164,13 @@ export function WhatIsEssense() {
         body="Biometric scanning cross-references your body chemistry with 200+ fragrance profiles to build a formula tuned to you and only you."
         active={b2}
         right={
-          <svg width="200" height="220" viewBox="0 0 200 220" aria-hidden>
-            <polygon
-              points="100,10 180,200 20,200"
-              fill="url(#pyr)"
-              stroke="var(--border-subtle)"
-            />
-            <defs>
-              <linearGradient id="pyr" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#4DD9FF" stopOpacity="0.35" />
-                <stop offset="50%" stopColor="#9D6FF5" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#F43F5E" stopOpacity="0.3" />
-              </linearGradient>
-            </defs>
-            <line x1="100" y1="10" x2="100" y2="200" stroke="var(--border-subtle)" />
-            <line x1="20" y1="200" x2="180" y2="200" stroke="var(--border-subtle)" />
-          </svg>
+          <Image
+            src={deviceIllustration}
+            alt="Essense device — personalized fragrance formula"
+            className="h-auto w-full max-w-[240px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.45)] lg:max-w-[280px]"
+            sizes="(min-width: 1024px) 280px, 240px"
+            priority={false}
+          />
         }
       />
 
