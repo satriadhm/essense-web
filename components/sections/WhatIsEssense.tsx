@@ -158,7 +158,9 @@ export function WhatIsEssense() {
         headline={
           <>
             Not one-size perfume.{" "}
-            <span className="text-[var(--accent-violet)]">Your</span> formula.
+            <span className="whitespace-nowrap">
+              <span className="text-[var(--accent-violet)]">Your</span> formula.
+            </span>
           </>
         }
         body="Biometric scanning cross-references your body chemistry with 200+ fragrance profiles to build a formula tuned to you and only you."
