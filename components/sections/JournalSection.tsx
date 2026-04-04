@@ -16,7 +16,7 @@ export function JournalSection() {
   return (
     <section
       id="journal"
-      className="overflow-x-clip bg-[var(--bg-deep)] px-5 py-[80px] sm:px-6 lg:px-[max(5vw,40px)] lg:py-[120px]"
+      className="bg-[var(--bg-deep)] px-5 py-[80px] sm:px-6 lg:px-[max(5vw,40px)] lg:py-[120px]"
     >
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
         <div className="min-w-0">
@@ -56,8 +56,8 @@ export function JournalSection() {
 
         <ScrollReveal>
           <GlassCard
-            padding={14}
-            className="mx-auto w-full max-w-[420px] rounded-[20px] sm:p-4 md:max-w-full md:p-6"
+            padding={16}
+            className="mx-auto w-full max-w-[420px] rounded-[20px] md:max-w-full"
           >
             <div className="flex items-center justify-between">
               <h3 className="font-heading text-lg font-bold">March 2026</h3>
