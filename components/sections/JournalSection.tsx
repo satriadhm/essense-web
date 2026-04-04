@@ -16,7 +16,7 @@ export function JournalSection() {
   return (
     <section
       id="journal"
-      className="bg-[var(--bg-deep)] px-5 py-[80px] sm:px-6 lg:px-[max(5vw,40px)] lg:py-[120px]"
+      className="overflow-x-hidden bg-[var(--bg-deep)] px-5 py-[80px] sm:px-6 lg:px-[max(5vw,40px)] lg:py-[120px]"
     >
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
         <div className="min-w-0">
@@ -54,11 +54,12 @@ export function JournalSection() {
           </a>
         </div>
 
-        <ScrollReveal>
-          <GlassCard
-            padding={16}
-            className="mx-auto w-full max-w-[420px] rounded-[20px] md:max-w-full"
-          >
+        <div className="min-w-0">
+          <ScrollReveal>
+            <GlassCard
+              padding={16}
+              className="mx-auto w-full max-w-[420px] rounded-[20px] md:max-w-full"
+            >
             <div className="flex items-center justify-between">
               <h3 className="font-heading text-lg font-bold">March 2026</h3>
               <div className="flex gap-2 text-[var(--text-muted)]">
@@ -75,48 +76,49 @@ export function JournalSection() {
                 <span key={`weekday-${i}`}>{d}</span>
               ))}
             </div>
-            <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
-              {days.map((d) => {
-                const isLog = logged.has(d);
-                return (
+              <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
+                {days.map((d) => {
+                  const isLog = logged.has(d);
+                  return (
+                    <div
+                      key={d}
+                      title={
+                        isLog
+                          ? "Mar 12 — Dior Sauvage + 24°C"
+                          : undefined
+                      }
+                      className={`relative flex aspect-square w-full min-w-0 items-center justify-center rounded-md text-[10px] sm:text-xs ${
+                        isLog
+                          ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
+                          : "text-[var(--text-muted)]"
+                      }`}
+                    >
+                      {d}
+                      {isLog && (
+                        <span className="absolute bottom-1 h-1 w-1 rounded-full bg-[var(--accent-purple)]" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="mt-6 flex w-full min-w-0 gap-3 overflow-x-auto pb-2">
+                {recent.map((r) => (
                   <div
-                    key={d}
-                    title={
-                      isLog
-                        ? "Mar 12 — Dior Sauvage + 24°C"
-                        : undefined
-                    }
-                    className={`relative flex aspect-square w-full min-w-0 items-center justify-center rounded-md text-[10px] sm:text-[11px] md:h-9 md:w-9 md:text-xs ${
-                      isLog
-                        ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
-                        : "text-[var(--text-muted)]"
-                    }`}
+                    key={r.date}
+                    className="min-w-[160px] rounded-xl border-l-4 bg-[var(--bg-surface)] py-3 pl-4 pr-3"
+                    style={{ borderColor: r.border }}
                   >
-                    {d}
-                    {isLog && (
-                      <span className="absolute bottom-1 h-1 w-1 rounded-full bg-[var(--accent-purple)]" />
-                    )}
+                    <p className="text-[11px] text-[var(--text-muted)]">{r.date}</p>
+                    <p className="font-heading text-[14px] font-semibold">{r.name}</p>
+                    <p className="mt-1 text-xs text-[var(--text-secondary)]">
+                      ☀ {r.cond}
+                    </p>
                   </div>
-                );
-              })}
-            </div>
-            <div className="mt-6 flex w-full min-w-0 gap-3 overflow-x-auto pb-2">
-              {recent.map((r) => (
-                <div
-                  key={r.date}
-                  className="min-w-[170px] rounded-xl border-l-4 bg-[var(--bg-surface)] py-3 pl-4 pr-3 md:min-w-[200px]"
-                  style={{ borderColor: r.border }}
-                >
-                  <p className="text-[11px] text-[var(--text-muted)]">{r.date}</p>
-                  <p className="font-heading text-[15px] font-semibold">{r.name}</p>
-                  <p className="mt-1 text-xs text-[var(--text-secondary)]">
-                    ☀ {r.cond}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </GlassCard>
-        </ScrollReveal>
+                ))}
+              </div>
+            </GlassCard>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );

@@ -97,7 +97,7 @@ export function Navbar() {
           </button>
         </nav>
 
-        <div className="flex w-full max-w-[380px] items-center justify-between rounded-full border border-[var(--border-active)] bg-[color:color-mix(in_srgb,var(--bg-mid)_86%,black)] px-4 py-2.5 shadow-[0_8px_28px_rgba(0,0,0,0.45)] backdrop-blur-[20px] md:hidden">
+        <div className="flex w-full max-w-[380px] items-center justify-between rounded-full border border-[var(--border-active)] bg-[rgba(13,17,40,0.88)] px-4 py-2.5 shadow-[0_8px_28px_rgba(0,0,0,0.45)] backdrop-blur-[20px] md:hidden">
           <a href="#home" className="flex items-center" aria-label="Essense home">
             <Image
               src="/app_logo.png"
@@ -132,7 +132,7 @@ export function Navbar() {
             <div className="flex justify-end p-6">
               <button
                 type="button"
-                className="font-heading text-sm uppercase text-[var(--text-muted)]"
+                className="font-heading text-sm uppercase text-[var(--text-secondary)]"
                 onClick={() => setOpen(false)}
               >
                 Close
