@@ -16,14 +16,14 @@ export function JournalSection() {
   return (
     <section
       id="journal"
-      className="bg-[var(--bg-deep)] px-5 py-[80px] sm:px-8 lg:px-[max(5vw,40px)] lg:py-[120px]"
+      className="overflow-x-clip bg-[var(--bg-deep)] px-5 py-[80px] sm:px-6 lg:px-[max(5vw,40px)] lg:py-[120px]"
     >
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
-        <div>
+        <div className="min-w-0">
           <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
             Fragrance journal
           </p>
-          <h2 className="mt-4 break-words font-heading text-[clamp(30px,8vw,42px)] font-bold leading-[1.2] text-[var(--text-primary)] lg:text-[length:var(--text-h2)]">
+          <h2 className="mt-4 max-w-[18ch] font-heading text-[length:var(--text-h2)] font-bold leading-[1.2] text-[var(--text-primary)] sm:max-w-none">
             Your scent <span className="italic text-[var(--accent-violet)]">story</span>. Written in data.
           </h2>
           <p className="mt-6 text-[var(--text-secondary)]">
@@ -55,7 +55,7 @@ export function JournalSection() {
         </div>
 
         <ScrollReveal>
-          <GlassCard padding={18} className="rounded-[20px] md:p-6">
+          <GlassCard padding={16} className="w-full max-w-full rounded-[20px] md:p-6">
             <div className="flex items-center justify-between">
               <h3 className="font-heading text-lg font-bold">March 2026</h3>
               <div className="flex gap-2 text-[var(--text-muted)]">
@@ -83,7 +83,7 @@ export function JournalSection() {
                         ? "Mar 12 — Dior Sauvage + 24°C"
                         : undefined
                     }
-                    className={`relative flex aspect-square w-full items-center justify-center rounded-md text-[11px] md:text-xs ${
+                    className={`relative flex h-7 w-7 items-center justify-center rounded-md text-[11px] md:h-9 md:w-9 md:text-xs ${
                       isLog
                         ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
                         : "text-[var(--text-muted)]"
@@ -97,11 +97,11 @@ export function JournalSection() {
                 );
               })}
             </div>
-            <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
+            <div className="mt-6 flex w-full min-w-0 gap-3 overflow-x-auto pb-2">
               {recent.map((r) => (
                 <div
                   key={r.date}
-                  className="min-w-[200px] rounded-xl border-l-4 bg-[var(--bg-surface)] py-3 pl-4 pr-3"
+                  className="min-w-[170px] rounded-xl border-l-4 bg-[var(--bg-surface)] py-3 pl-4 pr-3 md:min-w-[200px]"
                   style={{ borderColor: r.border }}
                 >
                   <p className="text-[11px] text-[var(--text-muted)]">{r.date}</p>

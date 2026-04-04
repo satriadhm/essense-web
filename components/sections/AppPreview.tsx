@@ -101,12 +101,12 @@ export function AppPreview() {
           In the palm of your hand.
         </h2>
 
-        <div className="relative z-[1] mt-16 flex items-center justify-center gap-0 max-lg:min-h-[340px] lg:min-h-[480px]">
+        <div className="relative z-[1] mt-16 flex items-center justify-center gap-0 max-lg:flex-col lg:min-h-[480px]">
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="z-[2] w-[min(38vw,170px)] origin-center -rotate-6 scale-[0.88] lg:w-[min(88vw,280px)]"
+            className="z-[2] w-[min(88vw,280px)] origin-center -rotate-6 scale-[0.88] max-lg:hidden"
           >
             <PhoneMockup>
               <JournalScreen />
@@ -116,7 +116,7 @@ export function AppPreview() {
             initial={{ opacity: 0, y: 100 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="z-[3] w-[min(46vw,210px)] lg:w-[min(92vw,300px)]"
+            className="z-[3] w-[min(92vw,300px)] max-lg:mx-auto"
           >
             <PhoneMockup>
               <HomeScreen />
@@ -126,7 +126,7 @@ export function AppPreview() {
             initial={{ opacity: 0, y: 80 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.25, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="z-[2] w-[min(38vw,170px)] origin-center rotate-6 scale-[0.88] lg:w-[min(88vw,280px)]"
+            className="z-[2] w-[min(88vw,280px)] origin-center rotate-6 scale-[0.88] max-lg:hidden"
           >
             <PhoneMockup>
               <ResultsScreen />
