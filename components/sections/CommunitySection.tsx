@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -48,8 +49,13 @@ export function CommunitySection() {
             >
               <GlassCard padding={20} className="text-left">
                 <div className="flex items-center gap-3">
-                  <span
-                    className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-cyan)] opacity-80"
+                  <Image
+                    src={post.avatarSrc}
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-[var(--border-subtle)]"
+                    sizes="36px"
                   />
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-heading text-sm font-semibold">
@@ -85,9 +91,13 @@ export function CommunitySection() {
                 key={u.name}
                 className="w-[170px] shrink-0 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-glass)] p-4 text-left backdrop-blur-md"
               >
-                <div
-                  className="mx-auto h-12 w-12 rounded-full"
-                  style={{ background: u.color }}
+                <Image
+                  src={u.imageSrc}
+                  alt=""
+                  width={48}
+                  height={48}
+                  className="mx-auto h-12 w-12 rounded-full object-cover ring-1 ring-[var(--border-subtle)]"
+                  sizes="48px"
                 />
                 <p className="mt-3 text-center font-heading text-sm font-bold">
                   {u.name}

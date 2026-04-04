@@ -1,3 +1,5 @@
+import { profileImageSrc } from "@/lib/profile-images";
+
 export type NoteTier = "top" | "heart" | "base";
 
 export interface FragranceProfile {
@@ -43,6 +45,7 @@ export const communityPosts = [
     comments: 8,
     shares: 3,
     formula: true,
+    avatarSrc: profileImageSrc.maleJapan,
   },
   {
     id: "2",
@@ -53,6 +56,7 @@ export const communityPosts = [
     comments: 12,
     shares: 5,
     formula: false,
+    avatarSrc: profileImageSrc.maleChinese,
   },
   {
     id: "3",
@@ -63,6 +67,7 @@ export const communityPosts = [
     comments: 6,
     shares: 2,
     formula: true,
+    avatarSrc: profileImageSrc.femaleLatino,
   },
   {
     id: "4",
@@ -73,6 +78,7 @@ export const communityPosts = [
     comments: 15,
     shares: 7,
     formula: false,
+    avatarSrc: profileImageSrc.femaleFilipino,
   },
   {
     id: "5",
@@ -83,6 +89,7 @@ export const communityPosts = [
     comments: 9,
     shares: 4,
     formula: false,
+    avatarSrc: profileImageSrc.maleWhite,
   },
   {
     id: "6",
@@ -93,13 +100,34 @@ export const communityPosts = [
     comments: 4,
     shares: 1,
     formula: false,
+    avatarSrc: profileImageSrc.maleChinese,
   },
 ];
 
 export const suggestedUsers = [
-  { name: "Aria Chen", tag: "Oriental specialist", color: "#9d6ff5" },
-  { name: "Lukas Berg", tag: "Nordic minimalist", color: "#4dd9ff" },
-  { name: "Sofia Ruiz", tag: "Citrus curator", color: "#f59e0b" },
-  { name: "Noah Kim", tag: "Woody blends", color: "#7b5cf0" },
-  { name: "Maya Patel", tag: "Layering coach", color: "#f43f5e" },
+  {
+    name: "Kenji Yamamoto",
+    tag: "Tokyo · fresh florals",
+    imageSrc: profileImageSrc.maleJapan,
+  },
+  {
+    name: "Wei Zhang",
+    tag: "Shanghai · woody blends",
+    imageSrc: profileImageSrc.maleChinese,
+  },
+  {
+    name: "Sofia Ruiz",
+    tag: "Citrus curator",
+    imageSrc: profileImageSrc.femaleLatino,
+  },
+  {
+    name: "Ana Reyes",
+    tag: "Manila · layering coach",
+    imageSrc: profileImageSrc.femaleFilipino,
+  },
+  {
+    name: "Lukas Berg",
+    tag: "Nordic minimalist",
+    imageSrc: profileImageSrc.maleWhite,
+  },
 ];

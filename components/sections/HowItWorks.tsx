@@ -14,6 +14,8 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { FragranceTag } from "@/components/ui/FragranceTag";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { BIOMETRIC_SCAN_SECONDS } from "@/lib/site-constants";
+import { profileImagesOrdered } from "@/lib/profile-images";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -223,15 +225,16 @@ const desktopSteps = [
           Each result is saved to your fragrance journal. Track how your formula evolves with your mood, the weather, and the seasons.
         </p>
         <div className="relative z-[1] mt-8 flex -space-x-3">
-          {["#7B5CF0", "#4DD9FF", "#9D6FF5", "#F59E0B", "#F43F5E", "#3B82F6", "#A0AABF", "#7B5CF0"].map(
-            (c, i) => (
-              <span
-                key={i}
-                className="h-10 w-10 rounded-full border-2 border-[var(--bg-deep)]"
-                style={{ background: c }}
-              />
-            ),
-          )}
+          {profileImagesOrdered.map((img, i) => (
+            <Image
+              key={img.src}
+              src={img}
+              alt=""
+              className="h-10 w-10 rounded-full border-2 border-[var(--bg-deep)] object-cover"
+              sizes="40px"
+              priority={i === 0}
+            />
+          ))}
         </div>
         <p className="relative z-[1] mt-4 text-sm text-[var(--text-muted)]">
           Join 10,000+ fragrance enthusiasts
