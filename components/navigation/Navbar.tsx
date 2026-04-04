@@ -13,16 +13,8 @@ const LINKS = [
 ];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const sections = LINKS.map((l) =>
@@ -48,7 +40,7 @@ export function Navbar() {
     <>
       <motion.header
         initial={false}
-        animate={{ opacity: scrolled ? 1 : 0, pointerEvents: scrolled ? "auto" : "none" }}
+        animate={{ opacity: 1, pointerEvents: "auto" }}
         transition={{ duration: 0.3 }}
         className="fixed left-1/2 top-0 z-[100] w-fit -translate-x-1/2 pt-4 max-md:pt-3"
       >
@@ -76,7 +68,7 @@ export function Navbar() {
                 <a
                   key={l.href}
                   href={l.href}
-                  className="group relative font-heading text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+                  className="group relative font-heading text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-primary)] transition-colors hover:text-[var(--accent-cyan)]"
                   data-cursor="pointer"
                 >
                   {l.label}

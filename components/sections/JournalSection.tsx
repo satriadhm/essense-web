@@ -23,7 +23,7 @@ export function JournalSection() {
           <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
             Fragrance journal
           </p>
-          <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-bold text-[var(--text-primary)]">
+          <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-bold leading-[1.2] text-[var(--text-primary)]">
             Your scent <span className="italic text-[var(--accent-violet)]">story</span>. Written in data.
           </h2>
           <p className="mt-6 text-[var(--text-secondary)]">
@@ -55,7 +55,7 @@ export function JournalSection() {
         </div>
 
         <ScrollReveal>
-          <GlassCard padding={24} className="rounded-[20px]">
+          <GlassCard padding={18} className="rounded-[20px] md:p-6">
             <div className="flex items-center justify-between">
               <h3 className="font-heading text-lg font-bold">March 2026</h3>
               <div className="flex gap-2 text-[var(--text-muted)]">
@@ -67,7 +67,7 @@ export function JournalSection() {
                 </button>
               </div>
             </div>
-            <div className="mt-4 grid grid-cols-7 gap-1 text-center text-[10px] text-[var(--text-muted)]">
+            <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[9px] text-[var(--text-muted)] md:mt-4 md:text-[10px]">
               {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
                 <span key={`weekday-${i}`}>{d}</span>
               ))}
@@ -83,7 +83,7 @@ export function JournalSection() {
                         ? "Mar 12 — Dior Sauvage + 24°C"
                         : undefined
                     }
-                    className={`relative flex h-9 w-9 items-center justify-center rounded-md text-xs ${
+                    className={`relative flex h-7 w-7 items-center justify-center rounded-md text-[11px] md:h-9 md:w-9 md:text-xs ${
                       isLog
                         ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
                         : "text-[var(--text-muted)]"

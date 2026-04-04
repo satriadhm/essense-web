@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Essense — Own Your Essence",
+  title: "Essense — Own Your Essense",
   description:
     "Biometric-powered fragrance intelligence. AI formulas tuned to your skin, weather, and story.",
   icons: {

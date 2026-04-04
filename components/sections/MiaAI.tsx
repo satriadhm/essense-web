@@ -53,7 +53,7 @@ export function MiaAI() {
           </a>
         </div>
 
-        <div className="mx-auto w-full max-w-[340px] rounded-[28px] border border-[var(--border-subtle)] bg-[var(--bg-mid)]">
+        <div className="mx-auto w-full max-w-[340px] rounded-[28px] border border-[color:color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--bg-mid)_80%,white)] shadow-[0_16px_38px_rgba(0,0,0,0.35)]">
           <div className="flex items-center gap-3 border-b border-[var(--border-subtle)] px-4 py-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-cyan)] font-heading text-sm font-bold">
               M

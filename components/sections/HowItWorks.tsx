@@ -245,13 +245,78 @@ const desktopSteps = [
 ];
 
 function MobileStack() {
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [activeStep, setActiveStep] = useState(0);
+  const mobileSteps = desktopSteps.slice(1);
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const id = window.setInterval(() => {
+      setActiveStep((prev) => {
+        const next = (prev + 1) % mobileSteps.length;
+        slider.scrollTo({
+          left: next * slider.clientWidth,
+          behavior: "smooth",
+        });
+        return next;
+      });
+    }, 3200);
+
+    return () => window.clearInterval(id);
+  }, [mobileSteps.length]);
+
+  const onScroll = () => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const idx = Math.round(slider.scrollLeft / Math.max(1, slider.clientWidth));
+    setActiveStep(Math.max(0, Math.min(mobileSteps.length - 1, idx)));
+  };
+
   return (
-    <div className="flex flex-col gap-16 px-[max(5vw,40px)] pb-12 pt-24 lg:hidden">
-      {desktopSteps.map((s, i) => (
-        <ScrollReveal key={s.key} delay={i * 80}>
-          <div>{s.content}</div>
-        </ScrollReveal>
-      ))}
+    <div className="pb-12 pt-24 lg:hidden">
+      <div className="px-[max(5vw,40px)]">
+        <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
+          How it works
+        </p>
+        <h2 className="mt-4 max-w-xl font-heading text-[length:var(--text-h2)] font-extrabold text-[var(--text-primary)]">
+          Four moments. One perfect formula.
+        </h2>
+      </div>
+      <div
+        ref={sliderRef}
+        onScroll={onScroll}
+        className="mt-10 flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {mobileSteps.map((s, i) => (
+          <div key={s.key} className="min-w-full snap-center px-[max(5vw,40px)]">
+            <ScrollReveal delay={i * 60}>
+              <div>{s.content}</div>
+            </ScrollReveal>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex justify-center gap-2">
+        {mobileSteps.map((s, i) => (
+          <button
+            key={`mobile-dot-${s.key}`}
+            type="button"
+            aria-label={`Go to step ${i + 1}`}
+            onClick={() => {
+              const slider = sliderRef.current;
+              if (!slider) return;
+              slider.scrollTo({ left: i * slider.clientWidth, behavior: "smooth" });
+              setActiveStep(i);
+            }}
+            className={`rounded-full transition-[width,background-color] ${
+              activeStep === i
+                ? "h-2 w-6 bg-[var(--accent-cyan)]"
+                : "h-2 w-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }

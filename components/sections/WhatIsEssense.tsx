@@ -187,16 +187,18 @@ function Block({
         active ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0",
       )}
     >
-      <div>
+      <div className="text-center lg:text-left">
         <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
           {label}
         </p>
         <h2 className="mt-4 font-heading text-[length:var(--text-h1)] font-extrabold leading-tight text-[var(--text-primary)]">
           {headline}
         </h2>
-        <p className="mt-6 max-w-[500px] text-[var(--text-secondary)]">{body}</p>
+        <p className="mx-auto mt-6 max-w-[500px] text-[var(--text-secondary)] lg:mx-0">
+          {body}
+        </p>
       </div>
-      <div className="relative flex justify-end lg:absolute lg:right-0 lg:top-8 lg:w-[280px]">
+      <div className="relative flex justify-center lg:absolute lg:right-0 lg:top-8 lg:w-[280px] lg:justify-end">
         {right}
       </div>
     </div>

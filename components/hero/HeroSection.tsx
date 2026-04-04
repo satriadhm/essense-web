@@ -154,7 +154,7 @@ export function HeroSection() {
               alt="Givenchy L'Interdit perfume bottle"
               width={520}
               height={832}
-              className="pointer-events-none absolute left-[35%] top-[55%] z-[1] h-auto max-h-[min(62vh,480px)] w-[min(50vw,340px)] max-w-[340px] -translate-x-1/2 -translate-y-1/2 -rotate-[11deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] max-lg:left-[28%] max-lg:top-[56%]"
+              className="pointer-events-none absolute left-[35%] top-[55%] z-[1] hidden h-auto max-h-[min(62vh,480px)] w-[min(50vw,340px)] max-w-[340px] -translate-x-1/2 -translate-y-1/2 -rotate-[11deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.15, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
@@ -164,7 +164,7 @@ export function HeroSection() {
               alt="Yves Saint Laurent Y Eau de Parfum bottle"
               width={720}
               height={1080}
-              className="pointer-events-none absolute left-[52%] top-[52%] z-[2] h-auto max-h-[min(74vh,600px)] w-[min(58vw,440px)] max-w-[440px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_16px_48px_rgba(0,0,0,0.45)]"
+              className="pointer-events-none absolute left-[52%] top-[52%] z-[2] hidden h-auto max-h-[min(74vh,600px)] w-[min(58vw,440px)] max-w-[440px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_16px_48px_rgba(0,0,0,0.45)] lg:block"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.25, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
@@ -174,7 +174,7 @@ export function HeroSection() {
               alt="Chanel fragrance bottle"
               width={520}
               height={832}
-              className="pointer-events-none absolute left-[68%] top-[50%] z-[1] h-auto max-h-[min(58vh,440px)] w-[min(46vw,300px)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 rotate-[10deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)]"
+              className="pointer-events-none absolute left-[68%] top-[50%] z-[1] hidden h-auto max-h-[min(58vh,440px)] w-[min(46vw,300px)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 rotate-[10deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.35, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
