@@ -142,7 +142,7 @@ export function HeroSection() {
         </div>
 
         <motion.div
-          className="relative flex min-h-[min(82vh,720px)] items-center justify-center overflow-hidden max-lg:mx-auto max-lg:min-h-[460px] max-lg:w-[94vw] lg:absolute lg:right-0 lg:top-1/2 lg:max-h-[min(92vh,900px)] lg:min-h-0 lg:w-[50%] lg:max-w-[760px] lg:-translate-y-1/2"
+          className="relative hidden min-h-[min(82vh,720px)] items-center justify-center overflow-hidden lg:absolute lg:right-0 lg:top-1/2 lg:flex lg:max-h-[min(92vh,900px)] lg:min-h-0 lg:w-[50%] lg:max-w-[760px] lg:-translate-y-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

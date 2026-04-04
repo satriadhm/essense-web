@@ -42,7 +42,7 @@ export function Navbar() {
         initial={false}
         animate={{ opacity: 1, pointerEvents: "auto" }}
         transition={{ duration: 0.3 }}
-        className="fixed left-1/2 top-0 z-[100] w-fit -translate-x-1/2 pt-4 max-md:pt-3"
+        className="fixed inset-x-0 top-0 z-[100] flex justify-center px-4 pt-[max(env(safe-area-inset-top),0.75rem)] md:px-0 md:pt-4"
       >
         <nav
           className={cn(
@@ -97,7 +97,7 @@ export function Navbar() {
           </button>
         </nav>
 
-        <div className="flex w-[min(100vw-2rem,380px)] items-center justify-between rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-4 py-2.5 backdrop-blur-[20px] md:hidden">
+        <div className="flex w-full max-w-[380px] items-center justify-between rounded-full border border-[var(--border-active)] bg-[color:color-mix(in_srgb,var(--bg-mid)_86%,black)] px-4 py-2.5 shadow-[0_8px_28px_rgba(0,0,0,0.45)] backdrop-blur-[20px] md:hidden">
           <a href="#home" className="flex items-center" aria-label="Essense home">
             <Image
               src="/app_logo.png"

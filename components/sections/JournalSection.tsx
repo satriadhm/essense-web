@@ -16,14 +16,14 @@ export function JournalSection() {
   return (
     <section
       id="journal"
-      className="bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[80px] lg:py-[120px]"
+      className="bg-[var(--bg-deep)] px-5 py-[80px] sm:px-8 lg:px-[max(5vw,40px)] lg:py-[120px]"
     >
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
         <div>
           <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
             Fragrance journal
           </p>
-          <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-bold leading-[1.2] text-[var(--text-primary)]">
+          <h2 className="mt-4 break-words font-heading text-[clamp(30px,8vw,42px)] font-bold leading-[1.2] text-[var(--text-primary)] lg:text-[length:var(--text-h2)]">
             Your scent <span className="italic text-[var(--accent-violet)]">story</span>. Written in data.
           </h2>
           <p className="mt-6 text-[var(--text-secondary)]">
@@ -83,7 +83,7 @@ export function JournalSection() {
                         ? "Mar 12 — Dior Sauvage + 24°C"
                         : undefined
                     }
-                    className={`relative flex h-7 w-7 items-center justify-center rounded-md text-[11px] md:h-9 md:w-9 md:text-xs ${
+                    className={`relative flex aspect-square w-full items-center justify-center rounded-md text-[11px] md:text-xs ${
                       isLog
                         ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
                         : "text-[var(--text-muted)]"

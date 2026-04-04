@@ -60,7 +60,7 @@ export function MiaAI() {
             </div>
             <div className="flex-1">
               <p className="font-heading text-sm font-bold">Mia</p>
-              <p className="text-[11px] text-[var(--text-muted)]">AI Assistant</p>
+              <p className="text-[11px] text-[var(--text-secondary)]">AI Assistant</p>
             </div>
             <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
               <span className="relative flex h-2 w-2">
