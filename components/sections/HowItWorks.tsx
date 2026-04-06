@@ -124,8 +124,8 @@ const desktopSteps = [
         </p>
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
           <FragranceTag name="YSL Y" />
-          <FragranceTag name="Dior Sauvage" />
-          <FragranceTag name="Givenchy Gentleman" />
+          <FragranceTag name="L'Oréal Homme Intense" />
+          <FragranceTag name="L'Oréal Homme Sport" />
         </div>
       </div>
     ),
@@ -275,7 +275,7 @@ function MobileStack() {
   };
 
   return (
-    <div className="pb-12 pt-24 lg:hidden">
+    <div className="pb-12 pt-[60px] lg:hidden">
       <div className="px-[max(5vw,40px)]">
         <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
           How it works

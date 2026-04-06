@@ -55,7 +55,7 @@ export function HeroSection() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mb-6 inline-flex w-fit rounded-full border border-[var(--border-active)] px-4 py-1.5"
           >
-            <span className="font-heading text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--accent-cyan)]">
+            <span className="font-heading text-[length:var(--text-label)] font-semibold uppercase tracking-[0.2em] text-[var(--accent-cyan)]">
               Your perfume companion
             </span>
           </motion.div>
@@ -123,18 +123,18 @@ export function HeroSection() {
             aria-label="Essense statistics"
           >
             <div className="flex flex-col py-1 pr-6">
-              <span className="text-lg text-[var(--text-primary)]">10K+</span>
-              <span className="text-[11px] tracking-wide text-[var(--text-muted)]">Scans</span>
+              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">10K+</span>
+              <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">Scans</span>
             </div>
             <div className="flex flex-col border-l border-[var(--border-subtle)] py-1 px-6">
-              <span className="text-lg text-[var(--text-primary)]">97%</span>
-              <span className="text-[11px] tracking-wide text-[var(--text-muted)]">
+              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">97%</span>
+              <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">
                 Match rate
               </span>
             </div>
             <div className="flex flex-col border-l border-[var(--border-subtle)] py-1 pl-6">
-              <span className="text-lg text-[var(--text-primary)]">200+</span>
-              <span className="text-[11px] tracking-wide text-[var(--text-muted)]">
+              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">200+</span>
+              <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">
                 Fragrances
               </span>
             </div>
@@ -150,8 +150,8 @@ export function HeroSection() {
           <div className="relative flex h-[min(82vh,640px)] w-full max-w-[min(100vw,760px)] shrink-0 items-center justify-center overflow-hidden lg:h-[min(88vh,780px)] lg:max-w-[780px]">
             <ScentRing />
             <motion.img
-              src="/givenchy_perfume.png"
-              alt="Givenchy L'Interdit perfume bottle"
+              src="/loreal_perfume.png"
+              alt="L'Oréal fragrance bottle"
               width={520}
               height={832}
               className="pointer-events-none absolute left-[35%] top-[55%] z-[1] hidden h-auto max-h-[min(62vh,480px)] w-[min(50vw,340px)] max-w-[340px] -translate-x-1/2 -translate-y-1/2 -rotate-[11deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"
@@ -171,7 +171,7 @@ export function HeroSection() {
             />
             <motion.img
               src="/chanel_perfume.png"
-              alt="Givenchy fragrance bottle"
+              alt="L'Oréal fragrance bottle"
               width={520}
               height={832}
               className="pointer-events-none absolute left-[68%] top-[50%] z-[1] hidden h-auto max-h-[min(58vh,440px)] w-[min(46vw,300px)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 rotate-[10deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"

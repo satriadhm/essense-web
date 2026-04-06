@@ -8,8 +8,8 @@ const logged = new Set([3, 7, 12, 18, 22, 28]);
 
 const recent = [
   { date: "Mar 28", name: "YSL Y", cond: "27°C · Humid", border: "var(--accent-cyan)" },
-  { date: "Mar 26", name: "Dior Sauvage", cond: "24°C · Clear", border: "var(--accent-purple)" },
-  { date: "Mar 21", name: "Givenchy Gentleman", cond: "19°C · Dry", border: "var(--accent-amber)" },
+  { date: "Mar 26", name: "L'Oréal Homme Intense", cond: "24°C · Clear", border: "var(--accent-purple)" },
+  { date: "Mar 21", name: "L'Oréal Homme Sport", cond: "19°C · Dry", border: "var(--accent-amber)" },
 ];
 
 export function JournalSection() {
@@ -84,7 +84,7 @@ export function JournalSection() {
                       key={d}
                       title={
                         isLog
-                          ? "Mar 12 — Dior Sauvage + 24°C"
+                          ? "Mar 12 — L'Oréal Homme Intense + 24°C"
                           : undefined
                       }
                       className={`relative flex aspect-square w-full min-w-0 items-center justify-center rounded-md text-[10px] sm:text-xs ${

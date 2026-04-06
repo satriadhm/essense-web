@@ -10,8 +10,8 @@ export interface FragranceProfile {
 
 export const exampleFragrances: FragranceProfile[] = [
   { id: "1", name: "YSL Y", family: "fresh" },
-  { id: "2", name: "Dior Sauvage", family: "fresh" },
-  { id: "3", name: "Givenchy Gentleman", family: "fresh" },
+  { id: "2", name: "L'Oréal Homme Intense", family: "fresh" },
+  { id: "3", name: "L'Oréal Homme Sport", family: "fresh" },
 ];
 
 export const noteTierExamples: Record<

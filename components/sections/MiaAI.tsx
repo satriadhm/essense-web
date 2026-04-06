@@ -6,8 +6,8 @@ import { PillBadge } from "@/components/ui/PillBadge";
 
 const bubbles = [
   { who: "mia" as const, text: "Hi there! 👋 I'm Mia, your AI fragrance assistant. What are you wearing today?" },
-  { who: "user" as const, text: "I just scanned Dior Sauvage." },
-  { who: "mia" as const, text: "Perfect choice for today's weather — 26°C, moderate humidity. Sauvage's bergamot will open beautifully." },
+  { who: "user" as const, text: "I just scanned L'Oréal Homme Intense." },
+  { who: "mia" as const, text: "Perfect choice for today's weather — 26°C, moderate humidity. L'Oréal Homme Intense's bergamot will open beautifully." },
   { who: "mia" as const, text: "Based on your biometrics, I'd suggest applying to your inner wrists and neck. Your skin temp will amplify the citrus top notes. 🍋" },
   { who: "user" as const, text: "What about for tonight?" },
   { who: "mia" as const, text: "Tonight's cooler temps (19°C) call for something warmer. Here's what I recommend:", card: true },
@@ -86,7 +86,7 @@ export function MiaAI() {
                 <p>{b.text}</p>
                 {b.card && (
                   <div className="mt-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-3 text-xs">
-                    <p className="font-heading font-semibold">Givenchy Gentleman — Base-forward edition</p>
+                    <p className="font-heading font-semibold">L&apos;Oréal Homme Intense — Base-forward edition</p>
                     <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-[var(--bg-mid)]">
                       <div className="h-full w-[72%] rounded-full bg-gradient-to-r from-[var(--accent-rose)] to-[var(--accent-purple)]" />
                     </div>

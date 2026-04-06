@@ -90,15 +90,8 @@ export function AppPreview() {
       }}
     >
       <div ref={ref} className="relative mx-auto max-w-5xl">
-        <p
-          className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 select-none font-heading font-extrabold text-[rgba(255,255,255,0.04)]"
-          style={{ fontSize: "clamp(80px, 12vw, 160px)" }}
-          aria-hidden
-        >
-          ESSENSE
-        </p>
         <h2 className="relative z-[1] text-center font-heading text-[length:var(--text-h2)] font-bold text-[var(--text-primary)]">
-          In the palm of your hand.
+          Your scent. Always with you.
         </h2>
 
         <div className="relative z-[1] mt-16 flex items-center justify-center gap-0 max-lg:flex-col lg:min-h-[480px]">
