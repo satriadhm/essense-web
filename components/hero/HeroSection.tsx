@@ -150,7 +150,7 @@ export function HeroSection() {
           <div className="relative flex h-[min(82vh,640px)] w-full max-w-[min(100vw,760px)] shrink-0 items-center justify-center overflow-hidden lg:h-[min(88vh,780px)] lg:max-w-[780px]">
             <ScentRing />
             <motion.img
-              src="/loreal_perfume.png"
+              src="/giorgio_perfume.png"
               alt="L'Oréal fragrance bottle"
               width={520}
               height={832}
