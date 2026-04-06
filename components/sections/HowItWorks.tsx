@@ -245,37 +245,125 @@ const desktopSteps = [
 ];
 
 function MobileStack() {
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const autoplayRef = useRef<number | null>(null);
+  const resumeTimeoutRef = useRef<number | null>(null);
+  const touchStartXRef = useRef(0);
+  const touchDeltaRef = useRef(0);
+  const isPausedRef = useRef(false);
   const [activeStep, setActiveStep] = useState(0);
   const mobileSteps = desktopSteps.slice(1);
+  const MOBILE_AUTOPLAY_MS = 3200;
+  const SWIPE_THRESHOLD = 48;
+  const GAP = 16;
+
+  const CARD_WIDTH = useCallback(() => window.innerWidth - 80, []);
+  const getOffset = useCallback(
+    (idx: number) => idx * (CARD_WIDTH() + GAP),
+    [CARD_WIDTH],
+  );
+
+  const applyTrackTransform = useCallback(
+    (step: number, delta = 0, withTransition = true) => {
+      const track = trackRef.current;
+      if (!track) return;
+      track.style.transition = withTransition
+        ? "transform 400ms cubic-bezier(0.16,1,0.3,1)"
+        : "none";
+      track.style.transform = `translateX(calc(40px - ${getOffset(step)}px + ${delta}px))`;
+    },
+    [getOffset],
+  );
+
+  const stopAutoplay = useCallback(() => {
+    if (autoplayRef.current !== null) {
+      window.clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  }, []);
+
+  const startAutoplay = useCallback(() => {
+    stopAutoplay();
+    autoplayRef.current = window.setInterval(() => {
+      setActiveStep((prev) => {
+        if (prev < mobileSteps.length - 1) {
+          return prev + 1;
+        }
+        window.setTimeout(() => {
+          setActiveStep(0);
+        }, 150);
+        return prev;
+      });
+    }, MOBILE_AUTOPLAY_MS);
+  }, [mobileSteps.length, stopAutoplay]);
+
+  const scheduleResume = useCallback(() => {
+    if (resumeTimeoutRef.current !== null) {
+      window.clearTimeout(resumeTimeoutRef.current);
+    }
+    resumeTimeoutRef.current = window.setTimeout(() => {
+      isPausedRef.current = false;
+      startAutoplay();
+    }, 1200);
+  }, [startAutoplay]);
 
   useEffect(() => {
-    const slider = sliderRef.current;
-    if (!slider) return;
+    applyTrackTransform(activeStep);
+  }, [activeStep, applyTrackTransform]);
 
-    const id = window.setInterval(() => {
+  useEffect(() => {
+    applyTrackTransform(activeStep, 0, false);
+    const onResize = () => applyTrackTransform(activeStep, 0, false);
+    window.addEventListener("resize", onResize);
+    startAutoplay();
+    return () => {
+      window.removeEventListener("resize", onResize);
+      stopAutoplay();
+      if (resumeTimeoutRef.current !== null) {
+        window.clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, [activeStep, applyTrackTransform, startAutoplay, stopAutoplay]);
+
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? 0;
+    touchDeltaRef.current = 0;
+    isPausedRef.current = true;
+    stopAutoplay();
+    if (resumeTimeoutRef.current !== null) {
+      window.clearTimeout(resumeTimeoutRef.current);
+    }
+  };
+
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const x = e.touches[0]?.clientX ?? touchStartXRef.current;
+    const delta = x - touchStartXRef.current;
+    touchDeltaRef.current = delta;
+    applyTrackTransform(activeStep, delta, false);
+  };
+
+  const onTouchEnd = () => {
+    const delta = touchDeltaRef.current;
+    if (Math.abs(delta) > SWIPE_THRESHOLD) {
       setActiveStep((prev) => {
-        const next = (prev + 1) % mobileSteps.length;
-        slider.scrollTo({
-          left: next * slider.clientWidth,
-          behavior: "smooth",
-        });
-        return next;
+        const next = delta < 0 ? prev + 1 : prev - 1;
+        return Math.max(0, Math.min(mobileSteps.length - 1, next));
       });
-    }, 3200);
-
-    return () => window.clearInterval(id);
-  }, [mobileSteps.length]);
-
-  const onScroll = () => {
-    const slider = sliderRef.current;
-    if (!slider) return;
-    const idx = Math.round(slider.scrollLeft / Math.max(1, slider.clientWidth));
-    setActiveStep(Math.max(0, Math.min(mobileSteps.length - 1, idx)));
+    } else {
+      applyTrackTransform(activeStep);
+    }
+    touchDeltaRef.current = 0;
+    scheduleResume();
   };
 
   return (
-    <div className="pb-12 pt-[60px] lg:hidden">
+    <div className="pb-12 pt-16 lg:hidden">
+      <style>{`
+        @keyframes dotFill {
+          from { width: 8px; }
+          to { width: 24px; }
+        }
+      `}</style>
       <div className="px-[max(5vw,40px)]">
         <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
           How it works
@@ -285,17 +373,37 @@ function MobileStack() {
         </h2>
       </div>
       <div
-        ref={sliderRef}
-        onScroll={onScroll}
-        className="mt-10 flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        className="mt-10 overflow-x-hidden"
       >
-        {mobileSteps.map((s, i) => (
-          <div key={s.key} className="min-w-full snap-center px-[max(5vw,40px)]">
-            <ScrollReveal delay={i * 60}>
-              <div>{s.content}</div>
-            </ScrollReveal>
-          </div>
-        ))}
+        <div
+          ref={trackRef}
+          className="flex flex-row gap-4 will-change-transform transition-transform duration-400 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+        >
+          {mobileSteps.map((s, i) => (
+            <div
+              key={s.key}
+              className="snap-center w-[calc(100vw-80px)] flex-shrink-0"
+            >
+              <ScrollReveal delay={i * 60}>
+                <div
+                  aria-label={
+                    activeStep === i
+                      ? `How Essense works, step ${i + 1} of ${mobileSteps.length}`
+                      : undefined
+                  }
+                  className={`overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-mid)] shadow-[0_8px_40px_rgba(0,0,0,0.45)] transition-[transform,opacity] duration-400 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
+                    activeStep === i ? "scale-100 opacity-100" : "scale-[0.93] opacity-60"
+                  }`}
+                >
+                  {s.content}
+                </div>
+              </ScrollReveal>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mt-4 flex justify-center gap-2">
         {mobileSteps.map((s, i) => (
@@ -304,17 +412,27 @@ function MobileStack() {
             type="button"
             aria-label={`Go to step ${i + 1}`}
             onClick={() => {
-              const slider = sliderRef.current;
-              if (!slider) return;
-              slider.scrollTo({ left: i * slider.clientWidth, behavior: "smooth" });
+              if (resumeTimeoutRef.current !== null) {
+                window.clearTimeout(resumeTimeoutRef.current);
+              }
+              isPausedRef.current = false;
               setActiveStep(i);
+              startAutoplay();
             }}
-            className={`rounded-full transition-[width,background-color] ${
+            className={`relative overflow-hidden rounded-full ${
               activeStep === i
-                ? "h-2 w-6 bg-[var(--accent-cyan)]"
+                ? "h-2 w-6 bg-[var(--bg-surface)]"
                 : "h-2 w-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
             }`}
-          />
+          >
+            {activeStep === i ? (
+              <span
+                key={`dot-fill-${activeStep}`}
+                className="absolute left-0 top-0 block h-2 w-2 rounded-full bg-[var(--accent-cyan)]"
+                style={{ animation: `dotFill ${MOBILE_AUTOPLAY_MS}ms linear forwards` }}
+              />
+            ) : null}
+          </button>
         ))}
       </div>
     </div>
