@@ -170,7 +170,7 @@ export function HeroSection() {
               transition={{ delay: 1.25, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             />
             <motion.img
-              src="/giorgio_perfume.png"
+              src="/polo_perfume.png"
               alt="Giorgio Armani fragrance bottle"
               width={520}
               height={832}
