@@ -151,7 +151,7 @@ export function HeroSection() {
             <ScentRing />
             <motion.img
               src="/giorgio_perfume.png"
-              alt="L'Oréal fragrance bottle"
+              alt="Giorgio Armani fragrance bottle"
               width={520}
               height={832}
               className="pointer-events-none absolute left-[35%] top-[55%] z-[1] hidden h-auto max-h-[min(62vh,480px)] w-[min(50vw,340px)] max-w-[340px] -translate-x-1/2 -translate-y-1/2 -rotate-[11deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"
@@ -170,8 +170,8 @@ export function HeroSection() {
               transition={{ delay: 1.25, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             />
             <motion.img
-              src="/chanel_perfume.png"
-              alt="L'Oréal fragrance bottle"
+              src="/giorgio_perfume.png"
+              alt="Giorgio Armani fragrance bottle"
               width={520}
               height={832}
               className="pointer-events-none absolute left-[68%] top-[50%] z-[1] hidden h-auto max-h-[min(58vh,440px)] w-[min(46vw,300px)] max-w-[300px] -translate-x-1/2 -translate-y-1/2 rotate-[10deg] object-contain drop-shadow-[0_14px_40px_rgba(0,0,0,0.4)] lg:block"
