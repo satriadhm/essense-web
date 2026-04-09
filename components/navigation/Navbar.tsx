@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/cn";
 
+const DOWNLOAD_URL =
+  "https://drive.google.com/file/d/1iw6MdGUq8CYv2GR6OB3m8GXkFheshu_Z/view?usp=drive_link";
+
 const LINKS = [
   { href: "#home", label: "Home" },
   { href: "#how-it-works", label: "How It Works" },
@@ -79,8 +82,10 @@ export function Navbar() {
               );
             })}
           </div>
-          <button
-            type="button"
+          <a
+            href={DOWNLOAD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="relative ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--accent-cyan)] transition hover:border-[var(--border-active)]"
             aria-label="Download"
             data-cursor="pointer"
@@ -94,7 +99,7 @@ export function Navbar() {
                 strokeLinecap="round"
               />
             </svg>
-          </button>
+          </a>
         </nav>
 
         <div className="flex w-full max-w-[380px] items-center justify-between rounded-full border border-[var(--border-active)] bg-[rgba(13,17,40,0.88)] px-4 py-2.5 shadow-[0_8px_28px_rgba(0,0,0,0.45)] backdrop-blur-[20px] md:hidden">

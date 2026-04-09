@@ -4,6 +4,9 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useCallback, useRef } from "react";
 import { cn } from "@/lib/cn";
 
+const DOWNLOAD_URL =
+  "https://drive.google.com/file/d/1iw6MdGUq8CYv2GR6OB3m8GXkFheshu_Z/view?usp=drive_link";
+
 type MagneticButtonProps = {
   className?: string;
   label?: string;
@@ -13,14 +16,14 @@ export function MagneticButton({
   className,
   label = "Download Free",
 }: MagneticButtonProps) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 300, damping: 25 });
   const springY = useSpring(y, { stiffness: 300, damping: 25 });
 
   const onMove = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -38,9 +41,11 @@ export function MagneticButton({
   }, [x, y]);
 
   return (
-    <motion.button
+    <motion.a
       ref={ref}
-      type="button"
+      href={DOWNLOAD_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       style={{ x: springX, y: springY }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -52,6 +57,6 @@ export function MagneticButton({
       )}
     >
       <span className="relative z-10">{label}</span>
-    </motion.button>
+    </motion.a>
   );
 }
