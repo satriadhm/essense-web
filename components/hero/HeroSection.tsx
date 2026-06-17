@@ -91,8 +91,8 @@ export function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.5 }}
           >
-            Biometric-powered fragrance intelligence that knows you better than
-            you know yourself.
+            A biometric scanner and app that picks fragrance formulas for your
+            skin, the weather, and the day.
           </motion.p>
 
           <motion.div

@@ -141,7 +141,7 @@ export function BiometricSection() {
               <span className="text-[var(--accent-cyan)]">
                 {BIOMETRIC_SCAN_SECONDS} seconds
               </span>{" "}
-              to your perfect formula.
+              from finger to formula.
             </h2>
           </ScrollReveal>
         </div>
@@ -248,7 +248,7 @@ export function BiometricSection() {
                 ))}
               </div>
               <p className="mt-4 text-sm italic text-[var(--text-muted)]">
-                Tuned to you. Right now.
+                Based on this morning&apos;s scan.
               </p>
             </GlassCard>
           </ScrollReveal>

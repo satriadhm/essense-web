@@ -37,12 +37,10 @@ export function CTASection() {
         />
 
         <h2 className="font-heading text-[length:var(--text-h1)] font-extrabold text-[var(--text-primary)]">
-          Your essence. Finally{" "}
-          <span className="gradient-text-brand">understood</span>.
+          Get <span className="gradient-text-brand">Essense</span>.
         </h2>
         <p className="mt-6 max-w-[400px] text-lg text-[var(--text-secondary)]">
-          Free to download. No subscription needed. Your first formula is
-          waiting.
+          Free to download. No subscription.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

@@ -423,7 +423,7 @@ export function AppPreview() {
     >
       <div ref={ref} className="relative mx-auto max-w-5xl">
         <h2 className="relative z-[1] text-center font-heading text-[length:var(--text-h2)] font-bold text-[var(--text-primary)]">
-          Your scent. Always with you.
+          The Essense app.
         </h2>
 
         {/* Desktop: three fanned phones */}

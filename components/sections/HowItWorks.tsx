@@ -81,7 +81,7 @@ const desktopSteps = [
           How it works
         </p>
         <h2 className="mt-4 max-w-xl font-heading text-[length:var(--text-h1)] font-extrabold text-[var(--text-primary)]">
-          Four moments. One perfect formula.
+          Four steps from scan to formula.
         </h2>
         <div className="mt-10 flex items-center gap-2 font-heading text-sm text-[var(--text-muted)]">
           <span>01</span>
@@ -117,10 +117,10 @@ const desktopSteps = [
           </svg>
         </GlassCard>
         <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
-          Select Your Scent
+          Pick a fragrance
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
-          Tell Essense which fragrance you&apos;re wearing — scan the barcode, or choose manually from 200+ perfumes.
+          Scan the barcode of the perfume you&apos;re wearing, or choose from a list of 200+.
         </p>
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
           <FragranceTag name="YSL Y" />
@@ -142,12 +142,11 @@ const desktopSteps = [
           <StepFingerprint />
         </GlassCard>
         <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
-          Read Your Biology
+          Scan your skin
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
-          Place your finger on the Essense device. In {BIOMETRIC_SCAN_SECONDS}{" "}
-          seconds, it captures your skin&apos;s temperature, conductance, and sebum
-          profile.
+          Press a finger to the device. In {BIOMETRIC_SCAN_SECONDS} seconds it
+          reads skin temperature, conductance, and sebum.
         </p>
         <ScanProgressLoop />
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
@@ -176,10 +175,10 @@ const desktopSteps = [
           <StepAI />
         </GlassCard>
         <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
-          AI Builds Your Formula
+          Mia suggests a formula
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
-          Mia, our AI fragrance engine, cross-references your biometrics with live weather and your history to build a formula tuned to today&apos;s you.
+          Mia combines your scan with the local weather and your past entries to recommend a mix for today.
         </p>
         <div className="relative z-[1] mt-6 max-w-sm rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-4">
           <p className="text-xs text-[var(--text-muted)]">Formula preview</p>
@@ -219,10 +218,10 @@ const desktopSteps = [
           <span className="text-2xl">↗</span>
         </GlassCard>
         <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
-          Yours. Every Day.
+          Save it to your journal
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
-          Each result is saved to your fragrance journal. Track how your formula evolves with your mood, the weather, and the seasons.
+          Each formula is logged so you can see how your choices change across moods, weather, and seasons.
         </p>
         <div className="relative z-[1] mt-8 flex -space-x-3">
           {profileImagesOrdered.map((img, i) => (
@@ -237,7 +236,7 @@ const desktopSteps = [
           ))}
         </div>
         <p className="relative z-[1] mt-4 text-sm text-[var(--text-muted)]">
-          Join 10,000+ fragrance enthusiasts
+          10,000+ people use Essense
         </p>
       </div>
     ),
@@ -369,7 +368,7 @@ function MobileStack() {
           How it works
         </p>
         <h2 className="mt-4 max-w-xl font-heading text-[length:var(--text-h2)] font-extrabold text-[var(--text-primary)]">
-          Four moments. One perfect formula.
+          Four steps from scan to formula.
         </h2>
       </div>
       <div
