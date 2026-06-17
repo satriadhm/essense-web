@@ -14,7 +14,7 @@ type MagneticButtonProps = {
 
 export function MagneticButton({
   className,
-  label = "Download Free",
+  label = "Join the beta",
 }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
