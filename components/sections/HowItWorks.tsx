@@ -120,7 +120,7 @@ const desktopSteps = [
           Pick a fragrance
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
-          Scan the barcode of the perfume you&apos;re wearing, or choose from a list of 200+.
+          Scan the barcode of the perfume you&apos;re wearing, or pick from the 8 fragrances in the beta catalog.
         </p>
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
           <FragranceTag name="YSL Y" />
@@ -236,7 +236,7 @@ const desktopSteps = [
           ))}
         </div>
         <p className="relative z-[1] mt-4 text-sm text-[var(--text-muted)]">
-          10,000+ people use Essense
+          23 testers in the private beta
         </p>
       </div>
     ),

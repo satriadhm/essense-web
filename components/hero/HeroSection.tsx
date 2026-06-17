@@ -123,17 +123,17 @@ export function HeroSection() {
             aria-label="Essense statistics"
           >
             <div className="flex flex-col py-1 pr-6">
-              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">10K+</span>
-              <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">Scans</span>
+              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">v0.1</span>
+              <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">Build</span>
             </div>
             <div className="flex flex-col border-l border-[var(--border-subtle)] py-1 px-6">
-              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">97%</span>
+              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">23</span>
               <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">
-                Match rate
+                Beta testers
               </span>
             </div>
             <div className="flex flex-col border-l border-[var(--border-subtle)] py-1 pl-6">
-              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">200+</span>
+              <span className="text-[length:var(--text-h3)] text-[var(--text-primary)]">8</span>
               <span className="text-[length:var(--text-label)] tracking-wide text-[var(--text-muted)]">
                 Fragrances
               </span>

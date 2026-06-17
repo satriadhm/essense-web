@@ -240,7 +240,7 @@ export function WhatIsEssense() {
             </span>
           </>
         }
-        body="The scanner reads your skin chemistry and matches it against 200+ fragrance profiles to suggest a formula that works on you."
+        body="The scanner reads your skin chemistry and matches it against the 8 fragrance profiles in our beta catalog to suggest a formula."
         active={b2}
         right={
           <Image

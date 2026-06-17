@@ -279,7 +279,7 @@ function ResultsScreen() {
       <div className="flex items-center justify-between gap-2">
         <p className="font-heading text-base font-bold text-[var(--text-primary)]">Your formula</p>
         <span className="rounded-full bg-[var(--accent-cyan)]/15 px-2 py-0.5 font-heading text-[11px] font-bold tabular-nums text-[var(--accent-cyan)]">
-          97% match
+          Beta match
         </span>
       </div>
 

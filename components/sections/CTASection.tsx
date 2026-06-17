@@ -40,7 +40,7 @@ export function CTASection() {
           Get <span className="gradient-text-brand">Essense</span>.
         </h2>
         <p className="mt-6 max-w-[400px] text-lg text-[var(--text-secondary)]">
-          Free to download. No subscription.
+          In private beta. Request an invite to try it.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -73,10 +73,10 @@ export function CTASection() {
       </div>
 
       <div className="pointer-events-none absolute left-8 top-24 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-3 py-1 text-[11px] text-[var(--text-muted)] backdrop-blur-md">
-        ★ 4.9 · 10,000+ downloads
+        Private beta · invite only
       </div>
       <div className="pointer-events-none absolute bottom-32 right-8 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-3 py-1 text-[11px] text-[var(--text-muted)] backdrop-blur-md max-md:hidden">
-        ★ 4.9 · 10,000+ downloads
+        Private beta · invite only
       </div>
 
       <footer className="relative z-[2] mx-auto mt-24 flex max-w-6xl flex-col items-center justify-between gap-4 border-t border-[var(--border-subtle)] pt-8 text-xs text-[var(--text-muted)] md:flex-row">
