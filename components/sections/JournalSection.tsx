@@ -24,12 +24,11 @@ export function JournalSection() {
             Fragrance journal
           </p>
           <h2 className="mt-4 max-w-[18ch] font-heading text-[length:var(--text-h2)] font-bold leading-[1.2] text-[var(--text-primary)] sm:max-w-none">
-            Your scent <span className="italic text-[var(--accent-violet)]">story</span>. Written in data.
+            A record of what you&apos;ve <span className="italic text-[var(--accent-violet)]">worn</span>.
           </h2>
           <p className="mt-6 text-[var(--text-secondary)]">
-            Every scan, every formula, every day — logged automatically. Revisit
-            what you wore last month. Discover patterns in your scent choices.
-            Own your fragrance history.
+            Every scan and formula is logged automatically. Look back at last
+            month, or spot patterns across the seasons.
           </p>
           <ul className="mt-8 space-y-3 text-[var(--text-secondary)]">
             <li>
@@ -50,7 +49,7 @@ export function JournalSection() {
             className="mt-10 inline-block text-[var(--accent-cyan)]"
             data-cursor="pointer"
           >
-            Explore Journal →
+            Open the journal →
           </a>
         </div>
 

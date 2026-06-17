@@ -5,12 +5,12 @@ import { useRef } from "react";
 import { PillBadge } from "@/components/ui/PillBadge";
 
 const bubbles = [
-  { who: "mia" as const, text: "Hi there! 👋 I'm Mia, your AI fragrance assistant. What are you wearing today?" },
-  { who: "user" as const, text: "I just scanned L'Oréal Homme Intense." },
-  { who: "mia" as const, text: "Perfect choice for today's weather — 26°C, moderate humidity. L'Oréal Homme Intense's bergamot will open beautifully." },
-  { who: "mia" as const, text: "Based on your biometrics, I'd suggest applying to your inner wrists and neck. Your skin temp will amplify the citrus top notes. 🍋" },
+  { who: "mia" as const, text: "Hi, I'm Mia. What are you wearing today?" },
+  { who: "user" as const, text: "Just scanned L'Oréal Homme Intense." },
+  { who: "mia" as const, text: "Good pick for 26°C and moderate humidity. The bergamot should open up well." },
+  { who: "mia" as const, text: "Apply to inner wrists and neck. Your skin temp will lift the citrus notes." },
   { who: "user" as const, text: "What about for tonight?" },
-  { who: "mia" as const, text: "Tonight's cooler temps (19°C) call for something warmer. Here's what I recommend:", card: true },
+  { who: "mia" as const, text: "Cooler tonight at 19°C. Try something warmer:", card: true },
 ];
 
 export function MiaAI() {
@@ -31,18 +31,17 @@ export function MiaAI() {
             Meet Mia
           </p>
           <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-extrabold text-[var(--text-primary)]">
-            Your AI fragrance guide.{" "}
-            <span className="gradient-text-brand">Always</span> on.
+            An <span className="gradient-text-brand">AI</span> fragrance
+            assistant.
           </h2>
           <p className="mt-6 text-[var(--text-secondary)]">
-            Ask Mia anything. Which fragrance suits a formal dinner? What pairs
-            with bergamot? Mia remembers your history, reads your biometrics, and
-            gives answers that make sense for <em>you</em>.
+            Ask which fragrance suits a formal dinner, or what pairs with
+            bergamot. Mia uses your scan history and biometrics to answer.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <PillBadge label="🧬 Biometric-Aware" color="purple" />
-            <PillBadge label="🌦 Weather-Sensitive" color="cyan" />
-            <PillBadge label="📖 Journal-Connected" color="amber" />
+            <PillBadge label="Biometric-aware" color="purple" />
+            <PillBadge label="Weather-sensitive" color="cyan" />
+            <PillBadge label="Journal-connected" color="amber" />
           </div>
           <a
             href="#cta"

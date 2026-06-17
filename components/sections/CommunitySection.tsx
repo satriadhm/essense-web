@@ -68,11 +68,11 @@ export function CommunitySection() {
             Community
           </p>
           <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-extrabold text-[var(--text-primary)]">
-            Scent enthusiasts. One feed.
+            What other people are wearing.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[var(--text-secondary)]">
-            Discover what others are wearing. Share your formulas. Earn Essense
-            Club points.
+            Share your formulas, follow people whose taste you like, and earn
+            Essense Club points.
           </p>
         </ScrollReveal>
 

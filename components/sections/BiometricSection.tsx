@@ -141,7 +141,7 @@ export function BiometricSection() {
               <span className="text-[var(--accent-cyan)]">
                 {BIOMETRIC_SCAN_SECONDS} seconds
               </span>{" "}
-              to your perfect formula.
+              from finger to formula.
             </h2>
           </ScrollReveal>
         </div>
@@ -212,13 +212,13 @@ export function BiometricSection() {
               >
                 <div className="text-[var(--accent-purple)]">✓</div>
                 <p className="mt-1 font-heading text-xl font-bold text-[var(--accent-violet)] lg:text-2xl">
-                  97%
+                  Match
                 </p>
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-                  Match rate
+                  Score
                 </p>
                 <p className="mt-1 text-[10px] text-[var(--text-muted)]">
-                  Based on 847 similar profiles
+                  Early model · trained on 23 profiles
                 </p>
               </GlassCard>
             </ScrollReveal>
@@ -248,7 +248,7 @@ export function BiometricSection() {
                 ))}
               </div>
               <p className="mt-4 text-sm italic text-[var(--text-muted)]">
-                Tuned to you. Right now.
+                Based on this morning&apos;s scan.
               </p>
             </GlassCard>
           </ScrollReveal>

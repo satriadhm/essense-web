@@ -17,7 +17,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Essense — Own Your Essense",
   description:
-    "Biometric-powered fragrance intelligence. AI formulas tuned to your skin, weather, and story.",
+    "A biometric scanner and app that recommends fragrance formulas based on your skin, the weather, and what you've worn before.",
   icons: {
     icon: "/app_logo.png",
     shortcut: "/app_logo.png",

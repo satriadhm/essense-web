@@ -224,8 +224,8 @@ export function WhatIsEssense() {
 
       <Block
         label="ADAPTIVE"
-        headline="Your skin changes. Your scent should too."
-        body="Temperature, stress, humidity — every factor shifts how a fragrance develops on you. Essense reads these signals in real time."
+        headline="Your skin chemistry shifts through the day."
+        body="Temperature, humidity, and stress all change how a fragrance develops on your skin. Essense measures them and adjusts the recommendation."
         active={b1}
         right={<AdaptiveSkinWidget />}
       />
@@ -234,13 +234,13 @@ export function WhatIsEssense() {
         label="PERSONAL"
         headline={
           <>
-            Not one-size perfume.{" "}
+            A formula built around{" "}
             <span className="whitespace-nowrap">
-              <span className="text-[var(--accent-violet)]">Your</span> formula.
+              <span className="text-[var(--accent-violet)]">your</span> body.
             </span>
           </>
         }
-        body="Biometric scanning cross-references your body chemistry with 200+ fragrance profiles to build a formula tuned to you and only you."
+        body="The scanner reads your skin chemistry and matches it against the 8 fragrance profiles in our beta catalog to suggest a formula."
         active={b2}
         right={
           <Image
@@ -255,8 +255,8 @@ export function WhatIsEssense() {
 
       <Block
         label="CIRCULAR"
-        headline="A scent that grows with you."
-        body="Every scan, every formula, every season — Essense learns. The more you use it, the more personal your formula becomes. Your fragrance evolves as you do."
+        headline="It gets better the more you use it."
+        body="Each scan trains the recommendations. Over time, the formulas reflect your patterns across moods, weather, and seasons."
         active={b3}
         right={<EvolvingFormulaWidget />}
       />
