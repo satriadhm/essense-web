@@ -11,7 +11,7 @@ const DOWNLOAD_URL =
 const LINKS = [
   { href: "#home", label: "Home" },
   { href: "#how-it-works", label: "How It Works" },
-  { href: "#features", label: "Features" },
+  { href: "#mia", label: "Mia" },
   { href: "#community", label: "Community" },
 ];
 
