@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Inter } from "next/font/google";
 import "./globals.css";
-import { CustomCursor } from "@/components/cursor/CustomCursor";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -36,7 +35,6 @@ export default function RootLayout({
       className={`${montserrat.variable} ${inter.variable} h-full scroll-smooth antialiased`}
     >
       <body className="page-root min-h-full bg-[var(--bg-deep)] text-[var(--text-primary)]">
-        <CustomCursor />
         {children}
       </body>
     </html>

@@ -81,7 +81,7 @@ export function CommunitySection() {
           onScroll={onMobileScroll}
           className="mt-16 flex snap-x snap-mandatory overflow-x-auto scroll-smooth md:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {communityPosts.map((post, i) => (
+          {communityPosts.map((post) => (
             <motion.div
               key={post.id}
               className="min-w-full snap-center px-[max(5vw,24px)]"
@@ -214,7 +214,6 @@ export function CommunitySection() {
                 <button
                   type="button"
                   className="mt-3 w-full rounded-full border border-[var(--border-active)] py-1.5 text-xs text-[var(--accent-cyan)]"
-                  data-cursor="pointer"
                 >
                   Follow
                 </button>

@@ -46,7 +46,6 @@ export function MiaAI() {
           <a
             href="#cta"
             className="mt-10 inline-block font-heading text-[15px] text-[var(--accent-cyan)] transition hover:underline"
-            data-cursor="pointer"
           >
             Talk to Mia →
           </a>
@@ -61,13 +60,6 @@ export function MiaAI() {
               <p className="font-heading text-sm font-bold">Mia</p>
               <p className="text-[11px] text-[var(--text-secondary)]">AI Assistant</p>
             </div>
-            <span className="flex items-center gap-1 text-[10px] text-[var(--text-muted)]">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              online
-            </span>
           </div>
           <div className="flex h-[420px] flex-col gap-3 overflow-y-auto p-4">
             {bubbles.map((b, i) => (

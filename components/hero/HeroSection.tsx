@@ -2,10 +2,8 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { ParticleField } from "./ParticleField";
 import { ScentRing } from "@/components/ui/ScentRing";
-import { NoteOrb } from "@/components/ui/NoteOrb";
-import { MagneticButton } from "@/components/animations/MagneticButton";
+import { CtaButton } from "@/components/ui/CtaButton";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -39,10 +37,6 @@ export function HeroSection() {
         }}
         aria-hidden
       />
-
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <ParticleField />
-      </div>
 
       <div className="relative z-[2] grid min-h-0 flex-1 grid-cols-1 items-center gap-10 overflow-x-hidden pb-24 pt-28 lg:grid-cols-[1.2fr_0.8fr] lg:gap-4 lg:pb-16 lg:pt-20">
         <div
@@ -101,11 +95,10 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.5 }}
           >
-            <MagneticButton />
+            <CtaButton />
             <a
               href="#community"
               className="group inline-flex items-center gap-2 text-[var(--text-secondary)] transition hover:text-[var(--accent-cyan)]"
-              data-cursor="pointer"
             >
               <span aria-hidden>★</span>
               <span className="border-b border-transparent text-sm group-hover:border-[var(--accent-cyan)]">
@@ -179,17 +172,6 @@ export function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.35, duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             />
-            <div className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center">
-              <div className="orbit-note-1 absolute flex items-center justify-center">
-                <NoteOrb noteType="top" size={48} />
-              </div>
-              <div className="orbit-note-2 absolute flex items-center justify-center">
-                <NoteOrb noteType="mid" size={56} />
-              </div>
-              <div className="orbit-note-3 absolute flex items-center justify-center">
-                <NoteOrb noteType="base" size={48} />
-              </div>
-            </div>
           </div>
         </motion.div>
       </div>

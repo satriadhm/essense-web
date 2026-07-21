@@ -47,7 +47,6 @@ export function JournalSection() {
           <a
             href="#journal"
             className="mt-10 inline-block text-[var(--accent-cyan)]"
-            data-cursor="pointer"
           >
             Open the journal →
           </a>

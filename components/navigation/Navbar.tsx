@@ -53,7 +53,7 @@ export function Navbar() {
           )}
           aria-label="Main"
         >
-          <a href="#home" className="flex items-center" data-cursor="pointer" aria-label="Essense home">
+          <a href="#home" className="flex items-center" aria-label="Essense home">
             <Image
               src="/app_logo.png"
               alt="Essense logo"
@@ -72,7 +72,6 @@ export function Navbar() {
                   key={l.href}
                   href={l.href}
                   className="group relative font-heading text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-primary)] transition-colors hover:text-[var(--accent-cyan)]"
-                  data-cursor="pointer"
                 >
                   {l.label}
                   {isActive && (
@@ -86,11 +85,9 @@ export function Navbar() {
             href={DOWNLOAD_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--accent-cyan)] transition hover:border-[var(--border-active)]"
+            className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--accent-cyan)] transition hover:border-[var(--border-active)]"
             aria-label="Download"
-            data-cursor="pointer"
           >
-            <span className="absolute inset-0 animate-ping rounded-full bg-[var(--accent-cyan)] opacity-20" />
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path
                 d="M12 3v12m0 0l4-4m-4 4l-4-4M4 21h16"
