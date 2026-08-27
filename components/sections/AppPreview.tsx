@@ -5,11 +5,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 
 const pills = [
-  "✦ Biometric Scan",
-  "✦ AI Formula",
-  "✦ Weather Sync",
-  "✦ Fragrance Journal",
-  "✦ Community",
+  "Biometric Scan",
+  "AI Formula",
+  "Weather Sync",
+  "Fragrance Journal",
+  "Community",
 ];
 
 const CAROUSEL_INTERVAL_MS = 3000;
@@ -98,7 +98,7 @@ function HomeScreen() {
             key={s.label}
             className="rounded-xl border border-white/[0.06] bg-[var(--bg-deep)]/80 px-2 py-2 text-center"
           >
-            <p className="text-[8px] uppercase tracking-wide text-[var(--text-muted)]">{s.label}</p>
+            <p className="text-[9px] uppercase tracking-wide text-[var(--text-muted)]">{s.label}</p>
             <p className="mt-1 font-heading text-sm font-bold tabular-nums text-[var(--text-primary)]">
               {s.value}
               {s.unit ? <span className="text-[10px] font-normal text-[var(--text-muted)]">{s.unit}</span> : null}
@@ -108,16 +108,13 @@ function HomeScreen() {
       </div>
 
       <div className="relative overflow-hidden rounded-2xl">
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-transparent via-white/25 to-transparent"
+        <div
+          className="animate-shimmer pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-transparent via-white/25 to-transparent"
           aria-hidden
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         />
         <button
           type="button"
-          className="relative z-[2] w-full rounded-2xl bg-gradient-to-r from-[var(--accent-purple)] via-[var(--accent-violet)] to-[var(--accent-cyan)] py-3.5 font-heading text-sm font-bold text-white shadow-lg shadow-[var(--glow-purple)]/30"
+          className="gradient-brand-fill relative z-[2] w-full rounded-2xl py-3.5 font-heading text-sm font-bold shadow-lg shadow-[var(--glow-purple)]/30"
         >
           Start biometric scan
         </button>
@@ -198,7 +195,7 @@ function JournalScreen() {
         </span>
       </div>
 
-      <div className="grid grid-cols-7 gap-0.5 text-center text-[8px] font-semibold uppercase text-[var(--text-muted)]">
+      <div className="grid grid-cols-7 gap-0.5 text-center text-[9px] font-semibold uppercase text-[var(--text-muted)]">
         {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((d) => (
           <span key={d} className="py-1">
             {d}
@@ -234,7 +231,7 @@ function JournalScreen() {
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-2 text-[8px] text-[var(--text-muted)]">
+      <div className="flex flex-wrap gap-2 text-[9px] text-[var(--text-muted)]">
         <span className="flex items-center gap-1">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-cyan)]" /> Fresh
         </span>
@@ -354,9 +351,24 @@ function ResultsScreen() {
 
 /** Order matches desktop fan: left → center → right */
 const CAROUSEL_SCREENS = [
-  { id: "journal" as const, label: "Journal", content: <JournalScreen /> },
-  { id: "home" as const, label: "Home", content: <HomeScreen /> },
-  { id: "results" as const, label: "Results", content: <ResultsScreen /> },
+  {
+    id: "journal" as const,
+    label: "Journal",
+    mockupLabel: "Essense app — fragrance journal screen",
+    content: <JournalScreen />,
+  },
+  {
+    id: "home" as const,
+    label: "Home",
+    mockupLabel: "Essense app — home screen with live weather and biometrics",
+    content: <HomeScreen />,
+  },
+  {
+    id: "results" as const,
+    label: "Results",
+    mockupLabel: "Essense app — recommended formula screen",
+    content: <ResultsScreen />,
+  },
 ];
 
 export function AppPreview() {
@@ -415,14 +427,14 @@ export function AppPreview() {
   return (
     <section
       id="app-preview"
-      className="relative overflow-hidden bg-[var(--bg-deep)] px-[max(5vw,40px)] py-[60px] lg:py-[100px]"
+      className="relative overflow-hidden px-[max(5vw,40px)] py-[60px] lg:py-[100px]"
       style={{
         background:
           "radial-gradient(circle at 50% 30%, rgba(123,92,240,0.12) 0%, transparent 55%), var(--bg-deep)",
       }}
     >
       <div ref={ref} className="relative mx-auto max-w-5xl">
-        <h2 className="relative z-[1] text-center font-heading text-[length:var(--text-h2)] font-bold text-[var(--text-primary)]">
+        <h2 className="relative z-[1] text-center font-heading text-h2 font-bold text-[var(--text-primary)]">
           The Essense app.
         </h2>
 
@@ -434,7 +446,7 @@ export function AppPreview() {
             transition={{ delay: 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="z-[2] w-[min(88vw,280px)] origin-center -rotate-6 scale-[0.88]"
           >
-            <PhoneMockup>
+            <PhoneMockup label="Essense app — fragrance journal screen">
               <JournalScreen />
             </PhoneMockup>
           </motion.div>
@@ -444,7 +456,7 @@ export function AppPreview() {
             transition={{ delay: 0, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="z-[3] w-[min(92vw,300px)]"
           >
-            <PhoneMockup>
+            <PhoneMockup label="Essense app — home screen with live weather and biometrics">
               <HomeScreen />
             </PhoneMockup>
           </motion.div>
@@ -454,7 +466,7 @@ export function AppPreview() {
             transition={{ delay: 0.25, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="z-[2] w-[min(88vw,280px)] origin-center rotate-6 scale-[0.88]"
           >
-            <PhoneMockup>
+            <PhoneMockup label="Essense app — recommended formula screen">
               <ResultsScreen />
             </PhoneMockup>
           </motion.div>
@@ -467,7 +479,7 @@ export function AppPreview() {
               <button
                 type="button"
                 onClick={prev}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] text-lg text-[var(--text-primary)] backdrop-blur-sm transition hover:border-[var(--border-active)]"
+                className="focus-ring flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] text-lg text-[var(--text-primary)] backdrop-blur-sm transition hover:border-[var(--border-active)]"
                 aria-label="Previous screen"
               >
                 ‹
@@ -475,7 +487,7 @@ export function AppPreview() {
               <button
                 type="button"
                 onClick={() => setPaused((p) => !p)}
-                className="flex h-10 min-w-[2.5rem] items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-3 text-sm backdrop-blur-sm transition hover:border-[var(--border-active)]"
+                className="focus-ring flex h-10 min-w-[2.5rem] items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-3 text-sm backdrop-blur-sm transition hover:border-[var(--border-active)]"
                 aria-label={paused ? "Resume auto-advance" : "Pause auto-advance"}
               >
                 {paused ? "▶" : "⏸"}
@@ -483,7 +495,7 @@ export function AppPreview() {
               <button
                 type="button"
                 onClick={next}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] text-lg text-[var(--text-primary)] backdrop-blur-sm transition hover:border-[var(--border-active)]"
+                className="focus-ring flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] text-lg text-[var(--text-primary)] backdrop-blur-sm transition hover:border-[var(--border-active)]"
                 aria-label="Next screen"
               >
                 ›
@@ -506,7 +518,9 @@ export function AppPreview() {
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                   className="w-full"
                 >
-                  <PhoneMockup>{CAROUSEL_SCREENS[active].content}</PhoneMockup>
+                  <PhoneMockup label={CAROUSEL_SCREENS[active].mockupLabel}>
+                    {CAROUSEL_SCREENS[active].content}
+                  </PhoneMockup>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -518,7 +532,7 @@ export function AppPreview() {
                     key={s.id}
                     type="button"
                     onClick={() => goTo(i)}
-                    className={`h-2 rounded-full transition-all ${
+                    className={`focus-ring h-2 rounded-full transition-[width,background-color] ${
                       i === active ? "w-8 bg-[var(--accent-cyan)]" : "w-2 bg-[var(--text-muted)]/40 hover:bg-[var(--text-muted)]/70"
                     }`}
                     aria-label={`Go to ${s.label}`}
@@ -526,7 +540,7 @@ export function AppPreview() {
                   />
                 ))}
               </div>
-              <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+              <p className="font-heading text-label font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
                 {CAROUSEL_SCREENS[active].label}
               </p>
             </div>
@@ -537,7 +551,7 @@ export function AppPreview() {
           {pills.map((p) => (
             <span
               key={p}
-              className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-[18px] py-2 text-[13px] text-[var(--text-secondary)] backdrop-blur-[8px] transition hover:border-[var(--border-active)] hover:text-[var(--text-primary)]"
+              className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-glass)] px-[18px] py-2 text-small text-[var(--text-secondary)] backdrop-blur-[8px]"
             >
               {p}
             </span>
