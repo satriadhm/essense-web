@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 
@@ -28,11 +28,11 @@ const slideVariants = {
 
 function StatusBar() {
   return (
-    <div className="mb-3 flex items-center justify-between px-1 text-[10px] font-medium text-[var(--text-muted)]">
+    <div className="mb-3 flex items-center justify-between px-1 text-xs font-medium text-[var(--text-muted)]">
       <span className="tracking-wide">9:41</span>
       <div className="flex items-center gap-1.5" aria-hidden>
         <span className="h-2 w-3 rounded-sm border border-[var(--text-muted)]/50" />
-        <span className="text-[9px]">5G</span>
+        <span className="text-label">5G</span>
         <span className="h-2.5 w-4 rounded-sm border border-[var(--text-muted)]/40 bg-[var(--text-muted)]/20" />
       </div>
     </div>
@@ -45,7 +45,7 @@ function HomeScreen() {
       <StatusBar />
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
+          <p className="font-heading text-small font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
             Good afternoon
           </p>
           <p className="font-heading text-lg font-bold leading-tight text-[var(--text-primary)]">Jasmine</p>
@@ -63,14 +63,14 @@ function HomeScreen() {
       <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/90 p-3.5 shadow-inner">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">Live weather</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">Live weather</p>
             <p className="mt-0.5 font-heading text-3xl font-bold tabular-nums text-[var(--text-primary)]">26°C</p>
           </div>
-          <span className="rounded-full bg-[var(--accent-cyan)]/15 px-2 py-0.5 text-[9px] font-semibold text-[var(--accent-cyan)]">
+          <span className="rounded-full bg-[var(--accent-cyan)]/15 px-2 py-0.5 text-label font-semibold text-[var(--accent-cyan)]">
             Humid
           </span>
         </div>
-        <p className="mt-1 text-[11px] text-[var(--text-secondary)]">
+        <p className="mt-1 text-small text-[var(--text-secondary)]">
           Heat index <span className="font-semibold text-[var(--accent-amber)]">29°C</span>
           <span className="text-[var(--text-muted)]"> · </span>
           Light breeze from SE
@@ -83,12 +83,13 @@ function HomeScreen() {
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--accent-cyan)]" />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-semibold text-[var(--text-primary)]">Device connected</p>
-          <p className="text-[10px] text-[var(--text-muted)]">Essense v2 · Bluetooth LE</p>
+          <p className="text-small font-semibold text-[var(--text-primary)]">Device connected</p>
+          <p className="text-xs text-[var(--text-muted)]">Essense v2 · Bluetooth LE</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      {/* gap-1 / px-1: the longest label needs every pixel of the 88px tile. */}
+      <div className="grid grid-cols-3 gap-1">
         {[
           { label: "Skin temp", value: "36.2°", unit: "C" },
           { label: "Conductance", value: "4.1", unit: "µS" },
@@ -96,12 +97,20 @@ function HomeScreen() {
         ].map((s) => (
           <div
             key={s.label}
-            className="rounded-xl border border-white/[0.06] bg-[var(--bg-deep)]/80 px-2 py-2 text-center"
+            className="rounded-xl border border-white/[0.06] bg-[var(--bg-deep)]/80 px-1 py-2 text-center"
           >
-            <p className="text-[9px] uppercase tracking-wide text-[var(--text-muted)]">{s.label}</p>
+            {/*
+              These three tiles are the narrowest containers on the page (~65px
+              inner). "Conductance" does not fit them uppercase at any legible
+              size, and uppercase is the harder case to read small anyway, so
+              this row is sentence case with the tracking removed.
+            */}
+            <p className="text-label leading-tight text-[var(--text-muted)]">
+              {s.label}
+            </p>
             <p className="mt-1 font-heading text-sm font-bold tabular-nums text-[var(--text-primary)]">
               {s.value}
-              {s.unit ? <span className="text-[10px] font-normal text-[var(--text-muted)]">{s.unit}</span> : null}
+              {s.unit ? <span className="text-xs font-normal text-[var(--text-muted)]">{s.unit}</span> : null}
             </p>
           </div>
         ))}
@@ -125,8 +134,8 @@ function HomeScreen() {
           ✦
         </span>
         <div>
-          <p className="text-[9px] font-semibold uppercase tracking-wider text-[var(--accent-cyan)]">Mia</p>
-          <p className="text-[11px] leading-snug text-[var(--text-secondary)]">
+          <p className="text-label font-semibold uppercase tracking-wider text-[var(--accent-cyan)]">Mia</p>
+          <p className="text-small leading-snug text-[var(--text-secondary)]">
             Your skin is warmer than usual — a fresher top layer may feel more balanced today.
           </p>
         </div>
@@ -188,14 +197,14 @@ function JournalScreen() {
       <div className="flex items-center justify-between gap-2">
         <div>
           <p className="font-heading text-base font-bold text-[var(--text-primary)]">Journal</p>
-          <p className="text-[10px] text-[var(--text-muted)]">April 2026</p>
+          <p className="text-xs text-[var(--text-muted)]">April 2026</p>
         </div>
-        <span className="rounded-full bg-gradient-to-r from-[var(--accent-purple)]/30 to-[var(--accent-cyan)]/20 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide text-[var(--text-primary)]">
+        <span className="rounded-full bg-gradient-to-r from-[var(--accent-purple)]/30 to-[var(--accent-cyan)]/20 px-2.5 py-1 text-label font-bold uppercase tracking-wide text-[var(--text-primary)]">
           12-day streak
         </span>
       </div>
 
-      <div className="grid grid-cols-7 gap-0.5 text-center text-[9px] font-semibold uppercase text-[var(--text-muted)]">
+      <div className="grid grid-cols-7 gap-0.5 text-center text-label font-semibold uppercase text-[var(--text-muted)]">
         {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((d) => (
           <span key={d} className="py-1">
             {d}
@@ -211,7 +220,7 @@ function JournalScreen() {
               return (
                 <div
                   key={day}
-                  className={`relative flex h-8 flex-col items-center justify-center rounded-lg text-[10px] font-medium tabular-nums ${
+                  className={`relative flex h-8 flex-col items-center justify-center rounded-lg text-xs font-medium tabular-nums ${
                     isToday
                       ? "ring-2 ring-[var(--accent-cyan)] ring-offset-2 ring-offset-[var(--bg-deep)]"
                       : "bg-[var(--bg-surface)]/60 text-[var(--text-secondary)]"
@@ -231,7 +240,7 @@ function JournalScreen() {
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-2 text-[9px] text-[var(--text-muted)]">
+      <div className="flex flex-wrap gap-2 text-label text-[var(--text-muted)]">
         <span className="flex items-center gap-1">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-cyan)]" /> Fresh
         </span>
@@ -244,14 +253,14 @@ function JournalScreen() {
       </div>
 
       <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/90 p-3">
-        <p className="text-[9px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">Latest entry</p>
+        <p className="text-label font-semibold uppercase tracking-wider text-[var(--text-muted)]">Latest entry</p>
         <p className="mt-1 font-heading text-sm font-bold text-[var(--text-primary)]">Evening woody layer</p>
-        <p className="mt-0.5 text-[10px] text-[var(--text-secondary)]">Sat · 7:40 PM · 18°C outside</p>
+        <p className="mt-0.5 text-xs text-[var(--text-secondary)]">Sat · 7:40 PM · 18°C outside</p>
         <div className="mt-2 flex flex-wrap gap-1">
           {["Sandalwood", "Low humidity", "Long wear"].map((t) => (
             <span
               key={t}
-              className="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-deep)] px-2 py-0.5 text-[9px] text-[var(--text-secondary)]"
+              className="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-deep)] px-2 py-0.5 text-label text-[var(--text-secondary)]"
             >
               {t}
             </span>
@@ -260,8 +269,8 @@ function JournalScreen() {
       </div>
 
       <div className="rounded-xl border border-[var(--border-active)]/35 bg-[var(--bg-glass)] px-3 py-2 backdrop-blur-sm">
-        <p className="text-[9px] font-semibold uppercase tracking-wider text-[var(--accent-cyan)]">Mia · Pattern</p>
-        <p className="text-[11px] leading-snug text-[var(--text-secondary)]">
+        <p className="text-label font-semibold uppercase tracking-wider text-[var(--accent-cyan)]">Mia · Pattern</p>
+        <p className="text-small leading-snug text-[var(--text-secondary)]">
           You reach for fresher accords on humid weekdays — consider a citrus top on Tuesday&apos;s forecast.
         </p>
       </div>
@@ -275,7 +284,7 @@ function ResultsScreen() {
       <StatusBar />
       <div className="flex items-center justify-between gap-2">
         <p className="font-heading text-base font-bold text-[var(--text-primary)]">Your formula</p>
-        <span className="rounded-full bg-[var(--accent-cyan)]/15 px-2 py-0.5 font-heading text-[11px] font-bold tabular-nums text-[var(--accent-cyan)]">
+        <span className="rounded-full bg-[var(--accent-cyan)]/15 px-2 py-0.5 font-heading text-small font-bold tabular-nums text-[var(--accent-cyan)]">
           Beta match
         </span>
       </div>
@@ -294,7 +303,7 @@ function ResultsScreen() {
           />
         ))}
         <div className="relative z-[1] h-16 w-16 rounded-full bg-gradient-to-br from-[var(--accent-purple)]/40 to-[var(--accent-cyan)]/30 blur-[2px]" />
-        <span className="absolute z-[2] text-[10px] font-semibold text-[var(--text-primary)]">ESSENSE</span>
+        <span className="absolute z-[2] text-xs font-semibold text-[var(--text-primary)]">ESSENSE</span>
       </div>
 
       <div className="space-y-2.5">
@@ -304,7 +313,7 @@ function ResultsScreen() {
           { tier: "Base", name: "Musk", pct: 88, color: "from-[var(--accent-amber)] to-[var(--accent-rose)]" },
         ].map((row) => (
           <div key={row.tier}>
-            <div className="mb-1 flex items-center justify-between text-[10px]">
+            <div className="mb-1 flex items-center justify-between text-xs">
               <span className="font-semibold text-[var(--text-muted)]">{row.tier}</span>
               <span className="text-[var(--text-secondary)]">
                 {row.name} · {row.pct}%
@@ -321,7 +330,7 @@ function ResultsScreen() {
       </div>
 
       <div>
-        <p className="mb-1.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
+        <p className="mb-1.5 text-label font-semibold uppercase tracking-wider text-[var(--text-muted)]">
           Application guide
         </p>
         <div className="grid grid-cols-2 gap-2">
@@ -335,14 +344,14 @@ function ResultsScreen() {
               key={cell.zone}
               className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/80 px-2.5 py-2 text-center"
             >
-              <p className="text-[10px] font-medium text-[var(--text-primary)]">{cell.zone}</p>
-              <p className="mt-0.5 text-[9px] tabular-nums text-[var(--text-muted)]">{cell.sprays} spray{cell.sprays > 1 ? "s" : ""}</p>
+              <p className="text-xs font-medium text-[var(--text-primary)]">{cell.zone}</p>
+              <p className="mt-0.5 text-label tabular-nums text-[var(--text-muted)]">{cell.sprays} spray{cell.sprays > 1 ? "s" : ""}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <p className="text-[9px] leading-relaxed text-[var(--text-muted)]">
+      <p className="text-label leading-relaxed text-[var(--text-muted)]">
         In high humidity, molecules lift faster — reapply or refresh after ~6h for consistent projection.
       </p>
     </div>
@@ -372,6 +381,7 @@ const CAROUSEL_SCREENS = [
 ];
 
 export function AppPreview() {
+  const reduceMotion = useReducedMotion();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
   const [active, setActive] = useState(1);
@@ -402,13 +412,13 @@ export function AppPreview() {
   }, [paginate]);
 
   useEffect(() => {
-    if (paused || !inView) return;
+    if (paused || !inView || reduceMotion) return;
     const id = window.setInterval(() => {
       setDirection(1);
       setActive((a) => (a + 1) % CAROUSEL_SCREENS.length);
     }, CAROUSEL_INTERVAL_MS);
     return () => window.clearInterval(id);
-  }, [paused, inView]);
+  }, [paused, inView, reduceMotion]);
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;

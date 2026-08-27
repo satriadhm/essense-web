@@ -8,6 +8,7 @@ import {
   useState,
   startTransition,
 } from "react";
+import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -297,6 +298,7 @@ const MOBILE_AUTOPLAY_MS = 3200;
 const SWIPE_THRESHOLD = 48;
 
 function MobileStack() {
+  const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const autoplayRef = useRef<number | null>(null);
   const resumeTimeoutRef = useRef<number | null>(null);
@@ -337,6 +339,8 @@ function MobileStack() {
 
   const startAutoplay = useCallback(() => {
     stopAutoplay();
+    // Auto-advancing a carousel is motion the reader did not ask for.
+    if (reduceMotion) return;
     autoplayRef.current = window.setInterval(() => {
       setActiveStep((prev) => {
         if (prev < mobileSteps.length - 1) {
@@ -348,7 +352,7 @@ function MobileStack() {
         return prev;
       });
     }, MOBILE_AUTOPLAY_MS);
-  }, [mobileSteps.length, stopAutoplay]);
+  }, [mobileSteps.length, stopAutoplay, reduceMotion]);
 
   const scheduleResume = useCallback(() => {
     if (resumeTimeoutRef.current !== null) {
@@ -500,12 +504,6 @@ function MobileStack() {
   );
 }
 
-/*
- * The desktop autoplay drives a 0.8s scroll tween, so a 1s cadence meant the
- * page was moving under the reader almost continuously.
- */
-const AUTOPLAY_MS = 4000;
-
 /** Steps s1–s4 only (panels at index 1–4; intro is index 0). */
 const STEP_PANEL_START = 1;
 const STEP_COUNT = 4;
@@ -516,9 +514,9 @@ export function HowItWorks() {
   const progressRef = useRef<HTMLDivElement>(null);
   const stRef = useRef<ScrollTrigger | null>(null);
   const panelLeftsRef = useRef<number[]>([]);
+  /** True only while a dot click is tweening the page; suppresses onUpdate. */
   const programmaticScrollRef = useRef(false);
   const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
-  const introModeRef = useRef(true);
 
   const [desktop, setDesktop] = useState(false);
   /** s1–s4 only: index 0 → panel 1, … index 3 → panel 4 */
@@ -527,48 +525,11 @@ export function HowItWorks() {
   const [introMode, setIntroMode] = useState(true);
 
   useEffect(() => {
-    introModeRef.current = introMode;
-  }, [introMode]);
-  const [hoverTrack, setHoverTrack] = useState(false);
-  const [sectionInView, setSectionInView] = useState(false);
-  /** Bump to reset the autoplay interval after dot click */
-  const [autoplayKey, setAutoplayKey] = useState(0);
-  /** False while user is wheeling/scrolling; pauses autoplay until idle debounce */
-  const [scrollIdle, setScrollIdle] = useState(true);
-
-  useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
     startTransition(() => setDesktop(mq.matches));
     const fn = () => startTransition(() => setDesktop(mq.matches));
     mq.addEventListener("change", fn);
     return () => mq.removeEventListener("change", fn);
-  }, []);
-
-  useEffect(() => {
-    const el = pinRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => setSectionInView(e.isIntersecting),
-      { threshold: 0.12, rootMargin: "0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [desktop]);
-
-  /** Pause autoplay while the user is actively scrolling (not our programmatic tween). */
-  useEffect(() => {
-    let t: ReturnType<typeof setTimeout>;
-    const onScroll = () => {
-      if (programmaticScrollRef.current) return;
-      setScrollIdle(false);
-      clearTimeout(t);
-      t = setTimeout(() => setScrollIdle(true), 700);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      clearTimeout(t);
-    };
   }, []);
 
   useLayoutEffect(() => {
@@ -636,8 +597,14 @@ export function HowItWorks() {
   }, [desktop]);
 
   /**
-   * Animates to s1–s4 by tweening scrollY so ScrollTrigger scrub stays authoritative
-   * (same end x as gsap.to(track, { x: -offsetLeft })).
+   * Scrolls to a step in response to a dot click. Tweens scrollY rather than the
+   * track so ScrollTrigger's scrub stays authoritative (same end x as
+   * gsap.to(track, { x: -offsetLeft })).
+   *
+   * This is the only thing that moves the page on the reader's behalf, and it
+   * only ever runs from a click. The section used to advance itself on a timer
+   * whenever it was in view, which meant it took the scroll position away from
+   * whoever was reading it.
    */
   const animateToContentStep = useCallback((step: number) => {
     const track = trackRef.current;
@@ -672,34 +639,8 @@ export function HowItWorks() {
     });
   }, []);
 
-  useEffect(() => {
-    if (!desktop || !sectionInView || hoverTrack || !scrollIdle) {
-      return;
-    }
-    const id = window.setInterval(() => {
-      if (introModeRef.current) {
-        requestAnimationFrame(() => animateToContentStep(0));
-        return;
-      }
-      setCurrentStep((prev) => {
-        const next = (prev + 1) % STEP_COUNT;
-        requestAnimationFrame(() => animateToContentStep(next));
-        return next;
-      });
-    }, AUTOPLAY_MS);
-    return () => clearInterval(id);
-  }, [
-    desktop,
-    sectionInView,
-    hoverTrack,
-    scrollIdle,
-    autoplayKey,
-    animateToContentStep,
-  ]);
-
   const onDotClick = (step: number) => {
     setCurrentStep(step);
-    setAutoplayKey((k) => k + 1);
     scrollTweenRef.current?.kill();
     animateToContentStep(step);
   };
@@ -718,8 +659,6 @@ export function HowItWorks() {
         <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden">
           <div
             ref={trackRef}
-            onMouseEnter={() => setHoverTrack(true)}
-            onMouseLeave={() => setHoverTrack(false)}
             className="flex h-[calc(100dvh-48px)] w-max gap-6 will-change-transform"
           >
             {desktopSteps.map((s) => (

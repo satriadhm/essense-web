@@ -126,30 +126,33 @@ export function MiaAI() {
             ))}
           </div>
           {/*
-           * Decorative composer. It looks like a text field but is not one, so
-           * it is hidden from assistive tech and kept out of the tab order
-           * rather than advertising an input that does not exist.
+           * The composer is a real control rather than a <span> dressed as a
+           * text field. It is not an input, because there is no Mia to send a
+           * message to yet — so it says what it actually does and goes there.
            */}
-          <div
-            className="flex items-center gap-2 border-t border-[var(--border-subtle)] px-3 py-3 text-[var(--text-muted)]"
-            aria-hidden
-            inert
+          <a
+            href="#cta"
+            className="focus-ring group flex items-center gap-2 border-t border-[var(--border-subtle)] px-3 py-3 text-[var(--text-muted)] transition hover:text-[var(--text-secondary)]"
           >
-            <span className="flex-1 rounded-full bg-[var(--bg-surface)] px-3 py-2 text-sm">
-              Ask Mia anything...
+            <span className="flex-1 rounded-full bg-[var(--bg-surface)] px-3 py-2 text-left text-sm transition group-hover:bg-[color-mix(in_srgb,var(--bg-surface)_70%,var(--accent-cyan))]">
+              Ask Mia anything…
             </span>
             <svg
               viewBox="0 0 24 24"
-              className="h-5 w-5 text-[var(--accent-cyan)]"
+              className="h-5 w-5 shrink-0 text-[var(--accent-cyan)]"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
+              aria-hidden
             >
               <path d="m4 12 16-8-6 8 6 8-16-8Z" />
             </svg>
-          </div>
+            <span className="sr-only">
+              Mia is part of the private beta — request an invite
+            </span>
+          </a>
         </div>
       </div>
     </section>
