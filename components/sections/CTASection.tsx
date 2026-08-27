@@ -37,7 +37,7 @@ export function CTASection() {
           className="mb-10 h-24 w-24 select-none object-contain sm:h-28 sm:w-28 md:h-32 md:w-32"
         />
 
-        <h2 className="font-heading text-h1 font-extrabold text-[var(--text-primary)]">
+        <h2 className="font-heading text-statement font-extrabold text-[var(--text-primary)]">
           Get <span className="gradient-text-brand">Essense</span>.
         </h2>
         <p className="mt-6 max-w-[400px] text-lg text-[var(--text-secondary)]">

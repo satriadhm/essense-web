@@ -42,7 +42,7 @@ export function MiaAI() {
       >
         <div>
           <SectionKicker tone="violet">Meet Mia</SectionKicker>
-          <h2 className="mt-4 font-heading text-h2 font-extrabold text-[var(--text-primary)]">
+          <h2 className="mt-4 font-heading text-section font-extrabold text-[var(--text-primary)]">
             An <span className="gradient-text-brand">AI</span> fragrance
             assistant.
           </h2>
@@ -59,7 +59,7 @@ export function MiaAI() {
             href="#cta"
             className="focus-ring mt-10 inline-block rounded font-heading text-sm text-[var(--accent-cyan)] transition hover:underline"
           >
-            Talk to Mia →
+            Try Mia in the beta →
           </a>
         </div>
 

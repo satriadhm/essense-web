@@ -171,7 +171,7 @@ export function CommunitySection() {
       <div className="mx-auto max-w-[1100px] text-center">
         <ScrollReveal>
           <SectionKicker>Community</SectionKicker>
-          <h2 className="mt-4 font-heading text-h2 font-extrabold text-[var(--text-primary)]">
+          <h2 className="mt-4 font-heading text-section font-extrabold text-[var(--text-primary)]">
             What other people are wearing.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[var(--text-secondary)]">

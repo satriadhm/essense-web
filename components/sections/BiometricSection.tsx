@@ -178,7 +178,7 @@ export function BiometricSection() {
         <div className="mx-auto max-w-4xl text-center">
           <ScrollReveal>
             <SectionKicker>Biometric analysis</SectionKicker>
-            <h2 className="mt-4 font-heading text-h1 font-extrabold text-[var(--text-primary)]">
+            <h2 className="mt-4 font-heading text-statement font-extrabold text-[var(--text-primary)]">
               <span className="text-[var(--accent-cyan)]">
                 {BIOMETRIC_SCAN_SECONDS} seconds
               </span>{" "}

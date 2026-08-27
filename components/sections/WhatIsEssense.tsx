@@ -250,7 +250,7 @@ function Block({
     >
       <div className="text-center lg:text-left">
         <SectionKicker>{label}</SectionKicker>
-        <h2 className="mt-4 font-heading text-h1 font-extrabold leading-tight text-[var(--text-primary)]">
+        <h2 className="mt-4 font-heading text-statement font-extrabold leading-tight text-[var(--text-primary)]">
           {headline}
         </h2>
         <p className="mx-auto mt-6 max-w-[500px] text-[var(--text-secondary)] lg:mx-0">
