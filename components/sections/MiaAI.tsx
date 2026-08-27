@@ -3,14 +3,25 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { PillBadge } from "@/components/ui/PillBadge";
+import { SectionKicker } from "@/components/ui/SectionKicker";
 
 const bubbles = [
   { who: "mia" as const, text: "Hi, I'm Mia. What are you wearing today?" },
   { who: "user" as const, text: "Just scanned L'Oréal Homme Intense." },
-  { who: "mia" as const, text: "Good pick for 26°C and moderate humidity. The bergamot should open up well." },
-  { who: "mia" as const, text: "Apply to inner wrists and neck. Your skin temp will lift the citrus notes." },
+  {
+    who: "mia" as const,
+    text: "Good pick for 26°C and moderate humidity. The bergamot should open up well.",
+  },
+  {
+    who: "mia" as const,
+    text: "Apply to inner wrists and neck. Your skin temp will lift the citrus notes.",
+  },
   { who: "user" as const, text: "What about for tonight?" },
-  { who: "mia" as const, text: "Cooler tonight at 19°C. Try something warmer:", card: true },
+  {
+    who: "mia" as const,
+    text: "Cooler tonight at 19°C. Try something warmer:",
+    card: true,
+  },
 ];
 
 export function MiaAI() {
@@ -25,12 +36,13 @@ export function MiaAI() {
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h12v12H0z' fill='none' stroke='%23ffffff' stroke-opacity='0.03'/%3E%3C/svg%3E")`,
       }}
     >
-      <div ref={ref} className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2 lg:items-center">
+      <div
+        ref={ref}
+        className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-2 lg:items-center"
+      >
         <div>
-          <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-purple)]">
-            Meet Mia
-          </p>
-          <h2 className="mt-4 font-heading text-[length:var(--text-h2)] font-extrabold text-[var(--text-primary)]">
+          <SectionKicker tone="violet">Meet Mia</SectionKicker>
+          <h2 className="mt-4 font-heading text-h2 font-extrabold text-[var(--text-primary)]">
             An <span className="gradient-text-brand">AI</span> fragrance
             assistant.
           </h2>
@@ -45,7 +57,7 @@ export function MiaAI() {
           </div>
           <a
             href="#cta"
-            className="mt-10 inline-block font-heading text-[15px] text-[var(--accent-cyan)] transition hover:underline"
+            className="focus-ring mt-10 inline-block rounded font-heading text-sm text-[var(--accent-cyan)] transition hover:underline"
           >
             Talk to Mia →
           </a>
@@ -53,45 +65,90 @@ export function MiaAI() {
 
         <div className="mx-auto w-full max-w-[340px] rounded-[28px] border border-[color:color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--bg-mid)_80%,white)] shadow-[0_16px_38px_rgba(0,0,0,0.35)]">
           <div className="flex items-center gap-3 border-b border-[var(--border-subtle)] px-4 py-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-cyan)] font-heading text-sm font-bold">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-violet)] font-heading text-sm font-bold text-white"
+              aria-hidden
+            >
               M
             </div>
             <div className="flex-1">
               <p className="font-heading text-sm font-bold">Mia</p>
-              <p className="text-[11px] text-[var(--text-secondary)]">AI Assistant</p>
+              <p className="text-label text-[var(--text-secondary)]">
+                AI Assistant
+              </p>
             </div>
           </div>
-          <div className="flex h-[420px] flex-col gap-3 overflow-y-auto p-4">
+          {/*
+           * tabIndex makes this scrollable region reachable by keyboard — a
+           * scroll container that cannot be focused cannot be scrolled without
+           * a pointer.
+           */}
+          <div
+            className="scrollbar-themed flex h-[420px] flex-col gap-3 overflow-y-auto p-4"
+            role="region"
+            aria-label="Example conversation with Mia"
+            tabIndex={0}
+          >
             {bubbles.map((b, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.4, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                animate={inView ? { opacity: 1, y: 0 } : undefined}
+                transition={{
+                  delay: i * 0.4,
+                  duration: 0.45,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className={
                   b.who === "user"
-                    ? "ml-auto max-w-[90%] rounded-[18px] bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-blue)] px-4 py-3 text-left text-[14px] text-white"
-                    : "mr-auto max-w-[95%] rounded-[18px] bg-[var(--bg-surface)] px-4 py-3 text-left text-[14px] text-[var(--text-primary)]"
+                    ? "ml-auto max-w-[90%] rounded-[18px] bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-blue)] px-4 py-3 text-left text-sm text-white"
+                    : "mr-auto max-w-[95%] rounded-[18px] bg-[var(--bg-surface)] px-4 py-3 text-left text-sm text-[var(--text-primary)]"
                 }
               >
                 <p>{b.text}</p>
                 {b.card && (
                   <div className="mt-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-3 text-xs">
-                    <p className="font-heading font-semibold">L&apos;Oréal Homme Intense — Base-forward edition</p>
-                    <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-[var(--bg-mid)]">
+                    <p className="font-heading font-semibold text-[var(--text-primary)]">
+                      L&apos;Oréal Homme Intense — Base-forward edition
+                    </p>
+                    <div
+                      className="mt-2 h-2 w-full overflow-hidden rounded-full bg-[var(--bg-mid)]"
+                      aria-hidden
+                    >
                       <div className="h-full w-[72%] rounded-full bg-gradient-to-r from-[var(--accent-rose)] to-[var(--accent-purple)]" />
                     </div>
-                    <p className="mt-1 text-[var(--text-muted)]">More base, softer top</p>
+                    <p className="mt-1 text-[var(--text-muted)]">
+                      More base, softer top
+                    </p>
                   </div>
                 )}
               </motion.div>
             ))}
           </div>
-          <div className="flex items-center gap-2 border-t border-[var(--border-subtle)] px-3 py-3 text-[var(--text-muted)]">
+          {/*
+           * Decorative composer. It looks like a text field but is not one, so
+           * it is hidden from assistive tech and kept out of the tab order
+           * rather than advertising an input that does not exist.
+           */}
+          <div
+            className="flex items-center gap-2 border-t border-[var(--border-subtle)] px-3 py-3 text-[var(--text-muted)]"
+            aria-hidden
+            inert
+          >
             <span className="flex-1 rounded-full bg-[var(--bg-surface)] px-3 py-2 text-sm">
               Ask Mia anything...
             </span>
-            <span className="text-[var(--accent-cyan)]">➤</span>
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5 text-[var(--accent-cyan)]"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m4 12 16-8-6 8 6 8-16-8Z" />
+            </svg>
           </div>
         </div>
       </div>

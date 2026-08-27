@@ -1,40 +1,5 @@
 import { profileImageSrc } from "@/lib/profile-images";
 
-export type NoteTier = "top" | "heart" | "base";
-
-export interface FragranceProfile {
-  id: string;
-  name: string;
-  family: "floral" | "woody" | "fresh" | "oriental";
-}
-
-export const exampleFragrances: FragranceProfile[] = [
-  { id: "1", name: "YSL Y", family: "fresh" },
-  { id: "2", name: "L'Oréal Homme Intense", family: "fresh" },
-  { id: "3", name: "L'Oréal Homme Sport", family: "fresh" },
-];
-
-export const noteTierExamples: Record<
-  NoteTier,
-  { label: string; examples: string[]; timeline: string }
-> = {
-  top: {
-    label: "TOP NOTES",
-    examples: ["Bergamot", "Citrus", "Ginger", "Neroli"],
-    timeline: "First 5–20 min — volatile, first impression",
-  },
-  heart: {
-    label: "HEART NOTES",
-    examples: ["Lavender", "Rose", "Jasmine", "Spice"],
-    timeline: "20 min–hours — character of the scent",
-  },
-  base: {
-    label: "BASE NOTES",
-    examples: ["Patchouli", "Sandalwood", "Musk", "Vanilla"],
-    timeline: "Hours to days — dry-down, sillage",
-  },
-};
-
 export const communityPosts = [
   {
     id: "1",

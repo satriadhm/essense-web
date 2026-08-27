@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Inter } from "next/font/google";
+import { MotionProvider } from "@/components/animations/MotionProvider";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -34,8 +35,8 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${inter.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="page-root min-h-full bg-[var(--bg-deep)] text-[var(--text-primary)]">
-        {children}
+      <body className="page-root min-h-full bg-bg-deep text-text-primary">
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

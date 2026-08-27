@@ -1,7 +1,5 @@
 import { cn } from "@/lib/cn";
-
-const DOWNLOAD_URL =
-  "https://drive.google.com/file/d/1iw6MdGUq8CYv2GR6OB3m8GXkFheshu_Z/view?usp=drive_link";
+import { DOWNLOAD_URL } from "@/lib/site-constants";
 
 type CtaButtonProps = {
   className?: string;
@@ -15,9 +13,10 @@ export function CtaButton({ className, label = "Join the beta" }: CtaButtonProps
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "inline-flex items-center justify-center rounded-full px-8 py-3.5 font-heading text-sm font-bold text-white",
-        "bg-gradient-to-br from-[var(--accent-purple)] to-[var(--accent-cyan)]",
-        "transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-cyan)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-deep)]",
+        "inline-flex items-center justify-center rounded-full px-8 py-3.5 font-heading text-sm font-bold",
+        // Dark ink on the violet→cyan ramp; white text scored 1.66:1 on the cyan stop.
+        "gradient-brand-fill",
+        "focus-ring transition hover:brightness-110",
         className,
       )}
     >

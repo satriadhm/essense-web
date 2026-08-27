@@ -1,5 +1,6 @@
 import { HideHomeScrollbar } from "@/components/home/HideHomeScrollbar";
 import { Navbar } from "@/components/navigation/Navbar";
+import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { HeroSection } from "@/components/hero/HeroSection";
 import { WhatIsEssense } from "@/components/sections/WhatIsEssense";
 import { HowItWorks } from "@/components/sections/HowItWorks";
@@ -26,6 +27,7 @@ export default function Home() {
         <AppPreview />
         <CTASection />
       </main>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,21 +1,37 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens.
+ *
+ * These stay on :root (rather than living only inside @theme) because the
+ * components reference them directly as var(--accent-cyan) etc. The @theme
+ * inline block below re-exports them into Tailwind's color namespace, so
+ * `bg-bg-deep` / `text-accent-cyan` utilities work too and new code can drop
+ * the arbitrary-value brackets.
+ *
+ * Contrast: every foreground/background pair used for text meets WCAG AA
+ * (>= 4.5:1). See the notes on individual tokens before changing them.
+ */
 :root {
   --bg-deep: #07091a;
   --bg-mid: #0d1128;
   --bg-surface: #141836;
   --bg-glass: rgba(20, 24, 54, 0.55);
 
+  /* Fill/gradient purple. Only safe under WHITE text (4.53:1). */
   --accent-purple: #7b5cf0;
+  /* Text purple, and the gradient stop used under DARK text (5.67:1). */
   --accent-violet: #9d6ff5;
   --accent-cyan: #4dd9ff;
-  --accent-blue: #3b82f6;
+  /* Darkened from #3b82f6, which failed AA under white text (3.68:1). */
+  --accent-blue: #3472d8;
   --accent-amber: #f59e0b;
   --accent-rose: #f43f5e;
 
   --text-primary: #f0f4ff;
   --text-secondary: #a0aabf;
-  --text-muted: #5c6680;
+  /* Lightened from #5c6680, which failed AA on every surface (3.0–3.5:1). */
+  --text-muted: #7c8aad;
 
   --border-subtle: rgba(77, 217, 255, 0.08);
   --border-active: rgba(77, 217, 255, 0.35);
@@ -23,6 +39,18 @@
   --glow-purple: rgba(123, 92, 240, 0.4);
   --glow-cyan: rgba(77, 217, 255, 0.3);
 
+  /*
+   * Foreground for the brand gradient. The cyan stop is far too light for
+   * white text (1.66:1), so gradient buttons use dark ink instead.
+   */
+  --on-gradient: var(--bg-deep);
+}
+
+@theme {
+  /*
+   * Type scale. Declared in @theme (not :root) so Tailwind emits both the
+   * `text-h1`-style utilities and the --text-* custom properties.
+   */
   --text-hero: clamp(44px, 13vw, 120px);
   --text-h1: clamp(40px, 6vw, 72px);
   --text-h2: clamp(28px, 4vw, 48px);
@@ -30,74 +58,124 @@
   --text-body: 16px;
   --text-small: 13px;
   --text-label: 11px;
-
-  --cursor-x: 0px;
-  --cursor-y: 0px;
 }
 
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg-deep: var(--bg-deep);
+  --color-bg-mid: var(--bg-mid);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-glass: var(--bg-glass);
+
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-rose: var(--accent-rose);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-border-subtle: var(--border-subtle);
+  --color-border-active: var(--border-active);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-* {
+/*
+ * Scrollbars. Scoped to the scrollable roots and opt-in containers rather
+ * than `*`, which made every element in the tree carry the properties.
+ */
+html,
+body,
+.scrollbar-themed {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--accent-purple) 60%, transparent)
     var(--bg-surface);
 }
 
-*::-webkit-scrollbar {
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.scrollbar-themed::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-*::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.scrollbar-themed::-webkit-scrollbar-track {
   background: var(--bg-surface);
   border-radius: 3px;
 }
 
-*::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.scrollbar-themed::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--accent-purple) 60%, transparent);
   border-radius: 3px;
 }
 
-/* Home / hero page: no visible scrollbar (scroll still works) */
+/* Home / hero page: no visible scrollbar (scroll still works). */
 html.home-hide-scrollbar,
 html.home-hide-scrollbar body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-html.home-hide-scrollbar *,
-html.home-hide-scrollbar *::-webkit-scrollbar,
-html.home-hide-scrollbar *::-webkit-scrollbar-track,
-html.home-hide-scrollbar *::-webkit-scrollbar-thumb {
-  scrollbar-width: none;
-}
-
-html.home-hide-scrollbar *::-webkit-scrollbar,
-body.home-hide-scrollbar::-webkit-scrollbar {
+html.home-hide-scrollbar::-webkit-scrollbar,
+html.home-hide-scrollbar body::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
-  background: transparent;
+}
+
+/* Hides a scroll container's scrollbar without hiding the page's. */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
   background: var(--bg-deep);
   color: var(--text-primary);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: 1.65;
 }
 
 .font-heading {
-  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-family: var(--font-heading);
 }
+
+/*
+ * Shared focus ring. Every interactive element should carry this so keyboard
+ * focus is visible against the dark surfaces.
+ */
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+ * Keyframes
+ *
+ * All keyframes live here. Component-local <style> tags were previously
+ * injecting these into the global scope from five different files, and one of
+ * them redefined `pulse` — the name Tailwind's own `animate-pulse` uses.
+ * ------------------------------------------------------------------------- */
 
 @keyframes pageIn {
   from {
@@ -108,19 +186,19 @@ body {
   }
 }
 
-.page-root {
-  animation: pageIn 400ms ease forwards;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes glowDrift {
-  0% {
-    transform: translate(0, 0);
+  0%,
+  100% {
+    translate: 0 0;
   }
   50% {
-    transform: translate(30px, -20px);
-  }
-  100% {
-    transform: translate(0, 0);
+    translate: 30px -20px;
   }
 }
 
@@ -134,43 +212,94 @@ body {
   }
 }
 
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+@keyframes scentBreath {
+  0%,
+  100% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
-.scroll-reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes scentRingSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.scroll-reveal-left {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition:
-    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+@keyframes scentRingPulseStroke {
+  0%,
+  100% {
+    stroke-width: 1;
+  }
+  50% {
+    stroke-width: 1.5;
+  }
 }
 
-.scroll-reveal-left.is-visible {
-  opacity: 1;
-  transform: translateX(0);
+@keyframes bioPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
-.scroll-reveal-right {
-  opacity: 0;
-  transform: translateX(30px);
-  transition:
-    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+/*
+ * Transform-based so the scan line does not trigger layout every frame.
+ * The travel distance is the height of the scanner window; the component sets
+ * --bio-scan-travel to match.
+ */
+@keyframes bioScanLine {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--bio-scan-travel, 178px));
+  }
 }
 
-.scroll-reveal-right.is-visible {
-  opacity: 1;
-  transform: translateX(0);
+/*
+ * Sweeping highlight. CSS rather than a Framer Motion `repeat: Infinity`
+ * animation, which kept a JS animation loop running for the whole page
+ * lifetime even while the element was off-screen.
+ */
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes dotFill {
+  from {
+    width: 8px;
+  }
+  to {
+    width: 24px;
+  }
+}
+
+/* Renamed from `pulse`, which collided with Tailwind's animate-pulse. */
+@keyframes stepNodePulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+.page-root {
+  animation: pageIn 400ms ease forwards;
 }
 
 .bg-site-gradient {
@@ -189,7 +318,7 @@ body {
 }
 
 .gradient-text-brand {
-  background: linear-gradient(135deg, #7b5cf0, #4dd9ff);
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -197,20 +326,17 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-@keyframes scent-ring-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes scent-ring-pulse-stroke {
-  0%,
-  100% {
-    stroke-width: 1;
-  }
-  50% {
-    stroke-width: 1.5;
-  }
+/*
+ * Brand gradient for filled controls. Starts at violet rather than purple so
+ * --on-gradient ink clears AA (5.67:1) across the whole ramp.
+ */
+.gradient-brand-fill {
+  background-image: linear-gradient(
+    135deg,
+    var(--accent-violet),
+    var(--accent-cyan)
+  );
+  color: var(--on-gradient);
 }
 
 .scent-ring-layer {
@@ -220,30 +346,93 @@ body {
 
 .scent-ring-layer--0 {
   animation:
-    scent-ring-spin 30s linear infinite,
-    scent-ring-pulse-stroke 3s ease-in-out infinite;
-  animation-delay: 0s, 0s;
+    scentRingSpin 30s linear infinite,
+    scentRingPulseStroke 3s ease-in-out infinite;
 }
 
 .scent-ring-layer--1 {
   animation:
-    scent-ring-spin 25s linear infinite reverse,
-    scent-ring-pulse-stroke 3s ease-in-out infinite;
+    scentRingSpin 25s linear infinite reverse,
+    scentRingPulseStroke 3s ease-in-out infinite;
   animation-delay: 0s, 0.4s;
 }
 
 .scent-ring-layer--2 {
   animation:
-    scent-ring-spin 20s linear infinite,
-    scent-ring-pulse-stroke 3s ease-in-out infinite;
+    scentRingSpin 20s linear infinite,
+    scentRingPulseStroke 3s ease-in-out infinite;
   animation-delay: 0s, 0.8s;
 }
 
 .scent-ring-layer--3 {
-  animation: scent-ring-spin 15s linear infinite reverse;
+  animation: scentRingSpin 15s linear infinite reverse;
 }
 
 .scent-ring-layer--4 {
-  animation: scent-ring-spin 35s linear infinite;
+  animation: scentRingSpin 35s linear infinite;
 }
 
+.scent-breath {
+  animation: scentBreath 4s ease-in-out infinite;
+}
+
+.bio-scan-line {
+  animation: bioScanLine 2s linear infinite;
+}
+
+.step-node-pulse {
+  animation: stepNodePulse 2.5s ease-in-out infinite;
+}
+
+/*
+ * Uses the standalone `translate` property, not `transform`, so it composes
+ * with the scroll-linked transform Framer Motion writes on the same element
+ * instead of overriding it.
+ */
+.animate-glow-drift {
+  animation: glowDrift 20s ease-in-out infinite;
+}
+
+.animate-scroll-line {
+  animation: scrollLinePulse 2.2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* Fades in on mount; paired with an opacity-0 starting state. */
+.animate-fade-in {
+  animation: fadeIn 600ms ease forwards;
+}
+
+/* ---------------------------------------------------------------------------
+ * Reduced motion
+ *
+ * The page is animation-heavy: infinite spins, drifting glows, shimmer sweeps,
+ * autoplaying carousels and a pinned horizontal scroll. Honour the OS setting.
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /*
+   * These start at opacity:0 and are revealed by an animation, so they must be
+   * forced visible once the animation is neutralised above.
+   */
+  .page-root,
+  .animate-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

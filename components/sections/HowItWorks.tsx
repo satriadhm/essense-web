@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { FragranceTag } from "@/components/ui/FragranceTag";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { SectionKicker } from "@/components/ui/SectionKicker";
 import { BIOMETRIC_SCAN_SECONDS } from "@/lib/site-constants";
 import { profileImagesOrdered } from "@/lib/profile-images";
 import Image from "next/image";
@@ -34,15 +35,36 @@ function StepFingerprint() {
 }
 
 function ScanProgressLoop() {
+  const ref = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(0);
+  const [visible, setVisible] = useState(false);
+
+  /*
+   * This component is rendered in both the mobile and desktop trees, so the
+   * unguarded 60ms interval ran twice for the whole life of the page — about
+   * 33 React renders a second, most of them for a hidden element.
+   */
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
     const t = setInterval(() => {
       setW((x) => (x >= 100 ? 0 : x + 2));
     }, 60);
     return () => clearInterval(t);
-  }, []);
+  }, [visible]);
+
   return (
-    <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-[var(--bg-deep)]">
+    <div
+      ref={ref}
+      className="mt-4 h-1 w-full overflow-hidden rounded-full bg-[var(--bg-deep)]"
+    >
       <div
         className="h-full rounded-full bg-[var(--accent-cyan)] transition-[width] duration-100"
         style={{ width: `${w}%` }}
@@ -62,12 +84,38 @@ function StepAI() {
           style={{
             transform: `rotate(${deg}deg) translateY(-36px)`,
             opacity: 0.4 + (i % 3) * 0.15,
-            animation: `pulse 2.5s ease-in-out ${i * 0.2}s infinite`,
+            animation: `stepNodePulse 2.5s ease-in-out ${i * 0.2}s infinite`,
           }}
         />
       ))}
-      <style>{`@keyframes pulse { 0%,100%{opacity:.35;transform:scale(1)} 50%{opacity:1;transform:scale(1.15)} }`}</style>
     </div>
+  );
+}
+
+function StepJournalIcons() {
+  const paths = [
+    "M10 3h4v3l2 3v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3V3Z", // bottle
+    "M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5Z", // journal
+    "M6 18 18 6M18 6h-7M18 6v7", // share out
+  ];
+  return (
+    <>
+      {paths.map((d) => (
+        <svg
+          key={d}
+          viewBox="0 0 24 24"
+          className="h-6 w-6 text-[var(--accent-cyan)]"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d={d} />
+        </svg>
+      ))}
+    </>
   );
 }
 
@@ -77,10 +125,8 @@ const desktopSteps = [
     width: "min-w-[100vw]",
     content: (
       <div className="flex h-full flex-col justify-center px-[max(5vw,40px)]">
-        <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
-          How it works
-        </p>
-        <h2 className="mt-4 max-w-xl font-heading text-[length:var(--text-h1)] font-extrabold text-[var(--text-primary)]">
+        <SectionKicker>How it works</SectionKicker>
+        <h2 className="mt-4 max-w-xl font-heading text-h1 font-extrabold text-[var(--text-primary)]">
           Four steps from scan to formula.
         </h2>
         <div className="mt-10 flex items-center gap-2 font-heading text-sm text-[var(--text-muted)]">
@@ -116,10 +162,10 @@ const desktopSteps = [
             </defs>
           </svg>
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
           Pick a fragrance
         </h3>
-        <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
+        <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
           Scan the barcode of the perfume you&apos;re wearing, or pick from the 8 fragrances in the beta catalog.
         </p>
         <div className="relative z-[1] mt-6 flex flex-wrap gap-2">
@@ -141,10 +187,10 @@ const desktopSteps = [
         <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center p-0">
           <StepFingerprint />
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
           Scan your skin
         </h3>
-        <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
+        <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
           Press a finger to the device. In {BIOMETRIC_SCAN_SECONDS} seconds it
           reads skin temperature, conductance, and sebum.
         </p>
@@ -174,10 +220,10 @@ const desktopSteps = [
         <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center overflow-visible p-0">
           <StepAI />
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
           Mia suggests a formula
         </h3>
-        <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
+        <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
           Mia combines your scan with the local weather and your past entries to recommend a mix for today.
         </p>
         <div className="relative z-[1] mt-6 max-w-sm rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-deep)] p-4">
@@ -212,26 +258,23 @@ const desktopSteps = [
         <span className="pointer-events-none absolute right-8 top-8 z-0 font-heading text-[clamp(100px,15vw,180px)] font-black text-white/[0.04]">
           04
         </span>
-        <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center gap-1 p-0">
-          <span className="text-2xl">🧴</span>
-          <span className="text-2xl">📖</span>
-          <span className="text-2xl">↗</span>
+        <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center gap-2 p-0">
+          <StepJournalIcons />
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-[28px] font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
           Save it to your journal
         </h3>
-        <p className="relative z-[1] mt-3 max-w-md text-[15px] text-[var(--text-secondary)]">
+        <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
           Each formula is logged so you can see how your choices change across moods, weather, and seasons.
         </p>
         <div className="relative z-[1] mt-8 flex -space-x-3">
-          {profileImagesOrdered.map((img, i) => (
+          {profileImagesOrdered.map((img) => (
             <Image
               key={img.src}
               src={img}
               alt=""
               className="h-10 w-10 rounded-full border-2 border-[var(--bg-deep)] object-cover"
               sizes="40px"
-              priority={i === 0}
             />
           ))}
         </div>
@@ -243,6 +286,16 @@ const desktopSteps = [
   },
 ];
 
+/*
+ * Mobile carousel geometry. The track offset is computed in JS while the card
+ * width is expressed in CSS, so both sides read the same numbers: `gap-4`
+ * below must stay equal to CARD_GAP.
+ */
+const CARD_INSET = 40;
+const CARD_GAP = 16;
+const MOBILE_AUTOPLAY_MS = 3200;
+const SWIPE_THRESHOLD = 48;
+
 function MobileStack() {
   const trackRef = useRef<HTMLDivElement>(null);
   const autoplayRef = useRef<number | null>(null);
@@ -252,14 +305,13 @@ function MobileStack() {
   const isPausedRef = useRef(false);
   const [activeStep, setActiveStep] = useState(0);
   const mobileSteps = desktopSteps.slice(1);
-  const MOBILE_AUTOPLAY_MS = 3200;
-  const SWIPE_THRESHOLD = 48;
-  const GAP = 16;
-
-  const CARD_WIDTH = useCallback(() => window.innerWidth - 80, []);
+  const getCardWidth = useCallback(
+    () => window.innerWidth - CARD_INSET * 2,
+    [],
+  );
   const getOffset = useCallback(
-    (idx: number) => idx * (CARD_WIDTH() + GAP),
-    [CARD_WIDTH],
+    (idx: number) => idx * (getCardWidth() + CARD_GAP),
+    [getCardWidth],
   );
 
   const applyTrackTransform = useCallback(
@@ -269,7 +321,9 @@ function MobileStack() {
       track.style.transition = withTransition
         ? "transform 400ms cubic-bezier(0.16,1,0.3,1)"
         : "none";
-      track.style.transform = `translateX(calc(40px - ${getOffset(step)}px + ${delta}px))`;
+      track.style.transform = `translateX(calc(${CARD_INSET}px - ${getOffset(
+        step,
+      )}px + ${delta}px))`;
     },
     [getOffset],
   );
@@ -306,13 +360,25 @@ function MobileStack() {
     }, 1200);
   }, [startAutoplay]);
 
+  const activeStepRef = useRef(0);
+  useEffect(() => {
+    activeStepRef.current = activeStep;
+  }, [activeStep]);
+
+  /* Animate to the new step. */
   useEffect(() => {
     applyTrackTransform(activeStep);
   }, [activeStep, applyTrackTransform]);
 
+  /*
+   * Mount-only. This previously also depended on activeStep, so on every step
+   * change it re-ran *after* the effect above and re-applied the same
+   * transform with `transition: none`, cancelling the 400ms slide before it
+   * could paint. The carousel snapped instead of sliding.
+   */
   useEffect(() => {
-    applyTrackTransform(activeStep, 0, false);
-    const onResize = () => applyTrackTransform(activeStep, 0, false);
+    applyTrackTransform(activeStepRef.current, 0, false);
+    const onResize = () => applyTrackTransform(activeStepRef.current, 0, false);
     window.addEventListener("resize", onResize);
     startAutoplay();
     return () => {
@@ -322,7 +388,7 @@ function MobileStack() {
         window.clearTimeout(resumeTimeoutRef.current);
       }
     };
-  }, [activeStep, applyTrackTransform, startAutoplay, stopAutoplay]);
+  }, [applyTrackTransform, startAutoplay, stopAutoplay]);
 
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     touchStartXRef.current = e.touches[0]?.clientX ?? 0;
@@ -357,17 +423,9 @@ function MobileStack() {
 
   return (
     <div className="pb-12 pt-16 lg:hidden">
-      <style>{`
-        @keyframes dotFill {
-          from { width: 8px; }
-          to { width: 24px; }
-        }
-      `}</style>
       <div className="px-[max(5vw,40px)]">
-        <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--accent-cyan)]">
-          How it works
-        </p>
-        <h2 className="mt-4 max-w-xl font-heading text-[length:var(--text-h2)] font-extrabold text-[var(--text-primary)]">
+        <SectionKicker>How it works</SectionKicker>
+        <h2 className="mt-4 max-w-xl font-heading text-h2 font-extrabold text-[var(--text-primary)]">
           Four steps from scan to formula.
         </h2>
       </div>
@@ -376,23 +434,26 @@ function MobileStack() {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         className="mt-10 overflow-x-hidden"
+        style={{ "--card-inset": `${CARD_INSET}px` } as React.CSSProperties}
       >
         <div
           ref={trackRef}
-          className="flex flex-row gap-4 will-change-transform transition-transform duration-400 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+          /* The transition is assigned imperatively in applyTrackTransform;
+             transition utilities here were always overridden by it. */
+          className="flex flex-row gap-4 will-change-transform"
         >
           {mobileSteps.map((s, i) => (
             <div
               key={s.key}
-              className="snap-center w-[calc(100vw-80px)] flex-shrink-0"
+              /* `snap-center` did nothing: the track is transform-driven, not
+                 a scroll-snap container. */
+              className="w-[calc(100vw-var(--card-inset)*2)] flex-shrink-0"
             >
               <ScrollReveal delay={i * 60}>
                 <div
-                  aria-label={
-                    activeStep === i
-                      ? `How Essense works, step ${i + 1} of ${mobileSteps.length}`
-                      : undefined
-                  }
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`Step ${i + 1} of ${mobileSteps.length}`}
                   className={`overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-mid)] shadow-[0_8px_40px_rgba(0,0,0,0.45)] transition-[transform,opacity] duration-400 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
                     activeStep === i ? "scale-100 opacity-100" : "scale-[0.93] opacity-60"
                   }`}
@@ -410,6 +471,7 @@ function MobileStack() {
             key={`mobile-dot-${s.key}`}
             type="button"
             aria-label={`Go to step ${i + 1}`}
+            aria-current={activeStep === i}
             onClick={() => {
               if (resumeTimeoutRef.current !== null) {
                 window.clearTimeout(resumeTimeoutRef.current);
@@ -418,7 +480,7 @@ function MobileStack() {
               setActiveStep(i);
               startAutoplay();
             }}
-            className={`relative overflow-hidden rounded-full ${
+            className={`focus-ring relative overflow-hidden rounded-full ${
               activeStep === i
                 ? "h-2 w-6 bg-[var(--bg-surface)]"
                 : "h-2 w-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
@@ -438,7 +500,11 @@ function MobileStack() {
   );
 }
 
-const AUTOPLAY_MS = 1000;
+/*
+ * The desktop autoplay drives a 0.8s scroll tween, so a 1s cadence meant the
+ * page was moving under the reader almost continuously.
+ */
+const AUTOPLAY_MS = 4000;
 
 /** Steps s1–s4 only (panels at index 1–4; intro is index 0). */
 const STEP_PANEL_START = 1;
@@ -648,13 +714,13 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="relative bg-[var(--bg-deep)]">
       <MobileStack />
-      <div ref={pinRef} className="relative hidden h-[100vh] lg:block">
-        <div className="sticky top-0 flex h-[100vh] flex-col overflow-hidden">
+      <div ref={pinRef} className="relative hidden h-[100dvh] lg:block">
+        <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden">
           <div
             ref={trackRef}
             onMouseEnter={() => setHoverTrack(true)}
             onMouseLeave={() => setHoverTrack(false)}
-            className="flex h-[calc(100vh-48px)] w-max gap-6 will-change-transform"
+            className="flex h-[calc(100dvh-48px)] w-max gap-6 will-change-transform"
           >
             {desktopSteps.map((s) => (
               <div
@@ -675,18 +741,19 @@ export function HowItWorks() {
             </div>
             <div
               className="mt-3 hidden justify-center gap-2 lg:flex"
-              role="tablist"
+              /* role="group", not "tablist": these scroll the track rather
+                 than swapping panels, and there are no matching tabpanels. */
+              role="group"
               aria-label="How it works steps"
             >
               {([0, 1, 2, 3] as const).map((i) => (
                 <button
                   key={i}
                   type="button"
-                  role="tab"
-                  aria-selected={!introMode && currentStep === i}
+                  aria-current={!introMode && currentStep === i}
                   aria-label={`Step ${i + 1}`}
                   onClick={() => onDotClick(i)}
-                  className={`rounded-full transition-[width,background-color] ${
+                  className={`focus-ring rounded-full transition-[width,background-color] ${
                     !introMode && currentStep === i
                       ? "h-2 w-6 bg-[var(--accent-cyan)]"
                       : "h-2 w-2 border border-[var(--border-subtle)] bg-[var(--bg-surface)]"
