@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "@/lib/cn";
 
 type GlassCardProps = {
@@ -16,8 +14,7 @@ export function GlassCard({
   glowColor,
   ...rest
 }: GlassCardProps) {
-  const pad =
-    typeof padding === "number" ? `${padding}px` : padding;
+  const pad = typeof padding === "number" ? `${padding}px` : padding;
 
   return (
     <div

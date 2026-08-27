@@ -1,20 +1,32 @@
-"use client";
-
 import { cn } from "@/lib/cn";
 
 type PhoneMockupProps = {
   children: React.ReactNode;
   className?: string;
   notch?: boolean;
+  /**
+   * Screen-reader label for the simulated screen. The mockup content is a
+   * marketing illustration full of placeholder data ("9:41", "Jasmine",
+   * "12-day streak") with non-functional controls, so it is exposed to
+   * assistive tech as a single labelled image rather than as page content.
+   */
+  label: string;
 };
 
-export function PhoneMockup({ children, className, notch = true }: PhoneMockupProps) {
+export function PhoneMockup({
+  children,
+  className,
+  notch = true,
+  label,
+}: PhoneMockupProps) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[42px] border-2 border-white/12 bg-[var(--bg-surface)] shadow-2xl",
+        "relative overflow-hidden rounded-[42px] border-2 border-[var(--border-active)] bg-[var(--bg-surface)] shadow-2xl",
         className,
       )}
+      role="img"
+      aria-label={label}
     >
       {notch && (
         <div
@@ -25,7 +37,13 @@ export function PhoneMockup({ children, className, notch = true }: PhoneMockupPr
           <span className="h-2 w-6 rounded-full bg-black/70" />
         </div>
       )}
-      <div className="min-h-[420px] bg-[var(--bg-deep)] pt-8">{children}</div>
+      {/*
+       * `inert` keeps the decorative buttons inside the mockup out of the tab
+       * order; aria-hidden keeps the placeholder copy out of the a11y tree.
+       */}
+      <div className="min-h-[420px] bg-[var(--bg-deep)] pt-8" aria-hidden inert>
+        {children}
+      </div>
     </div>
   );
 }

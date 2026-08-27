@@ -1,15 +1,13 @@
-"use client";
-
 import { cn } from "@/lib/cn";
 
 const colorMap = {
   cyan: "border-[color-mix(in_srgb,var(--accent-cyan)_30%,transparent)] text-[var(--accent-cyan)]",
+  // Violet, not purple: --accent-purple is only 3.8:1 on --bg-surface.
   purple:
-    "border-[color-mix(in_srgb,var(--accent-purple)_30%,transparent)] text-[var(--accent-purple)]",
+    "border-[color-mix(in_srgb,var(--accent-violet)_30%,transparent)] text-[var(--accent-violet)]",
   amber:
     "border-[color-mix(in_srgb,var(--accent-amber)_30%,transparent)] text-[var(--accent-amber)]",
-  muted:
-    "border-[var(--border-subtle)] text-[var(--text-muted)]",
+  muted: "border-[var(--border-subtle)] text-[var(--text-muted)]",
 };
 
 type PillBadgeProps = {
