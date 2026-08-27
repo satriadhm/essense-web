@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
@@ -93,12 +99,14 @@ function CommunityPostCard({ post }: { post: CommunityPost }) {
 }
 
 export function CommunitySection() {
+  const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const mobileSliderRef = useRef<HTMLDivElement>(null);
   const resumeRef = useRef<number | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [following, setFollowing] = useState<ReadonlySet<string>>(new Set());
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -130,7 +138,7 @@ export function CommunitySection() {
 
   useEffect(() => {
     const slider = mobileSliderRef.current;
-    if (!slider || isDesktop || paused) return;
+    if (!slider || isDesktop || paused || reduceMotion) return;
 
     const id = window.setInterval(() => {
       setActiveIndex((prev) => {
@@ -141,7 +149,7 @@ export function CommunitySection() {
     }, AUTOPLAY_MS);
 
     return () => window.clearInterval(id);
-  }, [isDesktop, paused]);
+  }, [isDesktop, paused, reduceMotion]);
 
   const onMobileScroll = () => {
     const slider = mobileSliderRef.current;
@@ -224,19 +232,13 @@ export function CommunitySection() {
         </div>
 
         {/*
-         * Suggested-people strip. The Follow buttons are illustrative and have
-         * no behaviour yet, so the strip is presented as decoration rather than
-         * as a row of controls that do nothing when activated.
+         * Suggested-people strip.
          *
          * The inner track is `w-max mx-auto` instead of `justify-center`:
          * a centred flex container clips its own leading items once the
          * content overflows, putting the first card out of scroll reach.
          */}
-        <div
-          className="mt-16 overflow-x-auto pb-2"
-          aria-hidden
-          inert
-        >
+        <div className="mt-16 overflow-x-auto pb-2">
           <div className="mx-auto flex w-max gap-4">
             {suggestedUsers.map((u) => (
               <div
@@ -257,9 +259,26 @@ export function CommunitySection() {
                 <p className="text-center text-label text-[var(--text-muted)]">
                   {u.tag}
                 </p>
-                <p className="mt-3 w-full rounded-full border border-[var(--border-active)] py-1.5 text-center text-xs text-[var(--accent-cyan)]">
-                  Follow
-                </p>
+                <button
+                  type="button"
+                  aria-pressed={following.has(u.name)}
+                  onClick={() =>
+                    setFollowing((prev) => {
+                      const next = new Set(prev);
+                      if (next.has(u.name)) next.delete(u.name);
+                      else next.add(u.name);
+                      return next;
+                    })
+                  }
+                  className={`focus-ring mt-3 w-full rounded-full border py-1.5 text-center text-xs transition ${
+                    following.has(u.name)
+                      ? "border-[var(--accent-cyan)] bg-[color-mix(in_srgb,var(--accent-cyan)_14%,transparent)] text-[var(--accent-cyan)]"
+                      : "border-[var(--border-active)] text-[var(--accent-cyan)] hover:bg-[color-mix(in_srgb,var(--accent-cyan)_8%,transparent)]"
+                  }`}
+                >
+                  {following.has(u.name) ? "Following" : "Follow"}
+                  <span className="sr-only"> {u.name}</span>
+                </button>
               </div>
             ))}
           </div>

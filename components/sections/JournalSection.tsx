@@ -1,21 +1,72 @@
+"use client";
+
+import { useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { SectionKicker } from "@/components/ui/SectionKicker";
 
-/** March 2026 has 31 days and starts on a Sunday, so the grid needs no offset. */
-const MONTH_LABEL = "March 2026";
-const DAYS_IN_MONTH = 31;
-const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
+const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"] as const;
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
 
-/** Logged entries keyed by day, so each cell describes its own scan. */
-const ENTRIES: Record<number, string> = {
-  3: "Mar 3 — YSL Y · 22°C",
-  7: "Mar 7 — L'Oréal Homme Sport · 19°C",
-  12: "Mar 12 — L'Oréal Homme Intense · 24°C",
-  18: "Mar 18 — YSL Y · 25°C",
-  22: "Mar 22 — L'Oréal Homme Sport · 21°C",
-  28: "Mar 28 — YSL Y · 27°C",
-};
+type Month = { year: number; month: number; entries: Record<number, string> };
+
+/**
+ * The months the journal has data for. Day counts and the starting weekday are
+ * derived from the date itself rather than hardcoded — the previous version
+ * hand-wrote 35 cells for a 31-day month.
+ */
+const MONTHS: Month[] = [
+  {
+    year: 2026,
+    month: 0,
+    entries: {
+      6: "YSL Y · 14°C",
+      11: "L'Oréal Homme Intense · 12°C",
+      19: "L'Oréal Homme Sport · 9°C",
+      27: "YSL Y · 15°C",
+    },
+  },
+  {
+    year: 2026,
+    month: 1,
+    entries: {
+      2: "L'Oréal Homme Intense · 16°C",
+      9: "YSL Y · 18°C",
+      14: "L'Oréal Homme Sport · 13°C",
+      21: "YSL Y · 17°C",
+      25: "L'Oréal Homme Intense · 20°C",
+    },
+  },
+  {
+    year: 2026,
+    month: 2,
+    entries: {
+      3: "YSL Y · 22°C",
+      7: "L'Oréal Homme Sport · 19°C",
+      12: "L'Oréal Homme Intense · 24°C",
+      18: "YSL Y · 25°C",
+      22: "L'Oréal Homme Sport · 21°C",
+      28: "YSL Y · 27°C",
+    },
+  },
+];
+
+/** Both derived from the date, so they cannot disagree with the calendar. */
+const daysInMonth = (y: number, m: number) => new Date(y, m + 1, 0).getDate();
+const firstWeekday = (y: number, m: number) => new Date(y, m, 1).getDay();
 
 const recent = [
   {
@@ -61,6 +112,125 @@ function SunIcon() {
   );
 }
 
+function Chevron({ dir }: { dir: "prev" | "next" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d={dir === "prev" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
+    </svg>
+  );
+}
+
+function JournalCalendar() {
+  const [index, setIndex] = useState(MONTHS.length - 1);
+  const { year, month, entries } = MONTHS[index];
+
+  const label = `${MONTH_NAMES[month]} ${year}`;
+  const total = daysInMonth(year, month);
+  const offset = firstWeekday(year, month);
+  const logged = Object.keys(entries).map(Number).sort((a, b) => a - b);
+
+  return (
+    <GlassCard
+      padding={16}
+      className="mx-auto w-full max-w-[420px] rounded-[20px] md:max-w-full"
+    >
+      <div className="flex items-center justify-between">
+        <h3 aria-live="polite" className="font-heading text-lg font-bold">
+          {label}
+        </h3>
+        <div className="flex gap-1">
+          <button
+            type="button"
+            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            disabled={index === 0}
+            aria-label="Previous month"
+            className="focus-ring flex h-7 w-7 items-center justify-center rounded-full text-[var(--text-muted)] transition hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] disabled:pointer-events-none disabled:opacity-35"
+          >
+            <Chevron dir="prev" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setIndex((i) => Math.min(MONTHS.length - 1, i + 1))}
+            disabled={index === MONTHS.length - 1}
+            aria-label="Next month"
+            className="focus-ring flex h-7 w-7 items-center justify-center rounded-full text-[var(--text-muted)] transition hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] disabled:pointer-events-none disabled:opacity-35"
+          >
+            <Chevron dir="next" />
+          </button>
+        </div>
+      </div>
+
+      {/*
+       * The grid is the visual rendering; reading 31 bare numbers aloud helps
+       * nobody, so the same information is given to assistive tech as a
+       * sentence that updates with the month.
+       */}
+      <p className="sr-only" aria-live="polite">
+        {logged.length} scans logged in {label}: days{" "}
+        {logged.join(", ")}.
+      </p>
+
+      <div aria-hidden>
+        <div className="mt-3 grid grid-cols-7 gap-0.5 text-center text-label text-[var(--text-muted)] sm:gap-1 md:mt-4">
+          {WEEKDAYS.map((d, i) => (
+            <span key={`weekday-${i}`}>{d}</span>
+          ))}
+        </div>
+
+        <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
+          {Array.from({ length: offset }, (_, i) => (
+            <div key={`pad-${i}`} />
+          ))}
+          {Array.from({ length: total }, (_, i) => i + 1).map((d) => {
+            const entry = entries[d];
+            return (
+              <div
+                key={d}
+                title={entry ? `${MONTH_NAMES[month]} ${d} — ${entry}` : undefined}
+                className={`relative flex aspect-square w-full min-w-0 items-center justify-center rounded-md text-label sm:text-xs ${
+                  entry
+                    ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
+                    : "text-[var(--text-muted)]"
+                }`}
+              >
+                {d}
+                {entry && (
+                  <span className="absolute bottom-1 h-1 w-1 rounded-full bg-[var(--accent-violet)]" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <ul className="scrollbar-none mt-6 flex w-full min-w-0 list-none gap-3 overflow-x-auto pb-2">
+        {recent.map((r) => (
+          <li
+            key={r.date}
+            className="min-w-[160px] rounded-xl border-l-4 bg-[var(--bg-surface)] py-3 pl-4 pr-3"
+            style={{ borderColor: r.border }}
+          >
+            <p className="text-label text-[var(--text-muted)]">{r.date}</p>
+            <p className="font-heading text-sm font-semibold">{r.name}</p>
+            <p className="mt-1 flex items-center gap-1 text-xs text-[var(--text-secondary)]">
+              <SunIcon /> {r.cond}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </GlassCard>
+  );
+}
+
 export function JournalSection() {
   return (
     <section
@@ -92,81 +262,7 @@ export function JournalSection() {
 
         <div className="min-w-0">
           <ScrollReveal>
-            {/*
-             * Product mockup: the month arrows and day cells are illustrative
-             * and have no behaviour, so the card is presented as a single
-             * decorative image instead of a set of dead controls.
-             */}
-            <GlassCard
-              padding={16}
-              className="mx-auto w-full max-w-[420px] rounded-[20px] md:max-w-full"
-              role="img"
-              aria-label={`Journal calendar for ${MONTH_LABEL}, showing ${
-                Object.keys(ENTRIES).length
-              } logged scans and the three most recent entries`}
-            >
-              <div aria-hidden inert>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-heading text-lg font-bold">
-                    {MONTH_LABEL}
-                  </h3>
-                  <div className="flex gap-2 text-[var(--text-muted)]">
-                    <span>&lt;</span>
-                    <span>&gt;</span>
-                  </div>
-                </div>
-
-                <div className="mt-3 grid grid-cols-7 gap-0.5 text-center text-label text-[var(--text-muted)] sm:gap-1 md:mt-4">
-                  {WEEKDAYS.map((d, i) => (
-                    <span key={`weekday-${i}`}>{d}</span>
-                  ))}
-                </div>
-
-                <div className="mt-2 grid grid-cols-7 gap-0.5 sm:gap-1">
-                  {Array.from({ length: DAYS_IN_MONTH }, (_, i) => i + 1).map(
-                    (d) => {
-                      const entry = ENTRIES[d];
-                      return (
-                        <div
-                          key={d}
-                          title={entry}
-                          className={`relative flex aspect-square w-full min-w-0 items-center justify-center rounded-md text-label sm:text-xs ${
-                            entry
-                              ? "bg-[rgba(77,217,255,0.06)] text-[var(--text-primary)]"
-                              : "text-[var(--text-muted)]"
-                          }`}
-                        >
-                          {d}
-                          {entry && (
-                            <span className="absolute bottom-1 h-1 w-1 rounded-full bg-[var(--accent-violet)]" />
-                          )}
-                        </div>
-                      );
-                    },
-                  )}
-                </div>
-
-                <div className="scrollbar-none mt-6 flex w-full min-w-0 gap-3 overflow-x-auto pb-2">
-                  {recent.map((r) => (
-                    <div
-                      key={r.date}
-                      className="min-w-[160px] rounded-xl border-l-4 bg-[var(--bg-surface)] py-3 pl-4 pr-3"
-                      style={{ borderColor: r.border }}
-                    >
-                      <p className="text-label text-[var(--text-muted)]">
-                        {r.date}
-                      </p>
-                      <p className="font-heading text-sm font-semibold">
-                        {r.name}
-                      </p>
-                      <p className="mt-1 flex items-center gap-1 text-xs text-[var(--text-secondary)]">
-                        <SunIcon /> {r.cond}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </GlassCard>
+            <JournalCalendar />
           </ScrollReveal>
         </div>
       </div>
