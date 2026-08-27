@@ -70,7 +70,7 @@ export function JournalSection() {
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
         <div className="min-w-0">
           <SectionKicker>Fragrance journal</SectionKicker>
-          <h2 className="mt-4 max-w-[18ch] font-heading text-h2 font-extrabold leading-[1.2] text-[var(--text-primary)] sm:max-w-none">
+          <h2 className="mt-4 max-w-[18ch] font-heading text-section font-extrabold leading-[1.2] text-[var(--text-primary)] sm:max-w-none">
             A record of what you&apos;ve{" "}
             <span className="italic text-[var(--accent-violet)]">worn</span>.
           </h2>

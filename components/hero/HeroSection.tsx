@@ -164,7 +164,7 @@ export function HeroSection() {
                 <dt className="text-label tracking-wide text-[var(--text-muted)]">
                   {stat.label}
                 </dt>
-                <dd className="text-h3 text-[var(--text-primary)]">
+                <dd className="text-subsection text-[var(--text-primary)]">
                   {stat.value}
                 </dd>
               </div>

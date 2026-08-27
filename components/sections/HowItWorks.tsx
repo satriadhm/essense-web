@@ -126,7 +126,7 @@ const desktopSteps = [
     content: (
       <div className="flex h-full flex-col justify-center px-[max(5vw,40px)]">
         <SectionKicker>How it works</SectionKicker>
-        <h2 className="mt-4 max-w-xl font-heading text-h1 font-extrabold text-[var(--text-primary)]">
+        <h2 className="mt-4 max-w-xl font-heading text-statement font-extrabold text-[var(--text-primary)]">
           Four steps from scan to formula.
         </h2>
         <div className="mt-10 flex items-center gap-2 font-heading text-sm text-[var(--text-muted)]">
@@ -162,7 +162,7 @@ const desktopSteps = [
             </defs>
           </svg>
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-subsection font-bold">
           Pick a fragrance
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
@@ -187,7 +187,7 @@ const desktopSteps = [
         <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center p-0">
           <StepFingerprint />
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-subsection font-bold">
           Scan your skin
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
@@ -220,7 +220,7 @@ const desktopSteps = [
         <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center overflow-visible p-0">
           <StepAI />
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-subsection font-bold">
           Mia suggests a formula
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
@@ -261,7 +261,7 @@ const desktopSteps = [
         <GlassCard className="relative z-[1] mx-auto flex h-[120px] w-[120px] items-center justify-center gap-2 p-0">
           <StepJournalIcons />
         </GlassCard>
-        <h3 className="relative z-[1] mt-8 font-heading text-h3 font-bold">
+        <h3 className="relative z-[1] mt-8 font-heading text-subsection font-bold">
           Save it to your journal
         </h3>
         <p className="relative z-[1] mt-3 max-w-md text-body text-[var(--text-secondary)]">
@@ -425,7 +425,7 @@ function MobileStack() {
     <div className="pb-12 pt-16 lg:hidden">
       <div className="px-[max(5vw,40px)]">
         <SectionKicker>How it works</SectionKicker>
-        <h2 className="mt-4 max-w-xl font-heading text-h2 font-extrabold text-[var(--text-primary)]">
+        <h2 className="mt-4 max-w-xl font-heading text-statement font-extrabold text-[var(--text-primary)]">
           Four steps from scan to formula.
         </h2>
       </div>

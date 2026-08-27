@@ -49,12 +49,27 @@
 @theme {
   /*
    * Type scale. Declared in @theme (not :root) so Tailwind emits both the
-   * `text-h1`-style utilities and the --text-* custom properties.
+   * `text-section`-style utilities and the --text-* custom properties.
+   *
+   * The steps are named for the role they play, not for a heading level,
+   * because they deliberately do not map one-to-one onto h1/h2/h3. The site
+   * has a single <h1> (the hero) and then two tiers of <h2>:
+   *
+   *   --text-hero        the one <h1>
+   *   --text-statement   story-beat sections — WhatIsEssense, Biometric,
+   *                      HowItWorks, CTA. Use at every breakpoint; the clamp
+   *                      already handles small screens.
+   *   --text-section     supporting sections — Journal, Mia, AppPreview,
+   *                      Community
+   *   --text-subsection  step titles and figure values inside a section
+   *
+   * Naming these --text-h1/h2/h3 was what let HowItWorks drift into rendering
+   * one heading at two different steps depending on breakpoint.
    */
   --text-hero: clamp(44px, 13vw, 120px);
-  --text-h1: clamp(40px, 6vw, 72px);
-  --text-h2: clamp(28px, 4vw, 48px);
-  --text-h3: clamp(20px, 3vw, 32px);
+  --text-statement: clamp(40px, 6vw, 72px);
+  --text-section: clamp(28px, 4vw, 48px);
+  --text-subsection: clamp(20px, 3vw, 32px);
   --text-body: 16px;
   --text-small: 13px;
   --text-label: 11px;
